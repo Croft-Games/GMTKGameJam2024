@@ -1,12 +1,11 @@
 name: "godot-ci export"
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
 
 env:
   GODOT_VERSION: 4.2.2
-  EXPORT_NAME: godot_project
   PROJECT_PATH: godot_project
   ITCHIO_USERNAME: ${{ vars.ITCHIO_USERNAME }}
   ITCHIO_GAME: ${{ vars.ITCHIO_GAME }}
@@ -16,25 +15,16 @@ permissions:
   contents: write
 
 jobs:
-  release:
-    name: Release pushed tag
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Create release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --generate-notes
-
-  export-windows:
-    name: Windows Export
+  export:
     runs-on: ubuntu-20.04
     container:
       image: barichello/godot-ci:4.2.2
+    strategy:
+      matrix: 
+        platform: 
+          - { name: windows, export: "game.exe", godot_preset: "Windows Desktop" }
+          - { name: linux, export: "game.x86_64", godot_preset: "Linux/X11" }
+          - { name: web, export: "index.html", godot_preset: "Web" }
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,72 +34,24 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-      - name: Windows Build
+      - name: Build
         run: |
           mkdir -v -p build/windows
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+          godot --headless --verbose --export-release "${{ matrix.platform.godot_preset }}" ../build/${{ matrix.platform.name }}/${{ matrix.platform.export }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows
-          path: build/windows
+          name: ${{ matrix.platform.name }}
+          path: build/${{ matrix.platform.name }}
       - name: Deploy to itch.io 🚀
+        if: startsWith(github.event.ref, 'refs/tags/v')
         run: |
-          butler push ./build/windows  $ITCHIO_USERNAME/$ITCHIO_GAME:windows
-
-  export-linux:
-    name: Linux Export
-    runs-on: ubuntu-20.04
-    container:
-      image: barichello/godot-ci:4.2.2
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+          butler push ./build/${{ matrix.platform.name }}  $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.platform.name }} --userversion ${{ github.ref_name }}
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-      - name: Linux Build
-        run: |
-          mkdir -v -p build/linux
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux
-          path: build/linux
-      - name: Deploy to itch.io 🚀
-        run: |
-          butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
-
-  export-web:
-    name: Web Export
-    runs-on: ubuntu-20.04
-    container:
-      image: barichello/godot-ci:4.2.2
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-      - name: Setup
-        run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-      - name: Web Build
-        run: |
-          mkdir -v -p build/web
-          cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" ../build/web/index.html
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: build/web
-      - name: Deploy to itch.io 🚀
-        run: |
-          butler push ./build/web $ITCHIO_USERNAME/$ITCHIO_GAME:web
+          folder: build/web
