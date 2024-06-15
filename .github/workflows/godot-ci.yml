@@ -36,7 +36,7 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Build
         run: |
-          mkdir -v -p build/windows
+          mkdir -v -p build/${{ matrix.platform.name }}
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "${{ matrix.platform.godot_preset }}" ../build/${{ matrix.platform.name }}/${{ matrix.platform.export }}
       - name: Upload Artifact
