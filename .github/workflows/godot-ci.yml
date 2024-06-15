@@ -50,6 +50,10 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags/v')
         run: |
           butler push ./build/${{ matrix.platform.name }}  $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.platform.name }} --userversion ${{ github.ref_name }}
+      - name: COI Service Worker for Pages
+        if: matrix.platform.name == 'web'
+        run: |
+          cp deploy_help/coi-serviceworker.js build/${{ matrix.platform.name }}/
       - name: GitHub Pages Artifact
         if: matrix.platform.name == 'web'
         uses: actions/upload-pages-artifact@v3
