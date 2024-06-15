@@ -2,16 +2,19 @@ name: "godot-ci export"
 on: push
 
 env:
-  GODOT_VERSION: 4.2.1
+  GODOT_VERSION: 4.2.2
   EXPORT_NAME: godot_project
   PROJECT_PATH: godot_project
+  ITCHIO_USERNAME: ${{ vars.ITCHIO_USERNAME }}
+  ITCHIO_GAME: ${{ vars.ITCHIO_GAME }}
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
 jobs:
   export-windows:
     name: Windows Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.2.1
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,12 +34,15 @@ jobs:
         with:
           name: windows
           path: build/windows
+      - name: Deploy to itch.io 🚀
+        run: |
+          butler push ./build/windows  $ITCHIO_USERNAME/$ITCHIO_GAME:windows
 
   export-linux:
     name: Linux Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.2.1
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,16 +62,15 @@ jobs:
         with:
           name: linux
           path: build/linux
+      - name: Deploy to itch.io 🚀
+        run: |
+          butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
 
   export-web:
     name: Web Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.2.1
-    env:
-      ITCHIO_USERNAME: ${{ vars.ITCHIO_USERNAME }}
-      ITCHIO_GAME: ${{ vars.ITCHIO_GAME }}
-      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -79,7 +84,7 @@ jobs:
         run: |
           mkdir -v -p build/web
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "HTML5" ../build/web/index.html
+          godot --headless --verbose --export-release "Web" ../build/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -96,15 +101,12 @@ jobs:
       - name: Deploy to itch.io 🚀
         run: |
           butler push ./build/web $ITCHIO_USERNAME/$ITCHIO_GAME:web
-          butler push ./build/linux $ITCHIO_USERNAME/$ITCHIO_GAME:linux
-          butler push ./build/windows  $ITCHIO_USERNAME/$ITCHIO_GAME:windows
-          butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
 
   export-mac:
     name: Mac Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.2.1
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -118,9 +120,12 @@ jobs:
         run: |
           mkdir -v -p build/mac
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+          godot --headless --verbose --export-release "macOS" ../build/mac/$EXPORT_NAME.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: mac
           path: build/mac
+      - name: Deploy to itch.io 🚀
+        run: |
+          butler push ./build/mac $ITCHIO_USERNAME/$ITCHIO_GAME:mac
