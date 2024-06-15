@@ -49,11 +49,11 @@ jobs:
         run: |
           butler push ./build/${{ matrix.platform.name }}  $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.platform.name }} --userversion ${{ github.ref_name }}
       - name: Install rsync 📚
-        if: matrix.platform.name == web
+        if: matrix.platform.name == 'web'
         run: |
           apt-get update && apt-get install -y rsync
       - name: Deploy to GitHub Pages 🚀
-        if: matrix.platform.name == web
+        if: matrix.platform.name == 'web'
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           folder: build/${{ matrix.platform.name }}
