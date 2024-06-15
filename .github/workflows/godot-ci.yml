@@ -12,11 +12,13 @@ env:
   BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   export:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:4.2.2
     strategy:
@@ -48,12 +50,24 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags/v')
         run: |
           butler push ./build/${{ matrix.platform.name }}  $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.platform.name }} --userversion ${{ github.ref_name }}
-      - name: Install rsync 📚
+      - name: GitHub Pages Artifact
         if: matrix.platform.name == 'web'
-        run: |
-          apt-get update && apt-get install -y rsync
-      - name: Deploy to GitHub Pages 🚀
-        if: matrix.platform.name == 'web'
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: build/${{ matrix.platform.name }}
+          path: build/${{ matrix.platform.name }}
+
+  ghpages:
+    needs: export
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
