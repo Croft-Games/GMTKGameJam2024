@@ -36,7 +36,7 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Build
         run: |
-          mkdir -v -p build/windows
+          mkdir -v -p build/${{ matrix.platform.name }}
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "${{ matrix.platform.godot_preset }}" ../build/${{ matrix.platform.name }}/${{ matrix.platform.export }}
       - name: Upload Artifact
@@ -49,9 +49,11 @@ jobs:
         run: |
           butler push ./build/${{ matrix.platform.name }}  $ITCHIO_USERNAME/$ITCHIO_GAME:${{ matrix.platform.name }} --userversion ${{ github.ref_name }}
       - name: Install rsync 📚
+        if: matrix.platform.name == web
         run: |
           apt-get update && apt-get install -y rsync
       - name: Deploy to GitHub Pages 🚀
+        if: matrix.platform.name == web
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          folder: build/web
+          folder: build/${{ matrix.platform.name }}
