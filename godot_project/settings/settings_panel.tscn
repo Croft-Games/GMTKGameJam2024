@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=3 uid="uid://fmcsbpyk4nw6"]
+
+[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/menu_theme.tres" id="1_bqoqf"]
+[ext_resource type="Script" path="res://settings/settings_panel.gd" id="2_b1skm"]
+[ext_resource type="PackedScene" uid="uid://daapjifgqc8ec" path="res://settings/volume_setting.tscn" id="3_1viyk"]
+[ext_resource type="PackedScene" uid="uid://xew3w434xsrw" path="res://settings/labelled_option.tscn" id="3_kpgdf"]
+[ext_resource type="Script" path="res://settings/numberwang.gd" id="4_j4pdt"]
+[ext_resource type="Script" path="res://settings/ray_tracing_toggle.gd" id="4_ss2f8"]
+
+[node name="SettingsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bqoqf")
+script = ExtResource("2_b1skm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+tab_alignment = 1
+
+[node name="General" type="MarginContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/General"]
+layout_mode = 2
+
+[node name="LabelledOption" parent="MarginContainer/TabContainer/General/VBoxContainer" instance=ExtResource("3_kpgdf")]
+layout_mode = 2
+label = "Numberwang"
+
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/TabContainer/General/VBoxContainer/LabelledOption"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "37"
+popup/item_1/id = 33
+popup/item_2/text = "3"
+popup/item_2/id = 2
+script = ExtResource("4_j4pdt")
+
+[node name="Audio" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio"]
+layout_mode = 2
+
+[node name="Master" parent="MarginContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("3_kpgdf")]
+layout_mode = 2
+label = "Master Volume"
+
+[node name="MasterVolume" parent="MarginContainer/TabContainer/Audio/VBoxContainer/Master" instance=ExtResource("3_1viyk")]
+layout_mode = 2
+bus = &"Master"
+
+[node name="Music" parent="MarginContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("3_kpgdf")]
+layout_mode = 2
+label = "Music Volume"
+
+[node name="MusicVolume" parent="MarginContainer/TabContainer/Audio/VBoxContainer/Music" instance=ExtResource("3_1viyk")]
+layout_mode = 2
+bus = &"Music"
+
+[node name="Effects" parent="MarginContainer/TabContainer/Audio/VBoxContainer" instance=ExtResource("3_kpgdf")]
+layout_mode = 2
+label = "Effects Volume"
+
+[node name="EffectsVolume" parent="MarginContainer/TabContainer/Audio/VBoxContainer/Effects" instance=ExtResource("3_1viyk")]
+layout_mode = 2
+bus = &"SFX"
+
+[node name="Graphics" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Graphics"]
+layout_mode = 2
+
+[node name="RayTracingToggle" type="CheckButton" parent="MarginContainer/TabContainer/Graphics/VBoxContainer"]
+layout_mode = 2
+text = "Ray Tracing"
+script = ExtResource("4_ss2f8")
+
+[node name="Controls" type="MarginContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Controls"]
+layout_mode = 2
+
+[connection signal="item_selected" from="MarginContainer/TabContainer/General/VBoxContainer/LabelledOption/OptionButton" to="MarginContainer/TabContainer/General/VBoxContainer/LabelledOption/OptionButton" method="_on_item_selected"]

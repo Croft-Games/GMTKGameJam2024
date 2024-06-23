@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dc1nsn17hv55s"
+path="res://.godot/imported/46-ri9 (Night).mp3-1b23ede9ba21c971b9d7a0b82ffbe029.mp3str"
+
+[deps]
+
+source_file="res://main_menu/46-ri9 (Night).mp3"
+dest_files=["res://.godot/imported/46-ri9 (Night).mp3-1b23ede9ba21c971b9d7a0b82ffbe029.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
