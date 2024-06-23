@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bcg08v88fsprf"]
+
+[ext_resource type="FontFile" uid="uid://cogjgiysvpaha" path="res://fonts/AstoriaMedium.ttf" id="1_dnebn"]
+[ext_resource type="StyleBox" uid="uid://bcjjjuhrac3c7" path="res://ui_themes/buttons/menu_button_disabled.tres" id="2_3clao"]
+[ext_resource type="StyleBox" uid="uid://baedpnd638tww" path="res://ui_themes/buttons/menu_button_focus.tres" id="3_a8rx0"]
+[ext_resource type="StyleBox" uid="uid://b4mg5ed3wcqwb" path="res://ui_themes/buttons/menu_button_hover.tres" id="4_u5ni8"]
+[ext_resource type="StyleBox" uid="uid://cuupqbx5jbt8b" path="res://ui_themes/buttons/menu_button.tres" id="5_e5yon"]
+[ext_resource type="StyleBox" uid="uid://cc1r8e01dy2xh" path="res://ui_themes/buttons/menu_button_pressed.tres" id="6_ahyf4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3aog"]
+
+[resource]
+default_font = ExtResource("1_dnebn")
+default_font_size = 31
+BoxContainer/constants/separation = 28
+Button/fonts/font = ExtResource("1_dnebn")
+Button/styles/disabled = ExtResource("2_3clao")
+Button/styles/focus = ExtResource("3_a8rx0")
+Button/styles/hover = ExtResource("4_u5ni8")
+Button/styles/normal = ExtResource("5_e5yon")
+Button/styles/pressed = ExtResource("6_ahyf4")
+MarginContainer/constants/margin_bottom = 12
+MarginContainer/constants/margin_left = 12
+MarginContainer/constants/margin_right = 12
+MarginContainer/constants/margin_top = 12
+TabContainer/styles/panel = SubResource("StyleBoxFlat_k3aog")

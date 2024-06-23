@@ -11,9 +11,17 @@ config_version=5
 [application]
 
 config/name="Gmtk Game Jam 2024"
-run/main_scene="res://menu/menu.tscn"
+run/main_scene="res://main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://audio/default_bus_layout.tres"
+
+[autoload]
+
+Settings="*res://settings/settings.tscn"
 
 [rendering]
 

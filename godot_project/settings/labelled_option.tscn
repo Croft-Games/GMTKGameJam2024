@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://xew3w434xsrw"]
+
+[ext_resource type="Script" path="res://settings/labelled_option.gd" id="1_3c008"]
+
+[node name="LabelledOption" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_3c008")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2

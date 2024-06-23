@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dsb8c8f6k62cq"]
+
+[ext_resource type="FontFile" uid="uid://bt6qk5t8ll0f5" path="res://fonts/bubble & soap.ttf" id="1_vpm4c"]
+
+[resource]
+Label/font_sizes/font_size = 61
+Label/fonts/font = ExtResource("1_vpm4c")

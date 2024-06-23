@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://cks8af20ujok7"]
+
+[ext_resource type="Script" path="res://settings/settings_page.gd" id="1_dw1ri"]
+[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/menu_theme.tres" id="1_fbcux"]
+[ext_resource type="PackedScene" uid="uid://fmcsbpyk4nw6" path="res://settings/settings_panel.tscn" id="3_0hbu6"]
+
+[node name="SettingsPage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fbcux")
+script = ExtResource("1_dw1ri")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="SettingsPanel" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_0hbu6")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
