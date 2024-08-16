@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://bqnpxbe8h6t4j"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
+[ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
+[ext_resource type="Texture2D" uid="uid://bkpcjt462pdji" path="res://player/Player_Sprite/idle/PlayerIdle_2.PNG" id="3_e28t7"]
+[ext_resource type="Texture2D" uid="uid://cy05hfm8j8uxy" path="res://player/Player_Sprite/move/PlayerMove1.PNG" id="3_tflh0"]
+[ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
+[ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
+[ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_iwtc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e28t7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_bc855")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e28t7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_tflh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frlsx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_v3ijn")
+}],
+"loop": true,
+"name": &"move",
+"speed": 12.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_j5slm"]
+offsets = PackedFloat32Array(0, 0.123377, 0.688312)
+colors = PackedColorArray(1, 1, 1, 1, 0.709677, 0.709677, 0.709677, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_va6p4"]
+gradient = SubResource("Gradient_j5slm")
+width = 350
+height = 453
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sngbg"]
+radius = 32.0
+height = 96.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_uo0jg")
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.065, 0.065)
+sprite_frames = SubResource("SpriteFrames_hvbdm")
+animation = &"idle"
+frame = 3
+frame_progress = 0.618256
+
+[node name="PointLight2D" type="PointLight2D" parent="PlayerSprite"]
+position = Vector2(-80.24, -253.215)
+color = Color(0.811765, 0.282353, 0.2, 1)
+energy = 4.21
+texture = SubResource("GradientTexture2D_va6p4")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="PlayerSprite"]
+position = Vector2(531.683, 707.692)
+emitting = false
+amount = 48
+randomness = 0.3
+gravity = Vector2(0, 0)
+initial_velocity_min = 616.16
+initial_velocity_max = 1000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 11.88)
+shape = SubResource("CapsuleShape2D_sngbg")
