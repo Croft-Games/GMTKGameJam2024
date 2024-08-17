@@ -92,6 +92,7 @@ reverse_cycle_tool={
 2d_physics/layer_3="Watering"
 2d_physics/layer_4="Pruning"
 2d_physics/layer_5="Refill"
+2d_physics/layer_10="GameBoundary"
 
 [rendering]
 

@@ -3,7 +3,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_i7ive"]
 
 [node name="WorldBoundary" type="StaticBody2D"]
+collision_layer = 513
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("WorldBoundaryShape2D_i7ive")
-one_way_collision = true

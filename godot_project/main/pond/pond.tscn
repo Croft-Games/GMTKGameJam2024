@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbgnu7nmpy442"]
+[gd_scene load_steps=6 format=3 uid="uid://cbgnu7nmpy442"]
 
 [ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawnable.tscn" id="2_hgt7u"]
 [ext_resource type="Texture2D" uid="uid://wgnc5mk8ev0n" path="res://main/pond/MainPond_1.PNG" id="2_nvxob"]
 [ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
 
@@ -19,7 +20,10 @@ animations = [{
 }]
 
 [node name="Pond" type="Node2D"]
+scale = Vector2(2, 2)
 script = ExtResource("1_3p408")
+
+[node name="Spawnable" parent="." instance=ExtResource("2_hgt7u")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.065, 0.065)

@@ -11,10 +11,9 @@ extends Node2D
 enum TreeState{SPAWNING, HAPPY, DRY, OVERGROWN}
 var current_state: TreeState = TreeState.SPAWNING
 
-enum Task{NONE, WATER, PRUNE}
-var current_task: Task = Task.NONE
-
-var task_options: Array[Task] = [Task.NONE, Task.WATER, Task.PRUNE]
+enum Task{UNSET, IDLE, WATER, PRUNE}
+var current_task: Task = Task.UNSET
+var queued_task: Task = Task.UNSET
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,24 +35,31 @@ func _on_spawn():
 func set_task(task: Task):
 	current_task = task
 	water_timer.hide()
+	water_timer.timer.stop()
 	prune_timer.hide()
+	prune_timer.timer.stop()
 	if task == Task.WATER:
 		water_timer.timer.start()
 		water_timer.show()
 	elif task == Task.PRUNE:
 		prune_timer.timer.start()
 		prune_timer.show()
-	elif task == Task.NONE:
+	elif task == Task.IDLE:
 		idle_timer.start()
 
 func set_random_task():
-	set_task(Task.values()[randi() % Task.size()])
+	set_task(Task.values()[randi_range(1, Task.size() - 1)])
 
 func set_state_happy():
 	if current_state != TreeState.HAPPY:
 		current_state = TreeState.HAPPY
 		sprite.play(&"happy")
-		set_random_task()
+		if current_task == Task.UNSET:
+			if queued_task == Task.UNSET:
+				set_random_task()
+			else:
+				set_task(queued_task)
+				queued_task = Task.UNSET
 
 
 func set_state_dry():

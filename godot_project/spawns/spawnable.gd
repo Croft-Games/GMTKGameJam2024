@@ -12,8 +12,7 @@ const buildup_time: float = 13.65
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pop_sounds.shuffle()
-	pop_sound.stream = pop_sounds[0]
+	pop_sound.stream = pop_sounds.pick_random()
 	spawn_timer.timeout.connect(spawn_in)
 	start_spawn()
 
