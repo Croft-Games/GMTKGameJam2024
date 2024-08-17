@@ -1,13 +1,18 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=16 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
+[ext_resource type="Texture2D" uid="uid://d3qa817ki2x1m" path="res://player/garden_tools/Rope_Texture.PNG" id="2_r7wrx"]
 [ext_resource type="Texture2D" uid="uid://bkpcjt462pdji" path="res://player/Player_Sprite/idle/PlayerIdle_2.PNG" id="3_e28t7"]
 [ext_resource type="Texture2D" uid="uid://cy05hfm8j8uxy" path="res://player/Player_Sprite/move/PlayerMove1.PNG" id="3_tflh0"]
 [ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
 [ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
+
+[sub_resource type="Curve" id="Curve_8facg"]
+_data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0), -0.164835, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
 animations = [{
@@ -58,17 +63,30 @@ fill_from = Vector2(0.5, 0.5)
 radius = 28.12
 height = 64.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pflck"]
+radius = 50.0
+height = 130.0
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
+base_speed = null
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = -1
+width_curve = SubResource("Curve_8facg")
+default_color = Color(0.8, 0.54902, 0, 1)
+texture = ExtResource("2_r7wrx")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 light_mask = 3
 scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_hvbdm")
 animation = &"idle"
-frame = 3
-frame_progress = 0.618256
 
 [node name="PointLight2D" type="PointLight2D" parent="PlayerSprite"]
 position = Vector2(-80.24, -253.215)
@@ -94,3 +112,10 @@ shape = SubResource("CapsuleShape2D_sngbg")
 stream = ExtResource("8_h2jn7")
 volume_db = -20.0
 bus = &"SFX"
+
+[node name="InteractionBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
+shape = SubResource("CapsuleShape2D_pflck")

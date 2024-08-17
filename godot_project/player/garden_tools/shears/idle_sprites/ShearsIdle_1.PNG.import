@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dystk3q173b33"
-path="res://.godot/imported/DryTree_1.PNG-c9bd95ecc0deda64473ac4936cd97393.ctex"
+uid="uid://cbjj6volwve2w"
+path="res://.godot/imported/ShearsIdle_1.PNG-9720ee7a1ddd85fd49ef386b5d3c4909.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/tree/dry_sprites/DryTree_1.PNG"
-dest_files=["res://.godot/imported/DryTree_1.PNG-c9bd95ecc0deda64473ac4936cd97393.ctex"]
+source_file="res://player/garden_tools/shears/idle_sprites/ShearsIdle_1.PNG"
+dest_files=["res://.godot/imported/ShearsIdle_1.PNG-9720ee7a1ddd85fd49ef386b5d3c4909.ctex"]
 
 [params]
 

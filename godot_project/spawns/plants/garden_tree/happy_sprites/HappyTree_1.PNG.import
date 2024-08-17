@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbubg5k61hqw0"
-path="res://.godot/imported/DryTree_2.PNG-e695d90cb33db075342e2eabad15ec19.ctex"
+uid="uid://hd5w3cr2lkue"
+path="res://.godot/imported/HappyTree_1.PNG-0ae622fd38664dd5610c7e571a166454.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/tree/dry_sprites/DryTree_2.PNG"
-dest_files=["res://.godot/imported/DryTree_2.PNG-e695d90cb33db075342e2eabad15ec19.ctex"]
+source_file="res://spawns/plants/garden_tree/happy_sprites/HappyTree_1.PNG"
+dest_files=["res://.godot/imported/HappyTree_1.PNG-0ae622fd38664dd5610c7e571a166454.ctex"]
 
 [params]
 

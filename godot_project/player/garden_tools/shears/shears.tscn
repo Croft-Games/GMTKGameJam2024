@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://bsm73i4jjane3"]
+
+[ext_resource type="Script" path="res://player/garden_tools/shears/shears.gd" id="1_4pqy0"]
+[ext_resource type="Texture2D" uid="uid://cbjj6volwve2w" path="res://player/garden_tools/shears/idle_sprites/ShearsIdle_1.PNG" id="2_7xtsa"]
+[ext_resource type="Texture2D" uid="uid://db2gyepinxinu" path="res://player/garden_tools/shears/idle_sprites/ShearsIdle_2.PNG" id="3_h0rcd"]
+[ext_resource type="Texture2D" uid="uid://dhc5h1wcslrsu" path="res://player/garden_tools/shears/snip_sprites/ShearsSnip_1.PNG" id="4_itpm1"]
+[ext_resource type="Texture2D" uid="uid://rr46fd3a7hy0" path="res://player/garden_tools/shears/snip_sprites/ShearsSnip_2.PNG" id="5_m56ul"]
+[ext_resource type="AudioStream" uid="uid://bj7q7y2bx8vfg" path="res://player/garden_tools/shears/267975__roulaine__garden-shears.wav" id="6_h4gh5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bi0x4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7xtsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h0rcd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_itpm1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m56ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_7xtsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m56ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_itpm1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m56ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_7xtsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m56ul")
+}],
+"loop": false,
+"name": &"snip",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_armh6"]
+radius = 64.4981
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ijo1r"]
+radius = 60.0
+
+[node name="Shears" type="Node2D"]
+script = ExtResource("1_4pqy0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0820313, 0.0820313)
+sprite_frames = SubResource("SpriteFrames_bi0x4")
+animation = &"snip"
+frame = 7
+frame_progress = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_h4gh5")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer2D"]
+one_shot = true
+
+[node name="GrabbableArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableArea"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_armh6")
+
+[node name="SnippingArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnippingArea"]
+position = Vector2(-56, -40)
+shape = SubResource("CircleShape2D_ijo1r")

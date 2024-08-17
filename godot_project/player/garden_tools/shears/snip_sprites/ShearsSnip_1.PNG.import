@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgnendfify8yw"
-path="res://.godot/imported/OvergrownTree_2.PNG-8f262370ad054fc981615685f20cd339.ctex"
+uid="uid://dhc5h1wcslrsu"
+path="res://.godot/imported/ShearsSnip_1.PNG-448ee88f614aff8b1354218fa4ef0724.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/tree/overgrown_sprites/OvergrownTree_2.PNG"
-dest_files=["res://.godot/imported/OvergrownTree_2.PNG-8f262370ad054fc981615685f20cd339.ctex"]
+source_file="res://player/garden_tools/shears/snip_sprites/ShearsSnip_1.PNG"
+dest_files=["res://.godot/imported/ShearsSnip_1.PNG-448ee88f614aff8b1354218fa4ef0724.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cldvclw4bpswf"
-path="res://.godot/imported/OvergrownTree_1.PNG-b9c603a5440ac78e6f6c76724a441a84.ctex"
+uid="uid://byhbxfq288rqt"
+path="res://.godot/imported/Tile_2.PNG-82a95abe42038a408857a54896f52ba1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/tree/overgrown_sprites/OvergrownTree_1.PNG"
-dest_files=["res://.godot/imported/OvergrownTree_1.PNG-b9c603a5440ac78e6f6c76724a441a84.ctex"]
+source_file="res://main/tiles/Tile_2.PNG"
+dest_files=["res://.godot/imported/Tile_2.PNG-82a95abe42038a408857a54896f52ba1.ctex"]
 
 [params]
 

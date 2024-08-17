@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var light: PointLight2D = $PlayerSprite/PointLight2D
 @onready var trail: CPUParticles2D = $PlayerSprite/CPUParticles2D
 @onready var move_sound: AudioStreamPlayer2D = $MovementSound
+@onready var interaction_box: Area2D = $InteractionBox
+@onready var rope: Line2D = $Line2D
 
 @export var base_speed: float = 200
 
@@ -16,24 +18,43 @@ const idle_light_position: Vector2 = Vector2(-80, -220)
 const move_light_colour: Color = Color("#cf4833")
 const move_light_position: Vector2 = Vector2(-100, -215)
 
+var equipped_tools: Array[GardenTool] = []
+var tool_slowdown: float = 0.2
+
+var facing_right: bool = false
+
+var distance_per_tool: float = 100
+
+const base_sprite_scale: float = 0.065
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	player_sprite.scale = base_sprite_scale * Vector2.ONE
+	rope.add_point(Vector2.ZERO)
 
+func flip_direction():
+	set_facing(not facing_right)
+
+func set_facing(right: bool):
+	facing_right = right
+	var x_scale: int = -1 if right else 1
+	player_sprite.scale.x = x_scale * base_sprite_scale
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var move_input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	speed_multiplier = exp(-equipped_tools.size() * 0.2)
 	velocity = move_input * base_speed * speed_multiplier
-	if velocity.x != 0:
-		var scale_mult: int = -1 if velocity.x > 0 else 1
-		player_sprite.scale.x = absf(player_sprite.scale.x) * scale_mult
+
+	if move_input.x != 0:
+		set_facing(move_input.x > 0)
 
 	if velocity.is_zero_approx():
 		set_state_idle()
 	else:
 		set_state_moving()
+
+	_move_tools(delta)
 
 func set_state_moving():
 	if current_state != PlayerState.MOVING:
@@ -56,3 +77,53 @@ func set_state_idle():
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
+
+func _move_tools(delta: float):
+	for i in equipped_tools.size():
+		var tooli: GardenTool = equipped_tools[i]
+		if tooli.position.distance_to(position) > (distance_per_tool * (i + 1)):
+			tooli.position = tooli.position.move_toward(position, base_speed * delta)
+			while rope.get_point_count() < (i + 1):
+				rope.add_point(Vector2.ZERO)
+		rope.set_point_position(i+1, to_local(tooli.position))
+
+func equip(tool: GardenTool):
+	equipped_tools.push_front(tool)
+	rope.add_point(to_global(tool.position))
+
+func grab_tool():
+	for area in interaction_box.get_overlapping_areas():
+		var t = area.get_parent()
+		if t is GardenTool and t not in equipped_tools:
+			equip(t)
+
+
+func use_tool():
+	if equipped_tools.size() > 0:
+		equipped_tools[0].use()
+
+func drop_tool():
+	var dropped_tool: GardenTool = equipped_tools.pop_front()
+	rope.remove_point(1)
+
+func cycle_tool():
+	var front = equipped_tools.pop_front()
+	if front != null:
+		equipped_tools.push_back(front)
+
+func reverse_cycle_tool():
+	var back = equipped_tools.pop_back()
+	if back != null:
+		equipped_tools.push_front(back)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("grab_tool"):
+		grab_tool()
+	if event.is_action_pressed("use_tool"):
+		use_tool()
+	if event.is_action_pressed("cycle_tool"):
+		cycle_tool()
+	if event.is_action_pressed("reverse_cycle_tool"):
+		reverse_cycle_tool()
+	if event.is_action_pressed("drop_tool"):
+		drop_tool()

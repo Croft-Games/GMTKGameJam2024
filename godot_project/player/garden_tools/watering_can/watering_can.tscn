@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3 uid="uid://bnivtnyi5b0e5"]
+
+[ext_resource type="Script" path="res://player/garden_tools/watering_can/watering_can.gd" id="1_nyv6o"]
+[ext_resource type="Texture2D" uid="uid://41ouudemfgx4" path="res://player/garden_tools/watering_can/idle_sprites/WateringcanIdle_1.PNG" id="2_vaf42"]
+[ext_resource type="Texture2D" uid="uid://de1ht4s4kdhfb" path="res://player/garden_tools/watering_can/idle_sprites/WateringcanIdle_2.PNG" id="3_xpkyn"]
+[ext_resource type="Texture2D" uid="uid://dqj7bswi38uj1" path="res://player/garden_tools/watering_can/pour_sprites/WateringcanPour_1.PNG" id="4_yryc8"]
+[ext_resource type="Texture2D" uid="uid://dppmwgeor16xm" path="res://player/garden_tools/watering_can/pour_sprites/WateringcanPour_2.PNG" id="5_hovqc"]
+[ext_resource type="Texture2D" uid="uid://cfmag5uwn4kws" path="res://player/garden_tools/watering_can/pour_sprites/WateringcanPour_3.PNG" id="6_k85sg"]
+[ext_resource type="AudioStream" uid="uid://2nk7jornm2pp" path="res://player/garden_tools/watering_can/532890__bricklover__watering-with-a-watering-can.mp3" id="7_37b6l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rm0a5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vaf42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xpkyn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_yryc8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hovqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_k85sg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hovqc")
+}],
+"loop": false,
+"name": &"pour",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_armh6"]
+radius = 64.4981
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ijo1r"]
+radius = 60.0
+
+[node name="WateringCan" type="Node2D"]
+script = ExtResource("1_nyv6o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0820313, 0.0820313)
+sprite_frames = SubResource("SpriteFrames_rm0a5")
+animation = &"idle"
+frame = 1
+frame_progress = 0.0840262
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_37b6l")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer2D"]
+wait_time = 0.4
+one_shot = true
+
+[node name="GrabbableArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabbableArea"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_armh6")
+
+[node name="WateringArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WateringArea"]
+position = Vector2(-56, 40)
+shape = SubResource("CircleShape2D_ijo1r")

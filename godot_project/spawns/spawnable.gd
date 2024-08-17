@@ -18,11 +18,7 @@ func _ready() -> void:
 	start_spawn()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func start_spawn(after: float = 10):
+func start_spawn(after: float = 3):
 	spawn_timer.wait_time = after
 	build_sound.pitch_scale = buildup_time / after
 	build_sound.play()

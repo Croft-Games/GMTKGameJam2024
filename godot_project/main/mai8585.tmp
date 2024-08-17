@@ -1,18 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=9 format=3 uid="uid://c7qxiy8cill5b"]
 
-[ext_resource type="Texture2D" uid="uid://c4jn6eq2w5maj" path="res://main/tiles/Tile_1.PNG" id="1_7mrjm"]
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
-[ext_resource type="Texture2D" uid="uid://byhbxfq288rqt" path="res://main/tiles/Tile_2.PNG" id="2_dqls5"]
 [ext_resource type="Script" path="res://main/PlayArea.gd" id="2_ej2m2"]
-[ext_resource type="Texture2D" uid="uid://py0bhp5scubk" path="res://main/tiles/Tile_3.PNG" id="3_554mh"]
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
-[ext_resource type="Texture2D" uid="uid://kd117asegrvx" path="res://main/tiles/Tile_4.PNG" id="4_xf0tt"]
-[ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
-[ext_resource type="Texture2D" uid="uid://ddtbk6ycgjb2e" path="res://main/tiles/Tile_5.PNG" id="5_vtlpq"]
+[ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/tree/tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
-[ext_resource type="PackedScene" uid="uid://cbgnu7nmpy442" path="res://main/pond/pond.tscn" id="12_vy460"]
-[ext_resource type="PackedScene" uid="uid://bsm73i4jjane3" path="res://player/garden_tools/shears/shears.tscn" id="13_ceri6"]
 
 [sub_resource type="Gradient" id="Gradient_6gm4f"]
 
@@ -26,47 +19,18 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-visible = false
 z_index = -10
 texture = SubResource("GradientTexture2D_yrv0p")
-
-[node name="Tile1" type="Sprite2D" parent="."]
-position = Vector2(440, -312)
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("1_7mrjm")
-
-[node name="Tile2" type="Sprite2D" parent="."]
-position = Vector2(-400, 224)
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("2_dqls5")
-
-[node name="Tile3" type="Sprite2D" parent="."]
-position = Vector2(-480, -272)
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("3_554mh")
-
-[node name="Tile4" type="Sprite2D" parent="."]
-position = Vector2(96, 344)
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("4_xf0tt")
-
-[node name="Tile5" type="Sprite2D" parent="."]
-position = Vector2(408, 248)
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("5_vtlpq")
 
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
 
-[node name="SpawnTimer" type="Timer" parent="GameManager"]
-wait_time = 8.0
-autostart = true
-
 [node name="Camera2D" type="Camera2D" parent="GameManager"]
 editor_draw_limits = true
 
 [node name="Player" parent="GameManager" instance=ExtResource("1_uhbg0")]
+base_speed = null
 
 [node name="PlayArea" type="Node2D" parent="GameManager"]
 script = ExtResource("2_ej2m2")
@@ -95,8 +59,8 @@ position = Vector2(-184, 24)
 [node name="WateringCan2" parent="GameManager" instance=ExtResource("6_m2s7n")]
 position = Vector2(240, -248)
 
-[node name="Pond" parent="GameManager" instance=ExtResource("12_vy460")]
-position = Vector2(-96, 232)
+[node name="WateringCan3" parent="GameManager" instance=ExtResource("6_m2s7n")]
+position = Vector2(-264, -144)
 
-[node name="Shears" parent="GameManager" instance=ExtResource("13_ceri6")]
-position = Vector2(-72, -208)
+[node name="WateringCan4" parent="GameManager" instance=ExtResource("6_m2s7n")]
+position = Vector2(-40, -448)
