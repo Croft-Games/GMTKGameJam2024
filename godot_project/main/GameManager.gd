@@ -1,11 +1,9 @@
 extends Node2D
 
 var elapsed_time: float = 0
-var time_since_last_spawn: float = 0
-var spawn_rate: float = 0.5
-var furthest_spawn: float = 0
 
 @export var possible_spawns: Array[PackedScene] = []
+@export var spawn_weights: Array[float] = []
 
 @onready var play_area: PlayArea = $PlayArea
 @onready var camera: Camera2D = $Camera2D
@@ -20,14 +18,25 @@ const init_tree_dist: float = 250
 var spawned_items: Array = []
 const spawn_spacing_sq: float = 80_000
 
+var _sum_of_spawn_weights: float = 1
+
+func sum(values) -> float:
+	var total: float = 0
+	for item in values:
+		total += item
+	return total
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	assert(possible_spawns.size() == spawn_weights.size())
+	_sum_of_spawn_weights = sum(spawn_weights)
 	spawn_timer.timeout.connect(spawn_element)
 	var first_pos: Vector2 = Vector2.ZERO
 	while not valid_spawn(first_pos):
 		first_pos = random_vec() * init_tree_dist
 	first_tree.position = first_pos
 	first_tree.queued_task = GardenTree.Task.PRUNE
+	first_tree.spawn_manager.start_spawn()
 	for ch in get_children():
 		if ch.has_node("Spawnable"):
 			spawned_items.append(ch)
@@ -54,8 +63,19 @@ func valid_spawn(pos: Vector2) -> bool:
 			return false
 	return true
 
+func _select_random_spawn():
+	var n: float = randf_range(0, _sum_of_spawn_weights)
+	var t: float = 0
+	for i in possible_spawns.size():
+		t += spawn_weights[i]
+		if n < t:
+			return possible_spawns[i]
+	return possible_spawns[0]
+
+
+
 func spawn_element():
-	var new_spawn = possible_spawns.pick_random().instantiate()
+	var new_spawn = _select_random_spawn().instantiate()
 	var spawn_position: Vector2 = first_tree.position
 	while not valid_spawn(spawn_position):
 		boundary_finder.target_position = random_vec() * play_area.right_boundary.position.x * 2
@@ -64,3 +84,4 @@ func spawn_element():
 	new_spawn.position = spawn_position
 	add_child(new_spawn)
 	spawned_items.append(new_spawn)
+	new_spawn.get_node("Spawnable").start_spawn(randfn(6, 2))

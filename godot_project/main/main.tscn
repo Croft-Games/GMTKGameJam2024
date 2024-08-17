@@ -29,10 +29,11 @@ texture = SubResource("GradientTexture2D_yrv0p")
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
-possible_spawns = Array[PackedScene]([ExtResource("5_gepyh")])
+possible_spawns = Array[PackedScene]([ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n")])
+spawn_weights = Array[float]([12.0, 1.0, 1.0, 1.0])
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
-wait_time = 4.0
+wait_time = 15.0
 autostart = true
 
 [node name="BoundaryFinder" type="RayCast2D" parent="GameManager"]

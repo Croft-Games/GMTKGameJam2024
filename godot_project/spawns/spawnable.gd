@@ -14,10 +14,10 @@ const buildup_time: float = 13.65
 func _ready() -> void:
 	pop_sound.stream = pop_sounds.pick_random()
 	spawn_timer.timeout.connect(spawn_in)
-	start_spawn()
 
 
 func start_spawn(after: float = 3):
+	parent.hide()
 	spawn_timer.wait_time = after
 	build_sound.pitch_scale = buildup_time / after
 	build_sound.play()
@@ -27,4 +27,5 @@ signal spawned
 
 func spawn_in():
 	pop_sound.play()
+	parent.show()
 	spawned.emit()

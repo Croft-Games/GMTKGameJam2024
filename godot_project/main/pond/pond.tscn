@@ -20,6 +20,7 @@ animations = [{
 }]
 
 [node name="Pond" type="Node2D"]
+z_index = -1
 scale = Vector2(2, 2)
 script = ExtResource("1_3p408")
 
