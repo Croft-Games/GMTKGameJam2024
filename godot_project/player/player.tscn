@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=13 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
+[ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
 animations = [{
@@ -54,14 +55,15 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sngbg"]
-radius = 32.0
-height = 96.0
+radius = 28.12
+height = 64.0
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+light_mask = 3
 scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_hvbdm")
 animation = &"idle"
@@ -72,6 +74,7 @@ frame_progress = 0.618256
 position = Vector2(-80.24, -253.215)
 color = Color(0.811765, 0.282353, 0.2, 1)
 energy = 4.21
+range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_va6p4")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="PlayerSprite"]
@@ -84,5 +87,10 @@ initial_velocity_min = 616.16
 initial_velocity_max = 1000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 11.88)
+position = Vector2(0, 24)
 shape = SubResource("CapsuleShape2D_sngbg")
+
+[node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_h2jn7")
+volume_db = -20.0
+bus = &"SFX"

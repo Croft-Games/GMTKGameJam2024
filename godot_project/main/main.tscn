@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=8 format=3 uid="uid://c7qxiy8cill5b"]
 
+[ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
 [ext_resource type="Script" path="res://main/PlayArea.gd" id="2_ej2m2"]
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
+[ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/tree/tree.tscn" id="5_gepyh"]
 
 [sub_resource type="Gradient" id="Gradient_6gm4f"]
 
@@ -19,9 +21,11 @@ fill_from = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_yrv0p")
 
 [node name="GameManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("1_bvkti")
 
 [node name="Camera2D" type="Camera2D" parent="GameManager"]
-zoom = Vector2(0.855, 0.855)
+editor_draw_limits = true
 
 [node name="Player" parent="GameManager" instance=ExtResource("1_uhbg0")]
 
@@ -42,3 +46,6 @@ rotation = 1.5708
 [node name="Right" parent="GameManager/PlayArea" instance=ExtResource("3_hxqmk")]
 position = Vector2(800, 0)
 rotation = -1.5708
+
+[node name="Tree" parent="GameManager" instance=ExtResource("5_gepyh")]
+position = Vector2(560, -16)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=13 format=3 uid="uid://bm3q6hnap71fv"]
+
+[ext_resource type="Script" path="res://spawns/spawnable.gd" id="1_gf334"]
+[ext_resource type="AudioStream" uid="uid://gk4yeg315ph2" path="res://spawns/pop_sfx/67086__sunnysidesound__pop_1.mp3" id="2_aldyd"]
+[ext_resource type="AudioStream" uid="uid://bsxd81xhy160b" path="res://spawns/131913__vartioh__pianist-build.wav" id="2_p86nr"]
+[ext_resource type="AudioStream" uid="uid://3o4lq83hbply" path="res://spawns/pop_sfx/67087__sunnysidesound__pop_10.mp3" id="3_djcas"]
+[ext_resource type="AudioStream" uid="uid://bdwq2goaa60ah" path="res://spawns/pop_sfx/67088__sunnysidesound__pop_2.mp3" id="4_pqiw5"]
+[ext_resource type="AudioStream" uid="uid://o4nd46usbwd8" path="res://spawns/pop_sfx/67089__sunnysidesound__pop_3.mp3" id="5_l20dm"]
+[ext_resource type="AudioStream" uid="uid://5fbii44e5r4s" path="res://spawns/pop_sfx/67090__sunnysidesound__pop_4.mp3" id="6_gxxkf"]
+[ext_resource type="AudioStream" uid="uid://csabtrg8dj1ux" path="res://spawns/pop_sfx/67091__sunnysidesound__pop_5.mp3" id="7_mb0b4"]
+[ext_resource type="AudioStream" uid="uid://c0llrqw7qtxar" path="res://spawns/pop_sfx/67092__sunnysidesound__pop_6.mp3" id="8_dulq2"]
+[ext_resource type="AudioStream" uid="uid://cbx6twpio4882" path="res://spawns/pop_sfx/67093__sunnysidesound__pop_7.mp3" id="9_46ttj"]
+[ext_resource type="AudioStream" uid="uid://dj2s3qmokm1l4" path="res://spawns/pop_sfx/67094__sunnysidesound__pop_8.mp3" id="10_s7dkt"]
+[ext_resource type="AudioStream" uid="uid://cc2sj7ac72q6o" path="res://spawns/pop_sfx/67095__sunnysidesound__pop_9.mp3" id="11_7pwml"]
+
+[node name="Spawnable" type="Node2D"]
+script = ExtResource("1_gf334")
+pop_sounds = Array[AudioStream]([ExtResource("2_aldyd"), ExtResource("3_djcas"), ExtResource("4_pqiw5"), ExtResource("5_l20dm"), ExtResource("6_gxxkf"), ExtResource("7_mb0b4"), ExtResource("8_dulq2"), ExtResource("9_46ttj"), ExtResource("10_s7dkt"), ExtResource("11_7pwml")])
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="BuildupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_p86nr")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true

@@ -1,3 +1,4 @@
+class_name PlayArea
 extends Node2D
 
 @onready var top_boundary: StaticBody2D = $Top

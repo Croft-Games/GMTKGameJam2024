@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdwwomujrar14"]
+
+[ext_resource type="Script" path="res://spawns/task_timer.gd" id="1_gxf81"]
+
+[node name="TaskTimer" type="Node2D"]
+script = ExtResource("1_gxf81")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ProgressBar" type="Polygon2D" parent="."]
+color = Color(0.568973, 0.568973, 0.568973, 1)
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 20, 0, 20)
+
+[node name="CurrentProgress" type="Polygon2D" parent="ProgressBar"]
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 20, 0, 20)

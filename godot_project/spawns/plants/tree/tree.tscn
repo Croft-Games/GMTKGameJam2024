@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://b18jlwxea0nsk"]
+
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawnable.tscn" id="1_0butv"]
+[ext_resource type="Script" path="res://spawns/plants/tree/tree.gd" id="1_gdj3g"]
+[ext_resource type="Texture2D" uid="uid://dystk3q173b33" path="res://spawns/plants/tree/dry_sprites/DryTree_1.PNG" id="2_dwkgt"]
+[ext_resource type="Texture2D" uid="uid://cbubg5k61hqw0" path="res://spawns/plants/tree/dry_sprites/DryTree_2.PNG" id="3_tnx3k"]
+[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/task_timer.tscn" id="3_wp4tu"]
+[ext_resource type="Texture2D" uid="uid://hd5w3cr2lkue" path="res://spawns/plants/tree/happy_sprites/HappyTree_1.PNG" id="4_uk1ow"]
+[ext_resource type="Texture2D" uid="uid://7x5co2o485q7" path="res://spawns/plants/tree/happy_sprites/HappyTree_2.PNG" id="5_qt040"]
+[ext_resource type="Texture2D" uid="uid://cldvclw4bpswf" path="res://spawns/plants/tree/overgrown_sprites/OvergrownTree_1.PNG" id="6_ddnqn"]
+[ext_resource type="Texture2D" uid="uid://cgnendfify8yw" path="res://spawns/plants/tree/overgrown_sprites/OvergrownTree_2.PNG" id="7_ps8rj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ko8td"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dwkgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tnx3k")
+}],
+"loop": true,
+"name": &"dry",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_uk1ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qt040")
+}],
+"loop": true,
+"name": &"happy",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ddnqn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ps8rj")
+}],
+"loop": true,
+"name": &"overgrown",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1swo"]
+radius = 117.85
+height = 309.15
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0gc0"]
+radius = 64.0
+height = 144.0
+
+[node name="Tree" type="Node2D"]
+script = ExtResource("1_gdj3g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_ko8td")
+animation = &"happy"
+
+[node name="Spawnable" parent="." instance=ExtResource("1_0butv")]
+
+[node name="InteractionBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
+position = Vector2(-8, 16)
+shape = SubResource("CapsuleShape2D_g1swo")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-8, 62)
+shape = SubResource("CapsuleShape2D_p0gc0")
+
+[node name="WaterTimer" parent="." instance=ExtResource("3_wp4tu")]
+position = Vector2(-56, -192)
+color = Color(0.398642, 0.587427, 1, 1)
+
+[node name="PruneTimer" parent="." instance=ExtResource("3_wp4tu")]
+position = Vector2(-56, -160)
+color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
