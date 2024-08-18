@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b18jlwxea0nsk"]
+[gd_scene load_steps=24 format=3 uid="uid://b18jlwxea0nsk"]
 
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawnable.tscn" id="1_0butv"]
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_tree.gd" id="1_gdj3g"]
@@ -9,6 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://7x5co2o485q7" path="res://spawns/plants/garden_tree/happy_sprites/HappyTree_2.PNG" id="5_qt040"]
 [ext_resource type="Texture2D" uid="uid://cldvclw4bpswf" path="res://spawns/plants/garden_tree/overgrown_sprites/OvergrownTree_1.PNG" id="6_ddnqn"]
 [ext_resource type="Texture2D" uid="uid://cgnendfify8yw" path="res://spawns/plants/garden_tree/overgrown_sprites/OvergrownTree_2.PNG" id="7_ps8rj"]
+[ext_resource type="Texture2D" uid="uid://cfli620xtpxux" path="res://spawns/plants/explosions/explosion00.png" id="10_r75cc"]
+[ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="10_w8uh3"]
+[ext_resource type="Texture2D" uid="uid://c8dyf4qm0yhpe" path="res://spawns/plants/explosions/explosion01.png" id="11_enl7e"]
+[ext_resource type="Texture2D" uid="uid://dyv0l0ik8x5n5" path="res://spawns/plants/explosions/explosion02.png" id="12_b4as7"]
+[ext_resource type="Texture2D" uid="uid://dndybf8eluo1c" path="res://spawns/plants/explosions/explosion03.png" id="13_a8ksu"]
+[ext_resource type="Texture2D" uid="uid://byjpbxgras8s0" path="res://spawns/plants/explosions/explosion04.png" id="14_mn12a"]
+[ext_resource type="Texture2D" uid="uid://cvty42f1fe22t" path="res://spawns/plants/explosions/explosion05.png" id="15_2d154"]
+[ext_resource type="Texture2D" uid="uid://bts78opnkqwvd" path="res://spawns/plants/explosions/explosion06.png" id="16_vb0yn"]
+[ext_resource type="Texture2D" uid="uid://ccddy5qwwqmyj" path="res://spawns/plants/explosions/explosion07.png" id="17_med3l"]
+[ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_xyidx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ko8td"]
 animations = [{
@@ -54,6 +64,41 @@ height = 309.15
 radius = 64.0
 height = 144.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_8enbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_r75cc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_enl7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_b4as7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_a8ksu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mn12a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2d154")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vb0yn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_med3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_xyidx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
 [node name="Tree" type="Node2D"]
 script = ExtResource("1_gdj3g")
 
@@ -90,3 +135,16 @@ color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
 
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_8enbr")
+frame = 2
+frame_progress = 0.0806179
+
+[node name="Timer" type="Timer" parent="Explosion"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Explosion"]
+stream = ExtResource("10_w8uh3")
+volume_db = 3.0
+bus = &"SFX"

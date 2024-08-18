@@ -4,10 +4,12 @@ extends CharacterBody2D
 @onready var light: PointLight2D = $PlayerSprite/PointLight2D
 @onready var trail: CPUParticles2D = $PlayerSprite/CPUParticles2D
 @onready var move_sound: AudioStreamPlayer2D = $MovementSound
+@onready var equip_sound: AudioStreamPlayer2D = $EquipSound
+@onready var drop_sound: AudioStreamPlayer2D = $DropSound
 @onready var interaction_box: Area2D = $InteractionBox
 @onready var rope: Line2D = $Line2D
 
-@export var base_speed: float = 200
+@export var base_speed: float = 400
 
 var speed_multiplier: float = 1
 enum PlayerState{IDLE, MOVING}
@@ -19,7 +21,7 @@ const move_light_colour: Color = Color("#cf4833")
 const move_light_position: Vector2 = Vector2(-100, -215)
 
 var equipped_tools: Array[GardenTool] = []
-var tool_slowdown: float = 0.2
+var tool_slowdown: float = 1
 
 var facing_right: bool = false
 
@@ -90,12 +92,14 @@ func _move_tools(delta: float):
 func equip(tool: GardenTool):
 	equipped_tools.push_front(tool)
 	rope.add_point(to_global(tool.position))
+	equip_sound.play()
 
 func grab_tool():
 	for area in interaction_box.get_overlapping_areas():
 		var t = area.get_parent()
 		if t is GardenTool and t not in equipped_tools:
 			equip(t)
+			return
 
 
 func use_tool():
@@ -104,17 +108,22 @@ func use_tool():
 
 func drop_tool():
 	var dropped_tool: GardenTool = equipped_tools.pop_front()
-	rope.remove_point(1)
+	if dropped_tool != null:
+		rope.remove_point(1)
+		drop_sound.play()
+
 
 func cycle_tool():
 	var front = equipped_tools.pop_front()
 	if front != null:
 		equipped_tools.push_back(front)
+		equip_sound.play()
 
 func reverse_cycle_tool():
 	var back = equipped_tools.pop_back()
 	if back != null:
 		equipped_tools.push_front(back)
+		equip_sound.play()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("grab_tool"):

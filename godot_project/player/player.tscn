@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=18 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -9,9 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
 [ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
+[ext_resource type="AudioStream" uid="uid://bu1haofvelo5" path="res://player/garden_tools/518850__mrickey13__item-equip.mp3" id="10_qaut7"]
+[ext_resource type="AudioStream" uid="uid://clydrxewmb1vi" path="res://player/garden_tools/648952__infi1234__equip.wav" id="11_unmod"]
 
 [sub_resource type="Curve" id="Curve_8facg"]
-_data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0), -0.164835, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0.483516), -0.164835, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
@@ -70,7 +72,6 @@ height = 130.0
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
-base_speed = null
 
 [node name="Line2D" type="Line2D" parent="."]
 z_index = -1
@@ -111,6 +112,14 @@ shape = SubResource("CapsuleShape2D_sngbg")
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_h2jn7")
 volume_db = -20.0
+bus = &"SFX"
+
+[node name="EquipSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_qaut7")
+bus = &"SFX"
+
+[node name="DropSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_unmod")
 bus = &"SFX"
 
 [node name="InteractionBox" type="Area2D" parent="."]

@@ -20,3 +20,5 @@ SFX:
 		Pops by SunnySideSound
 		Pianist build by vartioh
 		Garden Shears.wav byy Rouliane
+		EXPLDsgn_Powerful Explosion 2.1_EM_(28lrs).wav by newlocknew
+

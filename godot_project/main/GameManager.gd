@@ -16,7 +16,7 @@ var expansion_rate: float = 0.005
 const init_tree_dist: float = 250
 
 var spawned_items: Array = []
-const spawn_spacing_sq: float = 80_000
+const spawn_spacing_sq: float = 100_000
 
 var _sum_of_spawn_weights: float = 1
 
@@ -38,7 +38,7 @@ func _ready() -> void:
 	first_tree.queued_task = GardenTree.Task.PRUNE
 	first_tree.spawn_manager.start_spawn()
 	for ch in get_children():
-		if ch.has_node("Spawnable"):
+		if is_spawnable(ch):
 			spawned_items.append(ch)
 
 
@@ -58,6 +58,7 @@ func set_zoom_from_elapsed_time():
 func valid_spawn(pos: Vector2) -> bool:
 	if pos == Vector2.ZERO:
 		return false
+	clean_items()
 	for item in spawned_items:
 		if pos.distance_squared_to(item.position) < spawn_spacing_sq:
 			return false
@@ -72,11 +73,15 @@ func _select_random_spawn():
 			return possible_spawns[i]
 	return possible_spawns[0]
 
+func clean_items():
+	spawned_items = spawned_items.filter(is_spawnable)
 
+func is_spawnable(item):
+	return is_instance_valid(item) and item is Node2D and item.has_node("Spawnable")
 
 func spawn_element():
 	var new_spawn = _select_random_spawn().instantiate()
-	var spawn_position: Vector2 = first_tree.position
+	var spawn_position: Vector2 = Vector2.ZERO
 	while not valid_spawn(spawn_position):
 		boundary_finder.target_position = random_vec() * play_area.right_boundary.position.x * 2
 		boundary_finder.force_raycast_update()
