@@ -102,11 +102,17 @@ func _move_tools(delta: float):
 			tooli.set_facing(facing_right)
 
 func equip(tool: GardenTool):
+	connect_tool(tool)
 	equipped_tools.push_front(tool)
 	equip_sound.play()
 	if equipped_tools.size() > 1:
 		rope.add_point(to_global(tool.position))
 
+func connect_tool(tool: GardenTool):
+	tool.tool_failed.connect(_on_tool_failed)
+
+func disconnect_tool(tool: GardenTool):
+	tool.tool_failed.disconnect(_on_tool_failed)
 
 func grab_tool():
 	for area in interaction_box.get_overlapping_areas():
@@ -123,22 +129,37 @@ func use_tool():
 func drop_tool():
 	var dropped_tool: GardenTool = equipped_tools.pop_front()
 	if dropped_tool != null:
+		disconnect_tool(dropped_tool)
 		if rope.get_point_count() >= 2:
 			rope.remove_point(1)
 		drop_sound.play()
-
+		if equipped_tools.size() > 0:
+			connect_tool(equipped_tools[0])
 
 func cycle_tool():
 	var front = equipped_tools.pop_front()
 	if front != null:
+		disconnect_tool(front)
 		equipped_tools.push_back(front)
 		equip_sound.play()
+		connect_tool(equipped_tools[0])
 
 func reverse_cycle_tool():
 	var back = equipped_tools.pop_back()
 	if back != null:
+		if equipped_tools.size() > 0:
+			disconnect_tool(equipped_tools[0])
 		equipped_tools.push_front(back)
 		equip_sound.play()
+		connect_tool(back)
+
+func _on_tool_failed(action: String):
+	$SadSound.play()
+	$ExclamationMark.show()
+	$ExclamationMark/Timer.start()
+	if action == "water":
+		$NoWater.show()
+		$NoWater/Timer.start()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("grab_tool"):

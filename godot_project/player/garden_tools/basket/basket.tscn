@@ -70,8 +70,7 @@ radius = 88.3629
 script = ExtResource("1_bdnx1")
 sounds = {
 "collect": ExtResource("2_uty0n"),
-"drop": ExtResource("3_6jgoq"),
-"full": ExtResource("3_6jgoq")
+"drop": ExtResource("3_6jgoq")
 }
 default_animation = &"empty"
 

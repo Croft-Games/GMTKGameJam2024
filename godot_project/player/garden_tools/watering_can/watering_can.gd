@@ -47,6 +47,7 @@ func refill():
 	play_sound(8)
 
 func empty_animation():
+	tool_failed.emit("water")
 	play_empty_sound()
 	var empty_tween = create_tween()
 	empty_tween.set_trans(Tween.TRANS_SINE)

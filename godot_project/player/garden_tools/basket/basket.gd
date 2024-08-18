@@ -6,7 +6,7 @@ var fruit_level: int = 0
 
 func _ready() -> void:
 	super()
-	set_fruit_level(0)
+	set_fruit_level(3)
 
 func use():
 	if fruit_level > 0:
@@ -16,6 +16,7 @@ func use():
 				empty_fruit()
 				return
 	if fruit_level >= max_fruit_level:
+		tool_failed.emit("fruit")
 		play_full_sound()
 		return
 	for area in action_area.get_overlapping_areas():
@@ -34,8 +35,9 @@ func play_empty_sound():
 	play_sound(0)
 
 func play_full_sound():
-	sound.stream = sounds["full"]
-	play_sound(0)
+	pass
+	#sound.stream = sounds["full"]
+	#play_sound(0)
 
 func empty_fruit():
 	set_fruit_level(0)

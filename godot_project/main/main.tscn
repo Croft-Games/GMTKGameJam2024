@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=16 format=3 uid="uid://c7qxiy8cill5b"]
 
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
 [ext_resource type="Script" path="res://main/PlayArea.gd" id="2_ej2m2"]
 [ext_resource type="Texture2D" uid="uid://dpwr6x4uloi83" path="res://main/greentile.png" id="2_uep87"]
-[ext_resource type="PackedScene" uid="uid://bngyllf8oplu1" path="res://spawns/plants/daisy/garden_daisy.tscn" id="3_dbg3v"]
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
 [ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
@@ -36,8 +35,8 @@ layer_0/tile_data = PackedInt32Array(0, 1, 0, -196613, 1, 0, -131077, 1, 0, -655
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
-possible_spawns = Array[PackedScene]([ExtResource("3_dbg3v"), ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k")])
-spawn_weights = Array[float]([5.0, 5.0, 5.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k")])
+spawn_weights = Array[float]([5.0, 5.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 wait_time = 15.0

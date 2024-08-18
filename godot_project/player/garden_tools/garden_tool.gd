@@ -9,6 +9,8 @@ extends Spawnable
 
 var facing_right: bool = false
 
+signal tool_failed(action: String)
+
 func _ready() -> void:
 	super()
 	sprite.play(default_animation)

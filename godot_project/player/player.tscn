@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=25 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -9,8 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
 [ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
+[ext_resource type="AudioStream" uid="uid://cjfxwi88uf5d4" path="res://player/538150__fupicat__sad-synth.wav" id="9_5x1au"]
 [ext_resource type="AudioStream" uid="uid://bu1haofvelo5" path="res://player/garden_tools/518850__mrickey13__item-equip.mp3" id="10_qaut7"]
 [ext_resource type="AudioStream" uid="uid://clydrxewmb1vi" path="res://player/garden_tools/648952__infi1234__equip.wav" id="11_unmod"]
+[ext_resource type="Texture2D" uid="uid://b78qkdr0ukwwc" path="res://player/icons/exclamation_mark/Exclamation_1.PNG" id="12_0gxrr"]
+[ext_resource type="Texture2D" uid="uid://br10aa4r2txw1" path="res://player/icons/exclamation_mark/Exclatmation_2.PNG" id="13_gmqms"]
+[ext_resource type="Texture2D" uid="uid://du8naftxp2qqh" path="res://player/icons/no_water/NoWater_1.PNG" id="14_qk456"]
+[ext_resource type="Texture2D" uid="uid://b0puivcahlag7" path="res://player/icons/no_water/NoWater_2.PNG" id="15_8rlpd"]
 
 [sub_resource type="Curve" id="Curve_8facg"]
 _data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0.483516), -0.164835, 0.0, 0, 0]
@@ -69,6 +74,34 @@ height = 64.0
 radius = 50.0
 height = 130.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_m37y6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_0gxrr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_gmqms")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rs3m2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_qk456")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_8rlpd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
@@ -109,6 +142,11 @@ initial_velocity_max = 1000.0
 position = Vector2(0, 24)
 shape = SubResource("CapsuleShape2D_sngbg")
 
+[node name="SadSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_5x1au")
+volume_db = 4.0
+bus = &"SFX"
+
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_h2jn7")
 volume_db = -20.0
@@ -129,3 +167,31 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
 position = Vector2(-32, 0)
 shape = SubResource("CapsuleShape2D_pflck")
+
+[node name="ExclamationMark" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(0, -96)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_m37y6")
+autoplay = "default"
+frame = 1
+frame_progress = 0.279127
+
+[node name="Timer" type="Timer" parent="ExclamationMark"]
+one_shot = true
+
+[node name="NoWater" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(48, -96)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_rs3m2")
+autoplay = "default"
+frame_progress = 0.298128
+
+[node name="Timer" type="Timer" parent="NoWater"]
+one_shot = true
+
+[connection signal="timeout" from="ExclamationMark/Timer" to="ExclamationMark" method="hide"]
+[connection signal="timeout" from="NoWater/Timer" to="NoWater" method="hide"]

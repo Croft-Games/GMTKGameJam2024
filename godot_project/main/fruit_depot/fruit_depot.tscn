@@ -2,25 +2,25 @@
 
 [ext_resource type="Script" path="res://main/fruit_depot/fruit_depot.gd" id="1_e0wib"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_fi7qu"]
-[ext_resource type="Texture2D" uid="uid://csisexoffa1tv" path="res://main/fruit_depot/DaisesDry_1.PNG" id="3_3lyg7"]
-[ext_resource type="Texture2D" uid="uid://bk1scvrwy7rf8" path="res://main/fruit_depot/DasiesDry_2.PNG" id="4_4q867"]
+[ext_resource type="Texture2D" uid="uid://chtd2ujntvlhk" path="res://main/fruit_depot/Crate_1.PNG" id="3_qnxj4"]
+[ext_resource type="Texture2D" uid="uid://ce840mlxmf830" path="res://main/fruit_depot/Crate_2.PNG" id="4_qlifv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5qnmt"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_3lyg7")
+"texture": ExtResource("3_qnxj4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_4q867")
+"texture": ExtResource("4_qlifv")
 }],
 "loop": true,
 "name": &"default",
 "speed": 6.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e24ex"]
-radius = 43.7
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u22s3"]
+size = Vector2(64, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6s3kl"]
 radius = 57.85
@@ -40,7 +40,8 @@ autoplay = "default"
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
-shape = SubResource("CircleShape2D_e24ex")
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_u22s3")
 
 [node name="DepositArea" type="Area2D" parent="."]
 collision_layer = 64

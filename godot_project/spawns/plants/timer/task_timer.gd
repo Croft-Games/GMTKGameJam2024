@@ -2,8 +2,8 @@ class_name TaskTimer
 extends Node2D
 
 @onready var timer: Timer = $Timer
-@onready var progress_bar: Polygon2D = $ProgressBar
-@onready var current_progress: Polygon2D = $ProgressBar/CurrentProgress
+@onready var stopwatch: AnimatedSprite2D = $Stopwatch
+@onready var current_progress: Polygon2D = $Stopwatch/CurrentProgress
 @export var color: Color = Color.WHITE
 
 var max_size: float = 100
@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 	current_progress.scale.x = proportion
 
 func show_progress():
-	progress_bar.show()
+	stopwatch.show()
 
 func hide_progress():
-	progress_bar.hide()
+	stopwatch.hide()

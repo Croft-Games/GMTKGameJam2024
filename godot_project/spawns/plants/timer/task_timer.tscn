@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdwwomujrar14"]
+
+[ext_resource type="Script" path="res://spawns/plants/timer/task_timer.gd" id="1_j8fkv"]
+[ext_resource type="Texture2D" uid="uid://dfwgefhd7a5op" path="res://spawns/plants/timer/Timer_1.PNG" id="2_beqfq"]
+[ext_resource type="Texture2D" uid="uid://bqcm1yowwm5xc" path="res://spawns/plants/timer/Timer_2.PNG" id="3_c5i5e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ehlwk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_beqfq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_c5i5e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="TaskTimer" type="Node2D"]
+script = ExtResource("1_j8fkv")
+color = Color(0, 0, 1, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Stopwatch" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_ehlwk")
+frame = 1
+frame_progress = 0.765891
+
+[node name="CurrentProgress" type="Polygon2D" parent="Stopwatch"]
+scale = Vector2(5, 5)
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 20, 0, 20)

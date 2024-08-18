@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cc7brw25kjye1"]
+[gd_scene load_steps=28 format=3 uid="uid://cc7brw25kjye1"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_unf5s"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_hd86j"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bv8yqx35moehb" path="res://spawns/plants/garden_bush/happy_sprites/BushIdle_2.PNG" id="6_5ju5t"]
 [ext_resource type="Texture2D" uid="uid://d1jvlk4c8vnqx" path="res://spawns/plants/garden_bush/overgrown_sprites/BushOvergrown_1.PNG" id="7_8tsuw"]
 [ext_resource type="Texture2D" uid="uid://otnl0jhp0an" path="res://spawns/plants/garden_bush/overgrown_sprites/BushOvergrown_2.PNG" id="8_l12b2"]
-[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/task_timer.tscn" id="9_a6r2n"]
+[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/plants/timer/task_timer.tscn" id="9_h8r2l"]
 [ext_resource type="Texture2D" uid="uid://cfli620xtpxux" path="res://spawns/plants/explosions/explosion00.png" id="10_4bt7c"]
 [ext_resource type="Texture2D" uid="uid://c8dyf4qm0yhpe" path="res://spawns/plants/explosions/explosion01.png" id="11_qtrn8"]
 [ext_resource type="Texture2D" uid="uid://dyv0l0ik8x5n5" path="res://spawns/plants/explosions/explosion02.png" id="12_e2jct"]
@@ -20,6 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_ojrid"]
 [ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="19_3mojb"]
 [ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="20_qbw1d"]
+[ext_resource type="AudioStream" uid="uid://bsy6hrtxy4gbg" path="res://spawns/plants/leafy/106130__j1987__leafpilehit.wav" id="21_q84hd"]
+[ext_resource type="Texture2D" uid="uid://c7sfdcs3sc7o5" path="res://spawns/plants/leafy/DryParticle.png" id="22_fhgwa"]
+[ext_resource type="AudioStream" uid="uid://cgusdwwtadu5w" path="res://spawns/plants/471411__juaner__12_steam.wav" id="23_28qv7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5q56a"]
 animations = [{
@@ -125,12 +128,12 @@ shape = SubResource("CapsuleShape2D_g1swo")
 position = Vector2(-8, 62)
 shape = SubResource("CapsuleShape2D_p0gc0")
 
-[node name="WaterTimer" parent="." instance=ExtResource("9_a6r2n")]
+[node name="WaterTimer" parent="." instance=ExtResource("9_h8r2l")]
 visible = false
 position = Vector2(-56, -160)
 color = Color(0.398642, 0.587427, 1, 1)
 
-[node name="PruneTimer" parent="." instance=ExtResource("9_a6r2n")]
+[node name="PruneTimer" parent="." instance=ExtResource("9_h8r2l")]
 visible = false
 position = Vector2(-56, -160)
 color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
@@ -152,5 +155,8 @@ volume_db = 3.0
 bus = &"SFX"
 
 [node name="LeafSpawner" parent="." instance=ExtResource("20_qbw1d")]
+stream = ExtResource("21_q84hd")
 
 [node name="DryEffectSpawner" parent="." instance=ExtResource("20_qbw1d")]
+texture = ExtResource("22_fhgwa")
+stream = ExtResource("23_28qv7")

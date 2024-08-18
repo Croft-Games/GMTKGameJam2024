@@ -1,10 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://b18jlwxea0nsk"]
+[gd_scene load_steps=32 format=3 uid="uid://b18jlwxea0nsk"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_chlfc"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
 [ext_resource type="Texture2D" uid="uid://dystk3q173b33" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_1.PNG" id="2_dwkgt"]
 [ext_resource type="Texture2D" uid="uid://cbubg5k61hqw0" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_2.PNG" id="3_tnx3k"]
-[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/task_timer.tscn" id="3_wp4tu"]
 [ext_resource type="Texture2D" uid="uid://hd5w3cr2lkue" path="res://spawns/plants/garden_tree/happy_sprites/HappyTree_1.PNG" id="4_uk1ow"]
 [ext_resource type="Texture2D" uid="uid://dgnwfwrxhphhi" path="res://spawns/plants/garden_tree/fruit_sprites/FruitTree_1.PNG" id="5_3l0yw"]
 [ext_resource type="Texture2D" uid="uid://7x5co2o485q7" path="res://spawns/plants/garden_tree/happy_sprites/HappyTree_2.PNG" id="5_qt040"]
@@ -14,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cfli620xtpxux" path="res://spawns/plants/explosions/explosion00.png" id="10_r75cc"]
 [ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="10_w8uh3"]
 [ext_resource type="Texture2D" uid="uid://c8dyf4qm0yhpe" path="res://spawns/plants/explosions/explosion01.png" id="11_enl7e"]
+[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/plants/timer/task_timer.tscn" id="11_ett6d"]
 [ext_resource type="Texture2D" uid="uid://dyv0l0ik8x5n5" path="res://spawns/plants/explosions/explosion02.png" id="12_b4as7"]
 [ext_resource type="Texture2D" uid="uid://dndybf8eluo1c" path="res://spawns/plants/explosions/explosion03.png" id="13_a8ksu"]
 [ext_resource type="Texture2D" uid="uid://byjpbxgras8s0" path="res://spawns/plants/explosions/explosion04.png" id="14_mn12a"]
@@ -23,6 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_xyidx"]
 [ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="22_l4n1h"]
 [ext_resource type="AudioStream" uid="uid://cgusdwwtadu5w" path="res://spawns/plants/471411__juaner__12_steam.wav" id="23_0cwu2"]
+[ext_resource type="Texture2D" uid="uid://c7sfdcs3sc7o5" path="res://spawns/plants/leafy/DryParticle.png" id="23_3v4uw"]
+[ext_resource type="AudioStream" uid="uid://bsy6hrtxy4gbg" path="res://spawns/plants/leafy/106130__j1987__leafpilehit.wav" id="23_fif1e"]
+[ext_resource type="Texture2D" uid="uid://dw61mpmwxk8qn" path="res://spawns/plants/leafy/AppleParticle.png" id="25_44mxu"]
+[ext_resource type="AudioStream" uid="uid://lf7ig8fm4jxd" path="res://spawns/plants/leafy/173161__cubis2324__analogpop.wav" id="27_vcp1g"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ko8td"]
 animations = [{
@@ -140,17 +144,17 @@ shape = SubResource("CapsuleShape2D_g1swo")
 position = Vector2(-8, 62)
 shape = SubResource("CapsuleShape2D_p0gc0")
 
-[node name="WaterTimer" parent="." instance=ExtResource("3_wp4tu")]
+[node name="WaterTimer" parent="." instance=ExtResource("11_ett6d")]
 visible = false
 position = Vector2(-56, -160)
 color = Color(0.398642, 0.587427, 1, 1)
 
-[node name="PruneTimer" parent="." instance=ExtResource("3_wp4tu")]
+[node name="PruneTimer" parent="." instance=ExtResource("11_ett6d")]
 visible = false
 position = Vector2(-56, -160)
 color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
 
-[node name="FruitTimer" parent="." instance=ExtResource("3_wp4tu")]
+[node name="FruitTimer" parent="." instance=ExtResource("11_ett6d")]
 visible = false
 position = Vector2(-56, -160)
 color = Color(0.772549, 0.184314, 0.160784, 1)
@@ -172,8 +176,12 @@ volume_db = 3.0
 bus = &"SFX"
 
 [node name="LeafSpawner" parent="." instance=ExtResource("22_l4n1h")]
+stream = ExtResource("23_fif1e")
 
 [node name="DryEffectSpawner" parent="." instance=ExtResource("22_l4n1h")]
+texture = ExtResource("23_3v4uw")
 stream = ExtResource("23_0cwu2")
 
 [node name="AppleSpawner" parent="." instance=ExtResource("22_l4n1h")]
+texture = ExtResource("25_44mxu")
+stream = ExtResource("27_vcp1g")
