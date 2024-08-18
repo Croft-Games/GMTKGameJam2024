@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b18jlwxea0nsk"]
+[gd_scene load_steps=28 format=3 uid="uid://b18jlwxea0nsk"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_chlfc"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://ccddy5qwwqmyj" path="res://spawns/plants/explosions/explosion07.png" id="17_med3l"]
 [ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_xyidx"]
 [ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="22_l4n1h"]
+[ext_resource type="AudioStream" uid="uid://cgusdwwtadu5w" path="res://spawns/plants/471411__juaner__12_steam.wav" id="23_0cwu2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ko8td"]
 animations = [{
@@ -171,3 +172,8 @@ volume_db = 3.0
 bus = &"SFX"
 
 [node name="LeafSpawner" parent="." instance=ExtResource("22_l4n1h")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="LeafSpawner"]
+stream = ExtResource("23_0cwu2")
+volume_db = 5.0
+bus = &"SFX"
