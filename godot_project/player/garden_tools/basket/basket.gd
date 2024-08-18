@@ -1,7 +1,7 @@
 extends GardenTool
 
+@export var sounds: Dictionary = {}
 const max_fruit_level: int = 3
-
 var fruit_level: int = 0
 
 func _ready() -> void:
@@ -26,13 +26,16 @@ func use():
 				collect_fruit()
 
 func play_collect_sound():
-	play_sound(1)
+	sound.stream = sounds["collect"]
+	play_sound(0)
 
 func play_empty_sound():
-	play_sound(10.4)
+	sound.stream = sounds["drop"]
+	play_sound(0)
 
 func play_full_sound():
-	play_sound(8)
+	sound.stream = sounds["full"]
+	play_sound(0)
 
 func empty_fruit():
 	set_fruit_level(0)

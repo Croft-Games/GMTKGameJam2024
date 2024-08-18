@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://dmmyqmunmetl3"]
+[gd_scene load_steps=16 format=3 uid="uid://dmmyqmunmetl3"]
 
 [ext_resource type="Script" path="res://player/garden_tools/basket/basket.gd" id="1_bdnx1"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_482ku"]
+[ext_resource type="AudioStream" uid="uid://blcf0r47i8ry3" path="res://player/garden_tools/basket/447922__breviceps__thud-falling-on-wooden-floor-snapping-breaking-neck.wav" id="2_uty0n"]
+[ext_resource type="AudioStream" uid="uid://l8s6v6yjf753" path="res://player/garden_tools/basket/504626__leonelmail__body-fall-v-hvy-dirt.mp3" id="3_6jgoq"]
 [ext_resource type="Texture2D" uid="uid://4on8vndi33oj" path="res://player/garden_tools/basket/empty_sprites/BasketEmpty_1.PNG" id="3_21u0y"]
 [ext_resource type="Texture2D" uid="uid://c6wdc17lpug77" path="res://player/garden_tools/basket/empty_sprites/BasketEmpty_2.PNG" id="4_m0mk1"]
 [ext_resource type="Texture2D" uid="uid://boyc6vfyxv56m" path="res://player/garden_tools/basket/full_sprites/BasketThreeThird_1.PNG" id="5_544co"]
 [ext_resource type="Texture2D" uid="uid://bsswlo2p4tyj2" path="res://player/garden_tools/basket/full_sprites/BasketThreeThird_2.PNG" id="6_6fl2m"]
 [ext_resource type="Texture2D" uid="uid://t3s2xrjgw6en" path="res://player/garden_tools/basket/one_third_sprites/BasketOneThird_1.PNG" id="7_8r13t"]
-[ext_resource type="AudioStream" uid="uid://bj7q7y2bx8vfg" path="res://player/garden_tools/shears/267975__roulaine__garden-shears.wav" id="7_evfeq"]
 [ext_resource type="Texture2D" uid="uid://b4irs4sa3j012" path="res://player/garden_tools/basket/one_third_sprites/BasketOneThird_2.PNG" id="8_rvrdg"]
 [ext_resource type="Texture2D" uid="uid://bux1ek1oih0gr" path="res://player/garden_tools/basket/two_thirds_sprites/BasketTwoThird_1.PNG" id="9_xvj2e"]
 [ext_resource type="Texture2D" uid="uid://dmw4hqm5ly7g1" path="res://player/garden_tools/basket/two_thirds_sprites/BasketTwoThird_2.PNG" id="10_ch8nj"]
@@ -67,6 +68,11 @@ radius = 88.3629
 
 [node name="Basket" type="Node2D"]
 script = ExtResource("1_bdnx1")
+sounds = {
+"collect": ExtResource("2_uty0n"),
+"drop": ExtResource("3_6jgoq"),
+"full": ExtResource("3_6jgoq")
+}
 default_animation = &"empty"
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_482ku")]
@@ -78,8 +84,6 @@ animation = &"empty"
 autoplay = "empty"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_evfeq")
-volume_db = 5.0
 bus = &"SFX"
 
 [node name="GrabbableArea" type="Area2D" parent="."]

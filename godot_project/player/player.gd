@@ -123,7 +123,8 @@ func use_tool():
 func drop_tool():
 	var dropped_tool: GardenTool = equipped_tools.pop_front()
 	if dropped_tool != null:
-		rope.remove_point(1)
+		if rope.get_point_count() >= 2:
+			rope.remove_point(1)
 		drop_sound.play()
 
 

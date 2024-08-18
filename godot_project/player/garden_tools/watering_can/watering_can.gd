@@ -1,6 +1,6 @@
 extends GardenTool
 
-const max_water_level: int = 1
+const max_water_level: int = 3
 
 var water_level: int = max_water_level
 var is_pouring: bool = false
