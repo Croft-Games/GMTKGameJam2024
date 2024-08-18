@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=16 format=3 uid="uid://c7qxiy8cill5b"]
 
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
 [ext_resource type="PackedScene" uid="uid://cc7brw25kjye1" path="res://spawns/plants/garden_bush/garden_bush.tscn" id="9_420uc"]
 [ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="9_wccgg"]
+[ext_resource type="PackedScene" uid="uid://dmmyqmunmetl3" path="res://player/garden_tools/basket/basket.tscn" id="12_u20n1"]
 [ext_resource type="PackedScene" uid="uid://cbgnu7nmpy442" path="res://main/pond/pond.tscn" id="12_vy460"]
+[ext_resource type="PackedScene" uid="uid://dbwmume1vvu7l" path="res://main/fruit_depot/fruit_depot.tscn" id="13_cbs7k"]
 [ext_resource type="PackedScene" uid="uid://bsm73i4jjane3" path="res://player/garden_tools/shears/shears.tscn" id="13_ceri6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ujusv"]
@@ -33,8 +35,8 @@ layer_0/tile_data = PackedInt32Array(0, 1, 0, -196613, 1, 0, -131077, 1, 0, -655
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
-possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n")])
-spawn_weights = Array[float]([7.0, 6.0, 1.0, 1.0, 1.0])
+possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k")])
+spawn_weights = Array[float]([5.0, 6.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 
 [node name="SpawnTimer" type="Timer" parent="GameManager"]
 wait_time = 15.0
@@ -95,3 +97,9 @@ position = Vector2(-248, -120)
 
 [node name="Decoration6" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(-160, 512)
+
+[node name="Basket" parent="GameManager" instance=ExtResource("12_u20n1")]
+position = Vector2(448, -168)
+
+[node name="FruitDepot" parent="GameManager" instance=ExtResource("13_cbs7k")]
+position = Vector2(16, 360)

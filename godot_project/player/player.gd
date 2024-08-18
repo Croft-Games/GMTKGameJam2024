@@ -27,7 +27,7 @@ var tool_slowdown: float = 0.5
 var facing_right: bool = false
 
 var distance_per_tool: float = 100
-var active_tool_offset: Vector2 = Vector2(-30, -20)
+var active_tool_offset: Vector2 = Vector2(-50, -1)
 @onready var interaction_box_offset = interaction_shape.position
 
 const base_sprite_scale: float = 0.065

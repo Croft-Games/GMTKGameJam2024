@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cc7brw25kjye1"]
+[gd_scene load_steps=25 format=3 uid="uid://cc7brw25kjye1"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_unf5s"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_hd86j"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ccddy5qwwqmyj" path="res://spawns/plants/explosions/explosion07.png" id="17_dombw"]
 [ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_ojrid"]
 [ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="19_3mojb"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="20_qbw1d"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5q56a"]
 animations = [{
@@ -101,6 +102,7 @@ animations = [{
 
 [node name="Bush" type="Node2D"]
 script = ExtResource("1_unf5s")
+task_assignments = Array[int]([1, 2, 3])
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_hd86j")]
 
@@ -133,6 +135,11 @@ visible = false
 position = Vector2(-56, -160)
 color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
 
+[node name="FruitTimer" parent="." instance=ExtResource("9_a6r2n")]
+visible = false
+position = Vector2(-56, -160)
+color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
+
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 5.0
 
@@ -148,3 +155,5 @@ frame_progress = 0.0806179
 stream = ExtResource("19_3mojb")
 volume_db = 3.0
 bus = &"SFX"
+
+[node name="LeafSpawner" parent="." instance=ExtResource("20_qbw1d")]
