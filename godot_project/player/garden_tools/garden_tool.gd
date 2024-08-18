@@ -36,7 +36,7 @@ func set_facing(right: bool):
 func get_visuals() -> Array[Node2D]:
 	return [$AnimatedSprite2D]
 
-func get_colliders() -> Array[CollisionShape2D]:
+func get_colliders() -> Array:
 	return [$GrabbableArea/CollisionShape2D, $ActionArea/CollisionShape2D]
 
 func _on_animation_end():

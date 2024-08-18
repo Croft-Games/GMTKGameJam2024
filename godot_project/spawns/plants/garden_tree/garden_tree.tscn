@@ -123,12 +123,14 @@ script = ExtResource("1_chlfc")
 task_assignments = Array[int]([1, 2, 3, 4])
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_22lom")]
+spawn_bubble_size = 220.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_ko8td")
 animation = &"fruit"
 autoplay = "happy"
+metadata/_edit_lock_ = true
 
 [node name="InteractionBox" type="Area2D" parent="."]
 collision_layer = 44

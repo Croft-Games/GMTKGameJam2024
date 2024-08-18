@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=26 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -102,6 +102,9 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_eusyq"]
+radius = 71.65
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
@@ -192,6 +195,14 @@ frame_progress = 0.298128
 
 [node name="Timer" type="Timer" parent="NoWater"]
 one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_eusyq")
+debug_color = Color(0, 0.0325286, 0.0454713, 0.42)
 
 [connection signal="timeout" from="ExclamationMark/Timer" to="ExclamationMark" method="hide"]
 [connection signal="timeout" from="NoWater/Timer" to="NoWater" method="hide"]

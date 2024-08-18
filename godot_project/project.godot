@@ -95,6 +95,7 @@ reverse_cycle_tool={
 2d_physics/layer_6="Collecting"
 2d_physics/layer_7="Depositing"
 2d_physics/layer_10="GameBoundary"
+2d_physics/layer_16="Spawn"
 
 [rendering]
 

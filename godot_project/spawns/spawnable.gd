@@ -29,5 +29,5 @@ func _on_spawn():
 func get_visuals() -> Array[Node2D]:
 	return []
 
-func get_colliders() -> Array[CollisionShape2D]:
+func get_colliders() -> Array:
 	return []

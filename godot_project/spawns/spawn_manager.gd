@@ -5,8 +5,11 @@ extends Node2D
 @onready var pop_sound: AudioStreamPlayer2D = $PopSound
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var light: PointLight2D = $PointLight2D
+@onready var spawn_shape_cast: ShapeCast2D = $SpawnBlockBubble/ShapeCast2D
+@onready var spawn_block_bubble: CollisionShape2D = $SpawnBlockBubble/CollisionShape2D
 
 @export var pop_sounds: Array[AudioStream] = []
+@export var spawn_bubble_size: float = 100
 
 const buildup_time: float = 13.65
 
@@ -15,6 +18,8 @@ func _ready() -> void:
 	pop_sound.stream = pop_sounds.pick_random()
 	spawn_timer.timeout.connect(spawn_in)
 	light.hide()
+	spawn_block_bubble.shape = CircleShape2D.new()
+	spawn_block_bubble.shape.radius = spawn_bubble_size
 
 signal spawn_started
 signal spawned
@@ -40,3 +45,7 @@ func spawn_in():
 	pop_sound.play()
 	light.hide()
 	spawned.emit()
+
+func is_valid_spawn_location():
+	spawn_shape_cast.force_shapecast_update()
+	return not spawn_shape_cast.is_colliding()

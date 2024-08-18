@@ -20,27 +20,27 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u22s3"]
-size = Vector2(64, 40)
+size = Vector2(144, 88)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6s3kl"]
-radius = 57.85
+radius = 120.0
 
 [node name="FruitDepot" type="Node2D"]
 z_index = -1
-scale = Vector2(2, 2)
 script = ExtResource("1_e0wib")
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_fi7qu")]
+spawn_bubble_size = 200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.065, 0.065)
+scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_5qnmt")
 autoplay = "default"
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(0, 8)
+position = Vector2(0, 28)
 shape = SubResource("RectangleShape2D_u22s3")
 
 [node name="DepositArea" type="Area2D" parent="."]

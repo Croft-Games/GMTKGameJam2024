@@ -108,6 +108,7 @@ script = ExtResource("1_unf5s")
 task_assignments = Array[int]([1, 2, 3])
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_hd86j")]
+spawn_bubble_size = 220.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.15, 0.15)

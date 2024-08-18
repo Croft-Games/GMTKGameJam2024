@@ -62,7 +62,7 @@ func fail_task():
 func get_visuals() -> Array[Node2D]:
 	return [$AnimatedSprite2D]
 
-func get_colliders() -> Array[CollisionShape2D]:
+func get_colliders() -> Array:
 	return [$InteractionBox/CollisionShape2D, $CollisionBox/CollisionShape2D]
 
 func _on_spawn():

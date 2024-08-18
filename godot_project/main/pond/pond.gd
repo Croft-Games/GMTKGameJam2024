@@ -4,5 +4,5 @@ extends Spawnable
 func get_visuals() -> Array[Node2D]:
 	return [$AnimatedSprite2D]
 
-func get_colliders() -> Array[CollisionShape2D]:
+func get_colliders() -> Array:
 	return [$RefillArea/CollisionPolygon2D, $CollisionBox/CollisionPolygon2D]
