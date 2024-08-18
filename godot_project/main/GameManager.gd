@@ -15,9 +15,6 @@ const initial_zoom: float = 1
 var expansion_rate: float = 0.005
 const init_tree_dist: float = 250
 
-var spawned_items: Array = []
-const spawn_spacing_sq: float = 100_000
-
 var _sum_of_spawn_weights: float = 1
 
 func sum(values) -> float:
@@ -36,9 +33,6 @@ func _ready() -> void:
 		first_plant.position = random_vec() * init_tree_dist
 	first_plant.queued_task = GardenPlant.Task.PRUNE
 	first_plant.spawn_manager.start_spawn()
-	for ch in get_children():
-		if is_spawnable(ch):
-			spawned_items.append(ch)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,14 +48,6 @@ func set_zoom_from_elapsed_time():
 	camera.zoom = (initial_zoom / play_size) * Vector2.ONE
 	play_area.set_size(play_size)
 
-func valid_spawn(pos: Vector2) -> bool:
-	if pos == Vector2.ZERO:
-		return false
-	clean_items()
-	for item in spawned_items:
-		if pos.distance_squared_to(item.position) < spawn_spacing_sq:
-			return false
-	return true
 
 func _select_random_spawn():
 	var n: float = randf_range(0, _sum_of_spawn_weights)
@@ -71,9 +57,6 @@ func _select_random_spawn():
 		if n < t:
 			return possible_spawns[i]
 	return possible_spawns[0]
-
-func clean_items():
-	spawned_items = spawned_items.filter(is_spawnable)
 
 func is_spawnable(item):
 	return is_instance_valid(item) and item is Spawnable
@@ -90,5 +73,4 @@ func spawn_element():
 		new_spawn.position = Vector2.ZERO
 		while not new_spawn.spawn_manager.is_valid_spawn_location():
 			new_spawn.position = generate_spawn_position()
-		spawned_items.append(new_spawn)
 		new_spawn.spawn_manager.start_spawn()
