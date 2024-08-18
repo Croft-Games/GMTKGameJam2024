@@ -1,8 +1,9 @@
-[gd_scene load_steps=32 format=3 uid="uid://b18jlwxea0nsk"]
+[gd_scene load_steps=34 format=3 uid="uid://b18jlwxea0nsk"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_chlfc"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
 [ext_resource type="Texture2D" uid="uid://dystk3q173b33" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_1.PNG" id="2_dwkgt"]
+[ext_resource type="Shader" path="res://spawns/plants/garden_tree/garden_tree.gdshader" id="3_r4bhc"]
 [ext_resource type="Texture2D" uid="uid://cbubg5k61hqw0" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_2.PNG" id="3_tnx3k"]
 [ext_resource type="Texture2D" uid="uid://hd5w3cr2lkue" path="res://spawns/plants/garden_tree/happy_sprites/HappyTree_1.PNG" id="4_uk1ow"]
 [ext_resource type="Texture2D" uid="uid://dgnwfwrxhphhi" path="res://spawns/plants/garden_tree/fruit_sprites/FruitTree_1.PNG" id="5_3l0yw"]
@@ -27,6 +28,14 @@
 [ext_resource type="AudioStream" uid="uid://bsy6hrtxy4gbg" path="res://spawns/plants/leafy/106130__j1987__leafpilehit.wav" id="23_fif1e"]
 [ext_resource type="Texture2D" uid="uid://dw61mpmwxk8qn" path="res://spawns/plants/leafy/AppleParticle.png" id="25_44mxu"]
 [ext_resource type="AudioStream" uid="uid://lf7ig8fm4jxd" path="res://spawns/plants/leafy/173161__cubis2324__analogpop.wav" id="27_vcp1g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wh2gd"]
+shader = ExtResource("3_r4bhc")
+shader_parameter/deform = Vector2(2, 2)
+shader_parameter/offset = Vector2(70, 70)
+shader_parameter/modulate = Color(0, 0, 0, 0.490196)
+shader_parameter/x_buffer = 2.0
+shader_parameter/y_buffer = 2.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ko8td"]
 animations = [{
@@ -126,6 +135,7 @@ task_assignments = Array[int]([1, 2, 3, 4])
 spawn_bubble_size = 220.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_wh2gd")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_ko8td")
 animation = &"fruit"

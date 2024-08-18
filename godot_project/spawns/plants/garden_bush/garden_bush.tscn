@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://cc7brw25kjye1"]
+[gd_scene load_steps=30 format=3 uid="uid://cc7brw25kjye1"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_unf5s"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_hd86j"]
 [ext_resource type="Texture2D" uid="uid://sntjiaxsbyw2" path="res://spawns/plants/garden_bush/dry_sprites/BushDry_1.PNG" id="3_j6vgf"]
+[ext_resource type="Shader" path="res://spawns/plants/garden_tree/garden_tree.gdshader" id="3_mu7ef"]
 [ext_resource type="Texture2D" uid="uid://buynfkd8orhoh" path="res://spawns/plants/garden_bush/dry_sprites/BushDry_2.PNG" id="4_j6hkd"]
 [ext_resource type="Texture2D" uid="uid://bmn4twug0grdq" path="res://spawns/plants/garden_bush/happy_sprites/BushIdle_1.PNG" id="5_i6obf"]
 [ext_resource type="Texture2D" uid="uid://bv8yqx35moehb" path="res://spawns/plants/garden_bush/happy_sprites/BushIdle_2.PNG" id="6_5ju5t"]
@@ -23,6 +24,14 @@
 [ext_resource type="AudioStream" uid="uid://bsy6hrtxy4gbg" path="res://spawns/plants/leafy/106130__j1987__leafpilehit.wav" id="21_q84hd"]
 [ext_resource type="Texture2D" uid="uid://c7sfdcs3sc7o5" path="res://spawns/plants/leafy/DryParticle.png" id="22_fhgwa"]
 [ext_resource type="AudioStream" uid="uid://cgusdwwtadu5w" path="res://spawns/plants/471411__juaner__12_steam.wav" id="23_28qv7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01nt3"]
+shader = ExtResource("3_mu7ef")
+shader_parameter/deform = Vector2(2, 2)
+shader_parameter/offset = Vector2(230, 230)
+shader_parameter/modulate = Color(0, 0, 0, 0.490196)
+shader_parameter/x_buffer = 2.0
+shader_parameter/y_buffer = 2.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5q56a"]
 animations = [{
@@ -111,6 +120,7 @@ task_assignments = Array[int]([1, 2, 3])
 spawn_bubble_size = 220.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_01nt3")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_5q56a")
 animation = &"dry"

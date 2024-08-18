@@ -11,9 +11,15 @@ const initial_zoom: float = 1
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var boundary_finder: RayCast2D = $BoundaryFinder
 @onready var first_plant: GardenPlant = $First
+#@onready var health_bar: ProgressBar = $HUD/HealthBar
+const max_health: float = 10_000
+const health_regen: float = 1
+var health: float = max_health
+var fail_damage: float = 100
 
 var expansion_rate: float = 0.005
 const init_tree_dist: float = 250
+var game_active: bool = true
 
 var _sum_of_spawn_weights: float = 1
 
@@ -25,6 +31,8 @@ func sum(values) -> float:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#health_bar.max_value = max_health
+	#health_bar.step = max_health / 100
 	assert(possible_spawns.size() == spawn_weights.size())
 	_sum_of_spawn_weights = sum(spawn_weights)
 	spawn_timer.timeout.connect(spawn_element)
@@ -33,12 +41,29 @@ func _ready() -> void:
 		first_plant.position = random_vec() * init_tree_dist
 	first_plant.queued_task = GardenPlant.Task.PRUNE
 	first_plant.spawn_manager.start_spawn()
+	first_plant.failed_task.connect(task_failed)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	elapsed_time += delta
-	set_zoom_from_elapsed_time()
+	if game_active:
+		#health_bar.value = health
+		elapsed_time += delta
+		if health <= 0:
+			game_over()
+		health = minf(max_health, health + health_regen * delta)
+		set_zoom_from_elapsed_time()
+
+func task_failed():
+	health -= fail_damage
+
+func game_over():
+	spawn_timer.stop()
+	game_active = false
+	for ch in get_children():
+		if ch is GardenPlant:
+			ch.stop_timers()
+
 
 func random_vec():
 	return Vector2.from_angle(randf_range(-PI, PI))
