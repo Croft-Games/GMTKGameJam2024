@@ -6,7 +6,7 @@ var fruit_level: int = 0
 
 func _ready() -> void:
 	super()
-	set_fruit_level(3)
+	set_fruit_level(0)
 
 func use():
 	if fruit_level > 0:

@@ -3,23 +3,25 @@ extends Node2D
 
 @onready var timer: Timer = $Timer
 @onready var stopwatch: AnimatedSprite2D = $Stopwatch
-@onready var current_progress: Polygon2D = $Stopwatch/CurrentProgress
+@onready var moving_line: Sprite2D = $MovingLine
+@onready var exclamation_mark: AnimatedSprite2D = $ExclamationMark
+@onready var current_progress: TextureProgressBar =$CurrentProgress
 @export var color: Color = Color.WHITE
 
-var max_size: float = 100
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	current_progress.color = color
+	current_progress.tint_progress = color
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var proportion: float = timer.time_left / timer.wait_time
-	current_progress.scale.x = proportion
+	moving_line.rotation = -TAU * proportion
+	current_progress.value = proportion
+	exclamation_mark.visible = (proportion < 0.1)
 
-func show_progress():
-	stopwatch.show()
+func start():
+	timer.start()
+	show()
 
-func hide_progress():
-	stopwatch.hide()
+func stop():
+	timer.stop()
+	hide()

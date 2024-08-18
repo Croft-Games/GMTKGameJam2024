@@ -1,0 +1,11 @@
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://cwtjcp57v4s36"]
+
+[ext_resource type="Texture2D" uid="uid://dfwgefhd7a5op" path="res://spawns/plants/timer/Timer_1.PNG" id="1_ywav2"]
+[ext_resource type="Texture2D" uid="uid://bqcm1yowwm5xc" path="res://spawns/plants/timer/Timer_2.PNG" id="2_alynp"]
+
+[resource]
+frames = 2
+frame_0/texture = ExtResource("1_ywav2")
+frame_0/duration = 0.17
+frame_1/texture = ExtResource("2_alynp")
+frame_1/duration = 0.17

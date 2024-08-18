@@ -130,12 +130,12 @@ shape = SubResource("CapsuleShape2D_p0gc0")
 
 [node name="WaterTimer" parent="." instance=ExtResource("9_h8r2l")]
 visible = false
-position = Vector2(-56, -160)
+position = Vector2(0, -160)
 color = Color(0.398642, 0.587427, 1, 1)
 
 [node name="PruneTimer" parent="." instance=ExtResource("9_h8r2l")]
 visible = false
-position = Vector2(-56, -160)
+position = Vector2(0, -160)
 color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
 
 [node name="IdleTimer" type="Timer" parent="."]
