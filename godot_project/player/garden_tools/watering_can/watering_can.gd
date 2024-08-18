@@ -11,14 +11,17 @@ var water_level: int = max_water_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super()
 	sprite.play(&"idle")
 	sprite.animation_finished.connect(_on_animation_end)
 	sound_timer.timeout.connect(sound.stop)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func get_visuals() -> Array[Node2D]:
+	return [$AnimatedSprite2D]
+
+func get_colliders() -> Array[CollisionShape2D]:
+	return [$GrabbableArea/CollisionShape2D, $WateringArea/CollisionShape2D]
 
 func use():
 	for area in watering_area.get_overlapping_areas():

@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://b18jlwxea0nsk"]
 
-[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawnable.tscn" id="1_0butv"]
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_tree.gd" id="1_gdj3g"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
 [ext_resource type="Texture2D" uid="uid://dystk3q173b33" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_1.PNG" id="2_dwkgt"]
 [ext_resource type="Texture2D" uid="uid://cbubg5k61hqw0" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_2.PNG" id="3_tnx3k"]
 [ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/task_timer.tscn" id="3_wp4tu"]
@@ -102,12 +102,12 @@ animations = [{
 [node name="Tree" type="Node2D"]
 script = ExtResource("1_gdj3g")
 
+[node name="SpawnManager" parent="." instance=ExtResource("2_22lom")]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_ko8td")
 animation = &"happy"
-
-[node name="Spawnable" parent="." instance=ExtResource("1_0butv")]
 
 [node name="InteractionBox" type="Area2D" parent="."]
 collision_layer = 12

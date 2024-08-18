@@ -1,5 +1,5 @@
 class_name GardenTool
-extends Node2D
+extends Spawnable
 
 
 func use():

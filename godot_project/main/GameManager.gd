@@ -77,7 +77,7 @@ func clean_items():
 	spawned_items = spawned_items.filter(is_spawnable)
 
 func is_spawnable(item):
-	return is_instance_valid(item) and item is Node2D and item.has_node("Spawnable")
+	return is_instance_valid(item) and item is Spawnable
 
 func spawn_element():
 	var new_spawn = _select_random_spawn().instantiate()
@@ -89,4 +89,4 @@ func spawn_element():
 	new_spawn.position = spawn_position
 	add_child(new_spawn)
 	spawned_items.append(new_spawn)
-	new_spawn.get_node("Spawnable").start_spawn(randfn(6, 2))
+	new_spawn.spawn_manager.start_spawn()

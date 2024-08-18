@@ -1,31 +1,33 @@
 class_name Spawnable
 extends Node2D
 
-@onready var build_sound: AudioStreamPlayer2D = $BuildupSound
-@onready var pop_sound: AudioStreamPlayer2D = $PopSound
-@onready var spawn_timer: Timer = $SpawnTimer
-@onready var parent = get_parent()
-
-@export var pop_sounds: Array[AudioStream] = []
-
-const buildup_time: float = 13.65
+@onready var spawn_manager: SpawnManager = $SpawnManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pop_sound.stream = pop_sounds.pick_random()
-	spawn_timer.timeout.connect(spawn_in)
+	spawn_manager.spawn_started.connect(_on_start_spawn)
+	spawn_manager.spawned.connect(_on_spawn)
 
+func custom_hide():
+	for v in get_visuals():
+		v.hide()
+	for c in get_colliders():
+		c.disabled = true
 
-func start_spawn(after: float = 3):
-	parent.hide()
-	spawn_timer.wait_time = after
-	build_sound.pitch_scale = buildup_time / after
-	build_sound.play()
-	spawn_timer.start()
+func custom_show():
+	for v in get_visuals():
+		v.show()
+	for c in get_colliders():
+		c.disabled = false
 
-signal spawned
+func _on_start_spawn():
+	custom_hide()
 
-func spawn_in():
-	pop_sound.play()
-	parent.show()
-	spawned.emit()
+func _on_spawn():
+	custom_show()
+
+func get_visuals() -> Array[Node2D]:
+	return []
+
+func get_colliders() -> Array[CollisionShape2D]:
+	return []

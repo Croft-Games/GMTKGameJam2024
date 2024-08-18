@@ -32,6 +32,7 @@ const base_sprite_scale: float = 0.065
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_sprite.scale = base_sprite_scale * Vector2.ONE
+	set_state_idle(true)
 	rope.add_point(Vector2.ZERO)
 
 func flip_direction():
@@ -58,8 +59,8 @@ func _process(delta: float) -> void:
 
 	_move_tools(delta)
 
-func set_state_moving():
-	if current_state != PlayerState.MOVING:
+func set_state_moving(force: bool = false):
+	if force or current_state != PlayerState.MOVING:
 		current_state = PlayerState.MOVING
 		player_sprite.play(&"move", speed_multiplier)
 		light.color = move_light_colour
@@ -67,8 +68,8 @@ func set_state_moving():
 		trail.emitting = true
 		move_sound.play()
 
-func set_state_idle():
-	if current_state != PlayerState.IDLE:
+func set_state_idle(force: bool = false):
+	if force or current_state != PlayerState.IDLE:
 		current_state = PlayerState.IDLE
 		player_sprite.play(&"idle")
 		light.color = idle_light_colour

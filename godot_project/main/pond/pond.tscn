@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbgnu7nmpy442"]
 
 [ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
-[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawnable.tscn" id="2_hgt7u"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_6wo30"]
 [ext_resource type="Texture2D" uid="uid://wgnc5mk8ev0n" path="res://main/pond/MainPond_1.PNG" id="2_nvxob"]
 [ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
 
@@ -24,15 +24,16 @@ z_index = -1
 scale = Vector2(2, 2)
 script = ExtResource("1_3p408")
 
-[node name="Spawnable" parent="." instance=ExtResource("2_hgt7u")]
+[node name="SpawnManager" parent="." instance=ExtResource("2_6wo30")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_owkkq")
+autoplay = "default"
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="CollisionBox" type="StaticBody2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
 polygon = PackedVector2Array(40, 40, 56, 16, 56, -16, 48, -40, 40, -48, 24, -56, 8, -48, 0, -40, -8, -32, -16, -16, -24, 0, -40, 8, -48, 24, -56, 40, -40, 56, -24, 56, 0, 48, 24, 40, 40, 40)
 
 [node name="RefillArea" type="Area2D" parent="."]
