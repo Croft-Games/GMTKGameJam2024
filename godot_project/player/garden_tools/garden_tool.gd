@@ -3,19 +3,23 @@ extends Spawnable
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
-@onready var sound_timer: Timer = $AudioStreamPlayer2D/Timer
+@onready var action_timer: Timer = $ActionTimer
 @onready var action_area: Area2D = $ActionArea
 @export var default_animation: StringName = &"idle"
 
 var facing_right: bool = false
 
 func _ready() -> void:
+	super()
 	sprite.play(default_animation)
 	sprite.animation_finished.connect(_on_animation_end)
-	sound_timer.timeout.connect(sound.stop)
+	action_timer.timeout.connect(sound.stop)
 
 func use():
 	pass
+
+func facing_mult() -> float:
+	return (1 if facing_right else -1)
 
 func set_facing(right: bool):
 	if facing_right == right:
@@ -25,7 +29,7 @@ func set_facing(right: bool):
 		if v is Sprite2D or v is AnimatedSprite2D:
 			v.flip_h = right
 	for c in get_colliders():
-		c.position.x = absf(c.position.x) * (1 if right else -1)
+		c.position.x = absf(c.position.x) * facing_mult()
 
 func get_visuals() -> Array[Node2D]:
 	return [$AnimatedSprite2D]
@@ -40,4 +44,4 @@ func _on_animation_end():
 func play_sound(from: float):
 	sound.pitch_scale = randfn(1, 0.02)
 	sound.play(from)
-	sound_timer.start()
+	action_timer.start()

@@ -82,9 +82,6 @@ stream = ExtResource("7_evfeq")
 volume_db = 5.0
 bus = &"SFX"
 
-[node name="Timer" type="Timer" parent="AudioStreamPlayer2D"]
-one_shot = true
-
 [node name="GrabbableArea" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 0
@@ -100,3 +97,6 @@ collision_mask = 96
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActionArea"]
 position = Vector2(-48, -8)
 shape = SubResource("CircleShape2D_ijo1r")
+
+[node name="ActionTimer" type="Timer" parent="."]
+one_shot = true
