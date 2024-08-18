@@ -29,14 +29,12 @@ func start_spawn(after: float = -1):
 	build_sound.pitch_scale = speed_scale
 	build_sound.play()
 	spawn_timer.start()
+
+	light.texture_scale = 0.01
 	var pulse_tween = light.create_tween()
-	pulse_tween.set_ease(Tween.EASE_IN_OUT)
-	pulse_tween.set_trans(Tween.TRANS_SINE)
-	var num_loops = 5
-	pulse_tween.set_loops()
-	pulse_tween.set_speed_scale(speed_scale)
-	pulse_tween.tween_property(light, "texture_scale", 2, buildup_time / num_loops)
-	pulse_tween.tween_property(light, "texture_scale", 1, buildup_time / num_loops)
+	pulse_tween.set_ease(Tween.EASE_IN)
+	pulse_tween.set_trans(Tween.TRANS_BOUNCE)
+	pulse_tween.tween_property(light, "texture_scale", 4, buildup_time)
 
 func spawn_in():
 	pop_sound.play()
