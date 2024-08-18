@@ -1,12 +1,15 @@
 class_name GardenPlant
 extends Spawnable
 
-@onready var water_timer: TaskTimer = $WaterTimer
-@onready var prune_timer: TaskTimer = $PruneTimer
-@onready var fruit_timer: TaskTimer = $FruitTimer
+var water_timer: TaskTimer
+var prune_timer: TaskTimer
+var fruit_timer: TaskTimer
 @onready var idle_timer: Timer = $IdleTimer
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var leaf_spawner: CPUParticles2D = $LeafSpawner
+
+var leaf_spawner: LeafSpawner
+var dry_spawner: LeafSpawner
+var apple_spawner: LeafSpawner
 
 enum TreeState{SPAWNING, HAPPY, DRY, OVERGROWN, FRUIT}
 var current_state: TreeState = TreeState.SPAWNING
@@ -20,13 +23,22 @@ var previous_task: Task = Task.UNSET
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
-	water_timer.timer.wait_time = 10
-	prune_timer.timer.wait_time = 20
-	fruit_timer.timer.wait_time = 30
+	if Task.PRUNE in task_assignments:
+		leaf_spawner = $LeafSpawner
+		prune_timer = $PruneTimer
+		prune_timer.timer.wait_time = 20
+		prune_timer.timer.timeout.connect(fail_task)
+	if Task.WATER in task_assignments:
+		dry_spawner = $DryEffectSpawner
+		water_timer = $WaterTimer
+		water_timer.timer.wait_time = 10
+		water_timer.timer.timeout.connect(fail_task)
+	if Task.COLLECT in task_assignments:
+		apple_spawner = $AppleSpawner
+		fruit_timer = $FruitTimer
+		fruit_timer.timer.wait_time = 30
+		fruit_timer.timer.timeout.connect(fail_task)
 	idle_timer.wait_time = 5
-	water_timer.timer.timeout.connect(fail_task)
-	prune_timer.timer.timeout.connect(fail_task)
-	fruit_timer.timer.timeout.connect(fail_task)
 	idle_timer.timeout.connect(set_queued_task)
 
 signal failed_task()
@@ -59,12 +71,15 @@ func _on_spawn():
 
 func stop_timers():
 	# todo reduce task code duplication
-	water_timer.hide()
-	water_timer.timer.stop()
-	prune_timer.hide()
-	prune_timer.timer.stop()
-	fruit_timer.hide()
-	fruit_timer.timer.stop()
+	if water_timer != null:
+		water_timer.hide()
+		water_timer.timer.stop()
+	if prune_timer != null:
+		prune_timer.hide()
+		prune_timer.timer.stop()
+	if fruit_timer != null:
+		fruit_timer.hide()
+		fruit_timer.timer.stop()
 	idle_timer.stop()
 
 
@@ -83,7 +98,7 @@ func set_task(task: Task):
 
 func set_random_task():
 	var new_task: Task = current_task
-	while (new_task == current_task) or (new_task == previous_task):
+	while (new_task == current_task):
 		new_task = task_assignments.pick_random()
 	set_task(new_task)
 
@@ -108,6 +123,7 @@ func set_state_dry():
 		sprite.play(&"dry")
 		water_timer.timer.start()
 		water_timer.show()
+		dry_spawner.emit()
 
 func set_state_overgrown():
 	if current_state != TreeState.OVERGROWN:
@@ -115,7 +131,7 @@ func set_state_overgrown():
 		sprite.play(&"overgrown")
 		prune_timer.timer.start()
 		prune_timer.show()
-		play_leaf_anim()
+		leaf_spawner.emit()
 
 func set_state_fruit():
 	if current_state != TreeState.FRUIT:
@@ -123,26 +139,27 @@ func set_state_fruit():
 		sprite.play(&"fruit")
 		fruit_timer.timer.start()
 		fruit_timer.show()
+		apple_spawner.emit()
 
 func water():
-	water_timer.timer.stop()
-	water_timer.hide()
+	if water_timer != null:
+		water_timer.timer.stop()
+		water_timer.hide()
 	if current_state == TreeState.DRY:
 		set_task(Task.IDLE)
 
 func prune():
-	prune_timer.timer.stop()
-	prune_timer.hide()
+	if prune_timer != null:
+		prune_timer.timer.stop()
+		prune_timer.hide()
 	if current_state == TreeState.OVERGROWN:
 		set_task(Task.IDLE)
 
 func collect() -> bool:
-	fruit_timer.timer.stop()
-	fruit_timer.hide()
+	if fruit_timer != null:
+		fruit_timer.timer.stop()
+		fruit_timer.hide()
 	if current_state == TreeState.FRUIT:
 		set_task(Task.IDLE)
 		return true
 	return false
-
-func play_leaf_anim():
-	leaf_spawner.emitting = true

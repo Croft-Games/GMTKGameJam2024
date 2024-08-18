@@ -118,16 +118,6 @@ visible = false
 position = Vector2(-56, -160)
 color = Color(0.398642, 0.587427, 1, 1)
 
-[node name="PruneTimer" parent="." instance=ExtResource("9_qnygy")]
-visible = false
-position = Vector2(-56, -160)
-color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
-
-[node name="FruitTimer" parent="." instance=ExtResource("9_qnygy")]
-visible = false
-position = Vector2(-56, -160)
-color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
-
 [node name="IdleTimer" type="Timer" parent="."]
 wait_time = 5.0
 
@@ -144,4 +134,4 @@ stream = ExtResource("19_gjvrd")
 volume_db = 3.0
 bus = &"SFX"
 
-[node name="LeafSpawner" parent="." instance=ExtResource("20_0fs7b")]
+[node name="DryEffectSpawner" parent="." instance=ExtResource("20_0fs7b")]
