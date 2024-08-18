@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://b18jlwxea0nsk"]
 
-[ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_tree.gd" id="1_gdj3g"]
+[ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_chlfc"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
 [ext_resource type="Texture2D" uid="uid://dystk3q173b33" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_1.PNG" id="2_dwkgt"]
 [ext_resource type="Texture2D" uid="uid://cbubg5k61hqw0" path="res://spawns/plants/garden_tree/dry_sprites/DryTree_2.PNG" id="3_tnx3k"]
@@ -100,7 +100,7 @@ animations = [{
 }]
 
 [node name="Tree" type="Node2D"]
-script = ExtResource("1_gdj3g")
+script = ExtResource("1_chlfc")
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_22lom")]
 

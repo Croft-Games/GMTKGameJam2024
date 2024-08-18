@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var equip_sound: AudioStreamPlayer2D = $EquipSound
 @onready var drop_sound: AudioStreamPlayer2D = $DropSound
 @onready var interaction_box: Area2D = $InteractionBox
+@onready var interaction_shape: CollisionShape2D = $InteractionBox/CollisionShape2D
 @onready var rope: Line2D = $Line2D
 
 @export var base_speed: float = 400
@@ -21,11 +22,13 @@ const move_light_colour: Color = Color("#cf4833")
 const move_light_position: Vector2 = Vector2(-100, -215)
 
 var equipped_tools: Array[GardenTool] = []
-var tool_slowdown: float = 1
+var tool_slowdown: float = 0.5
 
 var facing_right: bool = false
 
 var distance_per_tool: float = 100
+var active_tool_offset: Vector2 = Vector2(-30, -20)
+@onready var interaction_box_offset = interaction_shape.position
 
 const base_sprite_scale: float = 0.065
 
@@ -38,15 +41,19 @@ func _ready() -> void:
 func flip_direction():
 	set_facing(not facing_right)
 
+func vector_from_facing(vector: Vector2) -> Vector2:
+	var x_mul: float = -1 if facing_right else 1
+	return Vector2(vector.x * x_mul, vector.y)
+
 func set_facing(right: bool):
 	facing_right = right
-	var x_scale: int = -1 if right else 1
-	player_sprite.scale.x = x_scale * base_sprite_scale
+	player_sprite.scale = vector_from_facing(base_sprite_scale * Vector2.ONE)
+	interaction_shape.position = vector_from_facing(interaction_box_offset)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var move_input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	speed_multiplier = exp(-equipped_tools.size() * 0.2)
+	speed_multiplier = exp(-equipped_tools.size() * tool_slowdown)
 	velocity = move_input * base_speed * speed_multiplier
 
 	if move_input.x != 0:
@@ -84,16 +91,22 @@ func _physics_process(delta: float) -> void:
 func _move_tools(delta: float):
 	for i in equipped_tools.size():
 		var tooli: GardenTool = equipped_tools[i]
-		if tooli.position.distance_to(position) > (distance_per_tool * (i + 1)):
-			tooli.position = tooli.position.move_toward(position, base_speed * delta)
-			while rope.get_point_count() < (i + 1):
-				rope.add_point(Vector2.ZERO)
-		rope.set_point_position(i+1, to_local(tooli.position))
+		if i > 0:
+			if tooli.position.distance_to(position) > (distance_per_tool * (i + 1)):
+				tooli.position = tooli.position.move_toward(position, base_speed * delta)
+				while rope.get_point_count() < i:
+					rope.add_point(Vector2.ZERO)
+			rope.set_point_position(i, to_local(tooli.position))
+		else:
+			tooli.position = position + vector_from_facing(active_tool_offset)
+			tooli.set_facing(facing_right)
 
 func equip(tool: GardenTool):
 	equipped_tools.push_front(tool)
-	rope.add_point(to_global(tool.position))
 	equip_sound.play()
+	if equipped_tools.size() > 1:
+		rope.add_point(to_global(tool.position))
+
 
 func grab_tool():
 	for area in interaction_box.get_overlapping_areas():

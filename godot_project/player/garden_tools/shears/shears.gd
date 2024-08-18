@@ -1,11 +1,5 @@
 extends GardenTool
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var sound: AudioStreamPlayer2D = $AudioStreamPlayer2D
-@onready var sound_timer: Timer = $AudioStreamPlayer2D/Timer
-@onready var snipping_area: Area2D = $SnippingArea
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
@@ -14,19 +8,12 @@ func _ready() -> void:
 	sound_timer.timeout.connect(sound.stop)
 
 
-func get_visuals() -> Array[Node2D]:
-	return [$AnimatedSprite2D]
-
-func get_colliders() -> Array[CollisionShape2D]:
-	return [$GrabbableArea/CollisionShape2D, $SnippingArea/CollisionShape2D]
-
-
 func use():
 	sprite.play(&"snip")
 	play_snip_sound()
-	for area in snipping_area.get_overlapping_areas():
+	for area in action_area.get_overlapping_areas():
 		var t = area.get_parent()
-		if t is GardenTree:
+		if t is GardenPlant:
 			t.prune()
 
 func _on_animation_end():

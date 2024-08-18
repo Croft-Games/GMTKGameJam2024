@@ -10,7 +10,7 @@ var elapsed_time: float = 0
 const initial_zoom: float = 1
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var boundary_finder: RayCast2D = $BoundaryFinder
-@onready var first_tree: GardenTree = $Tree
+@onready var first_plant: GardenPlant = $First
 
 var expansion_rate: float = 0.005
 const init_tree_dist: float = 250
@@ -34,9 +34,9 @@ func _ready() -> void:
 	var first_pos: Vector2 = Vector2.ZERO
 	while not valid_spawn(first_pos):
 		first_pos = random_vec() * init_tree_dist
-	first_tree.position = first_pos
-	first_tree.queued_task = GardenTree.Task.PRUNE
-	first_tree.spawn_manager.start_spawn()
+	first_plant.position = first_pos
+	first_plant.queued_task = GardenPlant.Task.PRUNE
+	first_plant.spawn_manager.start_spawn()
 	for ch in get_children():
 		if is_spawnable(ch):
 			spawned_items.append(ch)

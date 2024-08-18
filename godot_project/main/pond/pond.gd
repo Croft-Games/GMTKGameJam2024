@@ -1,5 +1,5 @@
 class_name Pond
-extends Node2D
+extends Spawnable
 
 func get_visuals() -> Array[Node2D]:
 	return [$AnimatedSprite2D]

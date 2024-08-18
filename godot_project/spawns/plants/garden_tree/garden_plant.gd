@@ -1,4 +1,4 @@
-class_name GardenTree
+class_name GardenPlant
 extends Spawnable
 
 @onready var water_timer: TaskTimer = $WaterTimer
@@ -10,7 +10,7 @@ enum TreeState{SPAWNING, HAPPY, DRY, OVERGROWN}
 var current_state: TreeState = TreeState.SPAWNING
 
 enum Task{UNSET, IDLE, WATER, PRUNE}
-var task_assignments: Array[Task] = [Task.IDLE, Task.WATER, Task.PRUNE]
+@export var task_assignments: Array[Task] = [Task.IDLE, Task.WATER, Task.PRUNE]
 var current_task: Task = Task.UNSET
 var queued_task: Task = Task.UNSET
 var previous_task: Task = Task.UNSET
