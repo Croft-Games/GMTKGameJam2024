@@ -98,7 +98,6 @@ func start_unlock(task):
 	unlock_started[task] = true
 	var reqs = unlock_reqs[task]
 	for i in reqs:
-		print(possible_spawns[i])
 		var new_spawn: Spawnable = spawn_element(possible_spawns[i])
 		new_spawn.spawn_manager.spawned.connect(unlock_task_for_plants.bind(task))
 
@@ -188,7 +187,6 @@ func spawn_element(packed_scene = null) -> Spawnable:
 		add_child(new_spawn)
 		new_spawn.position = Vector2.ZERO
 		while not new_spawn.spawn_manager.is_valid_spawn_location():
-			print("looking for spawn location... ")
 			new_spawn.position = generate_spawn_position()
 		new_spawn.spawn_manager.start_spawn()
 		if new_spawn is GardenPlant:

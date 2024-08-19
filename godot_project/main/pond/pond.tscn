@@ -38,7 +38,6 @@ z_index = -1
 script = ExtResource("1_3p408")
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_6wo30")]
-visible = false
 spawn_bubble_size = 250.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -49,14 +48,11 @@ sprite_frames = SubResource("SpriteFrames_owkkq")
 autoplay = "default"
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
-visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
-visible = false
 polygon = PackedVector2Array(64, 96, 100, 84, 128, 32, 124, -64, 92, -116, 36, -120, 0, -96, -48, -8, -116, 48, -120, 100, -92, 124, -64, 128, -24, 120, 28, 104, 48, 96)
 
 [node name="RefillArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 16
 collision_mask = 0
 
