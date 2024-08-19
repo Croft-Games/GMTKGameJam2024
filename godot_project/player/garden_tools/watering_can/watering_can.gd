@@ -6,6 +6,9 @@ const max_water_level: int = 3
 var water_level: int = max_water_level
 var is_pouring: bool = false
 
+@export var empty_modulation: Color = Color.DIM_GRAY
+var full_modulation: Color = Color.WHITE
+
 func _ready() -> void:
 	super()
 	action_timer.timeout.connect(stop_pouring)
@@ -33,6 +36,7 @@ func use():
 			sprite.play(&"pour")
 			play_water_sound()
 			water_level -= 1
+			sprite.modulate = empty_modulation.lerp(full_modulation, float(water_level) / max_water_level)
 			is_pouring = true
 	else:
 		empty_animation()
@@ -46,6 +50,15 @@ func play_empty_sound():
 func refill():
 	water_level = max_water_level
 	play_sound(8)
+	refill_animation()
+	sprite.modulate = full_modulation
+
+func refill_animation():
+	var refill_tween = create_tween()
+	refill_tween.set_trans(Tween.TRANS_SINE)
+	refill_tween.set_ease(Tween.EASE_IN_OUT)
+	refill_tween.tween_property(sprite, "rotation_degrees", 20 * facing_mult(), 0.4)
+	refill_tween.tween_property(sprite, "rotation_degrees", 0, 0.2)
 
 func empty_animation():
 	tool_failed.emit("water")

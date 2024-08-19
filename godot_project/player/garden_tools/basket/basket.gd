@@ -43,6 +43,15 @@ func play_full_sound():
 func empty_fruit():
 	set_fruit_level(0)
 	play_empty_sound()
+	empty_animation()
+
+
+func empty_animation():
+	var empty_tween = create_tween()
+	empty_tween.set_trans(Tween.TRANS_SINE)
+	empty_tween.set_ease(Tween.EASE_IN_OUT)
+	empty_tween.tween_property(sprite, "rotation_degrees", 45 * facing_mult(), 0.4)
+	empty_tween.tween_property(sprite, "rotation_degrees", 0, 0.2)
 
 func set_fruit_level(level: int):
 	fruit_level = level
