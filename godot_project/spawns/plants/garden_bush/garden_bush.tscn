@@ -130,13 +130,12 @@ collision_layer = 12
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
-position = Vector2(-8, 16)
 shape = SubResource("CapsuleShape2D_g1swo")
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-8, 62)
+position = Vector2(-8, 42)
 shape = SubResource("CapsuleShape2D_p0gc0")
 
 [node name="WaterTimer" parent="." instance=ExtResource("9_h8r2l")]

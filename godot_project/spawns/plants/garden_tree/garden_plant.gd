@@ -26,21 +26,22 @@ func _ready() -> void:
 	if Task.PRUNE in task_assignments:
 		leaf_spawner = $LeafSpawner
 		prune_timer = $PruneTimer
-		prune_timer.timer.wait_time = 20
+		prune_timer.timer.wait_time = 10
 		prune_timer.timer.timeout.connect(fail_task)
 	if Task.WATER in task_assignments:
 		dry_spawner = $DryEffectSpawner
 		water_timer = $WaterTimer
-		water_timer.timer.wait_time = 10
+		water_timer.timer.wait_time = 25
 		water_timer.timer.timeout.connect(fail_task)
 	if Task.COLLECT in task_assignments:
 		apple_spawner = $AppleSpawner
 		fruit_timer = $FruitTimer
-		fruit_timer.timer.wait_time = 30
+		fruit_timer.timer.wait_time = 20
 		fruit_timer.timer.timeout.connect(fail_task)
-	idle_timer.wait_time = 5
+	idle_timer.wait_time = 10
 	idle_timer.timeout.connect(set_queued_task)
 
+signal completed_task()
 signal failed_task()
 
 func fail_task():
@@ -56,6 +57,9 @@ func fail_task():
 	explosion.show()
 	explosion_timer.timeout.connect(queue_free)
 	explosion_timer.start()
+
+func complete_task():
+	completed_task.emit()
 
 # The below functions tell the spawn manager what to enable/disable
 
@@ -147,6 +151,7 @@ func water():
 		water_timer.hide()
 	if current_state == TreeState.DRY:
 		set_task(Task.IDLE)
+		complete_task()
 
 func prune():
 	if prune_timer != null:
@@ -154,6 +159,7 @@ func prune():
 		prune_timer.hide()
 	if current_state == TreeState.OVERGROWN:
 		set_task(Task.IDLE)
+		complete_task()
 
 func collect() -> bool:
 	if fruit_timer != null:
@@ -161,5 +167,6 @@ func collect() -> bool:
 		fruit_timer.hide()
 	if current_state == TreeState.FRUIT:
 		set_task(Task.IDLE)
+		complete_task()
 		return true
 	return false
