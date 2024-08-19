@@ -50,14 +50,14 @@ func _ready() -> void:
 	idle_timer.timeout.connect(set_queued_task)
 
 signal completed_task()
-signal failed_task()
+signal failed_task(plant: GardenPlant)
 
 func unlock_task(task: Task):
 	if task not in unlocked_tasks:
 		unlocked_tasks.append(task)
 
 func fail_task():
-	failed_task.emit()
+	failed_task.emit(self)
 	stop_timers()
 	custom_hide()
 

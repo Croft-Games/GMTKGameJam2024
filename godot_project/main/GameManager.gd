@@ -31,12 +31,19 @@ var current_plants: int = 1
 
 var unlocked_tasks: Array = [GardenPlant.Task.PRUNE]
 
-var object_counts: Dictionary = {}
+var object_counts: Dictionary = {
+	0: 1,
+	3: 1,
+}
 @export var spawn_dropoff: float = 1
 
 @export var unlock_reqs: Dictionary = {
 	GardenPlant.Task.WATER: [2, 4],
 	GardenPlant.Task.COLLECT: [1, 5, 6],
+}
+@export var locked_behind: Dictionary = {
+	GardenPlant.Task.WATER: [2, 4],
+	GardenPlant.Task.COLLECT: [5, 6],
 }
 var unlock_progress: Dictionary = {
 	GardenPlant.Task.WATER: 0,
@@ -94,7 +101,7 @@ func start_unlock(task):
 	unlock_started[task] = true
 	var reqs = unlock_reqs[task]
 	for i in reqs:
-		var new_spawn: Spawnable = spawn_element(possible_spawns[i])
+		var new_spawn: Spawnable = spawn_element(i)
 		new_spawn.spawn_manager.spawned.connect(unlock_task_for_plants.bind(task))
 
 func unlock_task_for_plants(task):
@@ -120,9 +127,13 @@ func task_completed():
 	health += active_health_regen
 	tasks_completed += 1
 
-func task_failed():
+func task_failed(plant: GardenPlant):
 	health -= fail_damage
 	current_plants -= 1
+	var i: int = 0
+	if GardenPlant.Task.COLLECT in plant.task_assignments:
+		i += 1
+	object_counts[i] = object_counts.get(i, 1) - 1
 
 func game_over():
 	spawn_timer.stop()
@@ -148,19 +159,20 @@ func set_zoom_from_elapsed_time():
 func is_unlocked(i):
 	if i < 0:
 		return false
-	if (not GardenPlant.Task.WATER in unlocked_tasks) and (i in unlock_reqs[GardenPlant.Task.WATER]):
+	if (not GardenPlant.Task.WATER in unlocked_tasks) and (i in locked_behind[GardenPlant.Task.WATER]):
 		return false
-	if (not GardenPlant.Task.COLLECT in unlocked_tasks) and (i in unlock_reqs[GardenPlant.Task.COLLECT]):
+	if (not GardenPlant.Task.COLLECT in unlocked_tasks) and (i in locked_behind[GardenPlant.Task.COLLECT]):
 		return false
 	return true
 
 
-func _select_random_spawn():
+func _select_random_spawn() -> int:
 	var modified_spawn_weights: Array[float] = []
 	for i in possible_spawns.size():
-		var packed_scene = possible_spawns[i]
-		var obj_count = object_counts.get(packed_scene, 0)
+		var obj_count = object_counts.get(i, 0)
 		modified_spawn_weights.append(spawn_weights[i] * exp(-obj_count * spawn_dropoff))
+	print(object_counts)
+	print(modified_spawn_weights)
 	var sum_of_spawn_weights: float = sum(modified_spawn_weights)
 	var n: float = randf_range(0, sum_of_spawn_weights)
 	var t: float = 0
@@ -171,7 +183,7 @@ func _select_random_spawn():
 			if n < t:
 				e = i
 				break
-	return possible_spawns[e]
+	return e
 
 func is_spawnable(item):
 	return is_instance_valid(item) and item is Spawnable
@@ -181,10 +193,10 @@ func generate_spawn_position():
 	boundary_finder.force_raycast_update()
 	return boundary_finder.get_collision_point() * minf(randfn(0.8, 0.1), 1.0)
 
-func spawn_element(packed_scene = null) -> Spawnable:
-	if packed_scene == null:
-		packed_scene = _select_random_spawn()
-	var new_spawn = packed_scene.instantiate()
+func spawn_element(packed_scene_index = null) -> Spawnable:
+	if packed_scene_index == null:
+		packed_scene_index = _select_random_spawn()
+	var new_spawn = possible_spawns[packed_scene_index].instantiate()
 	if new_spawn is Spawnable:
 		add_child(new_spawn)
 		new_spawn.position = Vector2.ZERO
@@ -200,7 +212,7 @@ func spawn_element(packed_scene = null) -> Spawnable:
 				new_spawn.unlock_task(task)
 		if new_spawn is GardenTool:
 			new_spawn.tool_failed.connect(_on_tool_failed)
-		object_counts[packed_scene] = object_counts.get(packed_scene, 0) + 1
+		object_counts[packed_scene_index] = object_counts.get(packed_scene_index, 0) + 1
 	return new_spawn
 
 

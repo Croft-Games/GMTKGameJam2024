@@ -1,11 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://xokngs078a6j"]
+[gd_scene load_steps=4 format=3 uid="uid://xokngs078a6j"]
 
-[ext_resource type="Shader" path="res://spawns/plants/garden_tree/highlight.gdshader" id="1_5m72f"]
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/highlighter.gd" id="2_oub2i"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_73rk3"]
-render_priority = 0
-shader = ExtResource("1_5m72f")
 
 [sub_resource type="Gradient" id="Gradient_vs8w0"]
 offsets = PackedFloat32Array(0, 0.623377, 1)
@@ -20,6 +15,5 @@ fill_to = Vector2(0.5, 0.469565)
 repeat = 2
 
 [node name="Highlighter" type="Sprite2D"]
-material = SubResource("ShaderMaterial_73rk3")
 texture = SubResource("GradientTexture2D_00rk0")
 script = ExtResource("2_oub2i")
