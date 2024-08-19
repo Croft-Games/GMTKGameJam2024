@@ -8,7 +8,6 @@ extends CharacterBody2D
 @onready var drop_sound: AudioStreamPlayer2D = $DropSound
 @onready var interaction_box: Area2D = $InteractionBox
 @onready var interaction_shape: CollisionShape2D = $InteractionBox/CollisionShape2D
-@onready var rope: Line2D = $Line2D
 
 @export var base_speed: float = 400
 
@@ -21,12 +20,11 @@ const idle_light_position: Vector2 = Vector2(-80, -220)
 const move_light_colour: Color = Color("#cf4833")
 const move_light_position: Vector2 = Vector2(-100, -215)
 
-var equipped_tools: Array[GardenTool] = []
+var equipped_tool: GardenTool = null
 var tool_slowdown: float = 0.5
 
 var facing_right: bool = false
 
-var distance_per_tool: float = 100
 var active_tool_offset: Vector2 = Vector2(-50, -1)
 @onready var interaction_box_offset = interaction_shape.position
 
@@ -36,7 +34,6 @@ const base_sprite_scale: float = 0.065
 func _ready() -> void:
 	player_sprite.scale = base_sprite_scale * Vector2.ONE
 	set_state_idle(true)
-	rope.add_point(Vector2.ZERO)
 
 func flip_direction():
 	set_facing(not facing_right)
@@ -53,7 +50,7 @@ func set_facing(right: bool):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var move_input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	speed_multiplier = exp(-equipped_tools.size() * tool_slowdown)
+	speed_multiplier = exp(-tool_slowdown * int(equipped_tool != null))
 	velocity = move_input * base_speed * speed_multiplier
 
 	if move_input.x != 0:
@@ -64,7 +61,7 @@ func _process(delta: float) -> void:
 	else:
 		set_state_moving()
 
-	_move_tools(delta)
+	_move_tool()
 
 func set_state_moving(force: bool = false):
 	if force or current_state != PlayerState.MOVING:
@@ -88,25 +85,15 @@ func set_state_idle(force: bool = false):
 func _physics_process(delta: float) -> void:
 	move_and_slide()
 
-func _move_tools(delta: float):
-	for i in equipped_tools.size():
-		var tooli: GardenTool = equipped_tools[i]
-		if i > 0:
-			if tooli.position.distance_to(position) > (distance_per_tool * (i + 1)):
-				tooli.position = tooli.position.move_toward(position, base_speed * delta)
-				while rope.get_point_count() < i:
-					rope.add_point(Vector2.ZERO)
-			rope.set_point_position(i, to_local(tooli.position))
-		else:
-			tooli.position = position + vector_from_facing(active_tool_offset)
-			tooli.set_facing(facing_right)
+func _move_tool():
+	if equipped_tool != null:
+		equipped_tool.position = position + vector_from_facing(active_tool_offset)
+		equipped_tool.set_facing(facing_right)
 
 func equip(tool: GardenTool):
 	connect_tool(tool)
-	equipped_tools.push_front(tool)
+	equipped_tool = tool
 	equip_sound.play()
-	if equipped_tools.size() > 1:
-		rope.add_point(to_global(tool.position))
 
 func connect_tool(tool: GardenTool):
 	tool.tool_failed.connect(_on_tool_failed)
@@ -117,41 +104,20 @@ func disconnect_tool(tool: GardenTool):
 func grab_tool():
 	for area in interaction_box.get_overlapping_areas():
 		var t = area.get_parent()
-		if t is GardenTool and t not in equipped_tools:
+		if t is GardenTool and t != equipped_tool:
 			equip(t)
 			return
 
-
 func use_tool():
-	if equipped_tools.size() > 0:
-		equipped_tools[0].use()
+	if equipped_tool != null:
+		equipped_tool.use()
 
 func drop_tool():
-	var dropped_tool: GardenTool = equipped_tools.pop_front()
-	if dropped_tool != null:
-		disconnect_tool(dropped_tool)
-		if rope.get_point_count() >= 2:
-			rope.remove_point(1)
+	if equipped_tool != null:
+		disconnect_tool(equipped_tool)
 		drop_sound.play()
-		if equipped_tools.size() > 0:
-			connect_tool(equipped_tools[0])
+		equipped_tool = null
 
-func cycle_tool():
-	var front = equipped_tools.pop_front()
-	if front != null:
-		disconnect_tool(front)
-		equipped_tools.push_back(front)
-		equip_sound.play()
-		connect_tool(equipped_tools[0])
-
-func reverse_cycle_tool():
-	var back = equipped_tools.pop_back()
-	if back != null:
-		if equipped_tools.size() > 0:
-			disconnect_tool(equipped_tools[0])
-		equipped_tools.push_front(back)
-		equip_sound.play()
-		connect_tool(back)
 
 func _on_tool_failed(action: String):
 	$SadSound.play()
@@ -166,12 +132,9 @@ func _on_tool_failed(action: String):
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("grab_tool"):
-		grab_tool()
+		if equipped_tool == null:
+			grab_tool()
+		else:
+			drop_tool()
 	if event.is_action_pressed("use_tool"):
 		use_tool()
-	if event.is_action_pressed("cycle_tool"):
-		cycle_tool()
-	if event.is_action_pressed("reverse_cycle_tool"):
-		reverse_cycle_tool()
-	if event.is_action_pressed("drop_tool"):
-		drop_tool()

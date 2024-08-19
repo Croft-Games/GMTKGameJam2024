@@ -1,8 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=27 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
-[ext_resource type="Texture2D" uid="uid://d3qa817ki2x1m" path="res://player/garden_tools/Rope_Texture.PNG" id="2_r7wrx"]
 [ext_resource type="Texture2D" uid="uid://bkpcjt462pdji" path="res://player/Player_Sprite/idle/PlayerIdle_2.PNG" id="3_e28t7"]
 [ext_resource type="Texture2D" uid="uid://cy05hfm8j8uxy" path="res://player/Player_Sprite/move/PlayerMove1.PNG" id="3_tflh0"]
 [ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
@@ -18,10 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://b0puivcahlag7" path="res://player/icons/no_water/NoWater_2.PNG" id="15_8rlpd"]
 [ext_resource type="Texture2D" uid="uid://7u0ktcdbc02y" path="res://player/icons/crate/Box_1.PNG" id="17_mrh7o"]
 [ext_resource type="Texture2D" uid="uid://dhhy0mkbmpw4g" path="res://player/icons/crate/Box_2.PNG" id="18_8oq8i"]
-
-[sub_resource type="Curve" id="Curve_8facg"]
-_data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0.483516), -0.164835, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
 animations = [{
@@ -124,16 +119,6 @@ radius = 71.65
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_uo0jg")
-
-[node name="Line2D" type="Line2D" parent="."]
-z_index = -1
-width_curve = SubResource("Curve_8facg")
-default_color = Color(0.8, 0.54902, 0, 1)
-texture = ExtResource("2_r7wrx")
-texture_mode = 1
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 light_mask = 3

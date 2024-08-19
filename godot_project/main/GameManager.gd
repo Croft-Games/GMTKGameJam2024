@@ -80,13 +80,16 @@ func _ready() -> void:
 	first_plant.completed_task.connect(task_completed)
 
 
+func modified_passive_health_regen() -> float:
+	return passive_health_regen * (1 - exp(1 - current_plants / 2))
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if game_active:
 		elapsed_time += delta
 		if health <= 0:
 			game_over()
-		health = clampf(health + passive_health_regen * delta, 0, max_health)
+		health = clampf(health + modified_passive_health_regen() * delta, 0, max_health)
 		set_zoom_from_elapsed_time()
 
 		try_unlock(GardenPlant.Task.WATER)
