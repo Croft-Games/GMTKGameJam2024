@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b18jlwxea0nsk"]
+[gd_scene load_steps=35 format=3 uid="uid://b18jlwxea0nsk"]
 
 [ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_chlfc"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_22lom"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c8dyf4qm0yhpe" path="res://spawns/plants/explosions/explosion01.png" id="11_enl7e"]
 [ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/plants/timer/task_timer.tscn" id="11_ett6d"]
 [ext_resource type="Texture2D" uid="uid://dyv0l0ik8x5n5" path="res://spawns/plants/explosions/explosion02.png" id="12_b4as7"]
+[ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="12_ubfc5"]
 [ext_resource type="Texture2D" uid="uid://dndybf8eluo1c" path="res://spawns/plants/explosions/explosion03.png" id="13_a8ksu"]
 [ext_resource type="Texture2D" uid="uid://byjpbxgras8s0" path="res://spawns/plants/explosions/explosion04.png" id="14_mn12a"]
 [ext_resource type="Texture2D" uid="uid://cvty42f1fe22t" path="res://spawns/plants/explosions/explosion05.png" id="15_2d154"]
@@ -135,12 +136,15 @@ task_assignments = Array[int]([1, 2, 3, 4])
 spawn_bubble_size = 220.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+clip_children = 2
 material = SubResource("ShaderMaterial_wh2gd")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_ko8td")
-animation = &"fruit"
+animation = &"happy"
 autoplay = "happy"
 metadata/_edit_lock_ = true
+
+[node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("12_ubfc5")]
 
 [node name="InteractionBox" type="Area2D" parent="."]
 collision_layer = 44

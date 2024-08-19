@@ -31,3 +31,7 @@ func get_visuals() -> Array[Node2D]:
 
 func get_colliders() -> Array:
 	return []
+
+func highlight():
+	if has_node("AnimatedSprite2D/Highlighter"):
+		$AnimatedSprite2D/Highlighter.highlight()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbgnu7nmpy442"]
+[gd_scene load_steps=9 format=3 uid="uid://cbgnu7nmpy442"]
 
 [ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_6wo30"]
 [ext_resource type="Texture2D" uid="uid://wgnc5mk8ev0n" path="res://main/pond/MainPond_1.PNG" id="2_nvxob"]
 [ext_resource type="Shader" path="res://main/pond/pond.gdshader" id="3_phr3x"]
 [ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
+[ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="6_w844i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_811bs"]
 shader = ExtResource("3_phr3x")
@@ -46,6 +47,10 @@ material = SubResource("ShaderMaterial_811bs")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_owkkq")
 autoplay = "default"
+frame = 1
+frame_progress = 0.949561
+
+[node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("6_w844i")]
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 

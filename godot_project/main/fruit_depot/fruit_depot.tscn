@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbwmume1vvu7l"]
+[gd_scene load_steps=11 format=3 uid="uid://dbwmume1vvu7l"]
 
 [ext_resource type="Script" path="res://main/fruit_depot/fruit_depot.gd" id="1_e0wib"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_fi7qu"]
 [ext_resource type="Shader" path="res://spawns/plants/garden_tree/garden_tree.gdshader" id="3_gerac"]
 [ext_resource type="Texture2D" uid="uid://chtd2ujntvlhk" path="res://main/fruit_depot/Crate_1.PNG" id="3_qnxj4"]
 [ext_resource type="Texture2D" uid="uid://ce840mlxmf830" path="res://main/fruit_depot/Crate_2.PNG" id="4_qlifv"]
+[ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="6_6sf5k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4xa2l"]
 shader = ExtResource("3_gerac")
@@ -41,10 +42,13 @@ script = ExtResource("1_e0wib")
 spawn_bubble_size = 200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+clip_children = 2
 material = SubResource("ShaderMaterial_4xa2l")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_5qnmt")
 autoplay = "default"
+
+[node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("6_6sf5k")]
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 

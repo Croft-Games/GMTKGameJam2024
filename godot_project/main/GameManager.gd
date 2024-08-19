@@ -198,5 +198,13 @@ func spawn_element(packed_scene = null) -> Spawnable:
 			max_plants = max(current_plants, max_plants)
 			for task in unlocked_tasks:
 				new_spawn.unlock_task(task)
+		if new_spawn is GardenTool:
+			new_spawn.tool_failed.connect(_on_tool_failed)
 		object_counts[packed_scene] = object_counts.get(packed_scene, 0) + 1
 	return new_spawn
+
+
+func _on_tool_failed(action: String):
+	for ch in get_children():
+		if (action == "water" and ch is Pond) or (action == "fruit" and ch is FruitDepot):
+			ch.highlight()
