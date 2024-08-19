@@ -35,7 +35,6 @@ size = Vector2(144, 88)
 radius = 120.0
 
 [node name="FruitDepot" type="Node2D"]
-z_index = -1
 script = ExtResource("1_e0wib")
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_fi7qu")]

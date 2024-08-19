@@ -51,7 +51,7 @@ theme_override_constants/margin_right = 70
 [node name="HealthBar" type="ProgressBar" parent="GameManager/HUDCanvas/HUD/MarginContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-value = 100.0
+value = 70.0
 show_percentage = false
 
 [node name="GameOverPanel" type="PanelContainer" parent="GameManager/HUDCanvas/HUD"]

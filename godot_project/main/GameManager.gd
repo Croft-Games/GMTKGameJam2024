@@ -61,6 +61,7 @@ func sum(values) -> float:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	health_bar.max_value = max_health
+	health_bar.value = max_health
 	assert(possible_spawns.size() == spawn_weights.size())
 	spawn_timer.timeout.connect(spawn_element)
 	first_plant.position = Vector2.ZERO
