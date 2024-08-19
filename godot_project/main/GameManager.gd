@@ -81,7 +81,7 @@ func _ready() -> void:
 
 
 func modified_passive_health_regen() -> float:
-	return passive_health_regen * (1 - exp(1 - current_plants / 2))
+	return passive_health_regen * (1 - exp(1 - (float(current_plants) / 2)))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

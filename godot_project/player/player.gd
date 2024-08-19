@@ -116,8 +116,8 @@ func drop_tool():
 	if equipped_tool != null:
 		disconnect_tool(equipped_tool)
 		drop_sound.play()
+		equipped_tool.drop()
 		equipped_tool = null
-
 
 func _on_tool_failed(action: String):
 	$SadSound.play()
