@@ -1,0 +1,24 @@
+Game Design:
+	Charlie Wilson (Violent Quiche)
+	Elizabeth Kracik-Dyer (Lizard)
+	Oliver Carr
+	Ben Smith
+
+Code:
+	Charlie
+
+Art:
+	Liz
+
+Music:
+	Background Music - Oliver Carr
+	Menu Music: Nature spirits (Almusic34)
+
+SFX:
+	From freesound.org:
+		ENGINE~1.WAV by MarlonHJ
+		Pops by SunnySideSound
+		Pianist build by vartioh
+		Garden Shears.wav byy Rouliane
+		EXPLDsgn_Powerful Explosion 2.1_EM_(28lrs).wav by newlocknew
+

@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbwmume1vvu7l"]
+
+[ext_resource type="Script" path="res://main/fruit_depot/fruit_depot.gd" id="1_e0wib"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_fi7qu"]
+[ext_resource type="Shader" path="res://spawns/plants/garden_tree/garden_tree.gdshader" id="3_gerac"]
+[ext_resource type="Texture2D" uid="uid://chtd2ujntvlhk" path="res://main/fruit_depot/Crate_1.PNG" id="3_qnxj4"]
+[ext_resource type="Texture2D" uid="uid://ce840mlxmf830" path="res://main/fruit_depot/Crate_2.PNG" id="4_qlifv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xa2l"]
+shader = ExtResource("3_gerac")
+shader_parameter/deform = Vector2(2, 2)
+shader_parameter/offset = Vector2(360, 360)
+shader_parameter/modulate = Color(0, 0, 0, 0.490196)
+shader_parameter/x_buffer = 2.0
+shader_parameter/y_buffer = 2.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5qnmt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qnxj4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qlifv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u22s3"]
+size = Vector2(144, 88)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6s3kl"]
+radius = 120.0
+
+[node name="FruitDepot" type="Node2D"]
+z_index = -1
+script = ExtResource("1_e0wib")
+
+[node name="SpawnManager" parent="." instance=ExtResource("2_fi7qu")]
+spawn_bubble_size = 200.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_4xa2l")
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_5qnmt")
+autoplay = "default"
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(0, 28)
+shape = SubResource("RectangleShape2D_u22s3")
+
+[node name="DepositArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
+shape = SubResource("CircleShape2D_6s3kl")

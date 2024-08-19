@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbgnu7nmpy442"]
+
+[ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_6wo30"]
+[ext_resource type="Texture2D" uid="uid://wgnc5mk8ev0n" path="res://main/pond/MainPond_1.PNG" id="2_nvxob"]
+[ext_resource type="Shader" path="res://main/pond/pond.gdshader" id="3_phr3x"]
+[ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_811bs"]
+shader = ExtResource("3_phr3x")
+shader_parameter/OCTAVE = 6
+shader_parameter/mulscale = 5.0
+shader_parameter/height = 0.6
+shader_parameter/tide = 0.1
+shader_parameter/foamthickness = 0.1
+shader_parameter/timescale = 1.0
+shader_parameter/waterdeep = 0.3
+shader_parameter/WATER_COL = Color(0.180392, 0.552941, 0.768627, 1)
+shader_parameter/WATER2_COL = Color(0.12549, 0.380392, 0.529412, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_owkkq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nvxob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yctd3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="Pond" type="Node2D"]
+z_index = -1
+script = ExtResource("1_3p408")
+
+[node name="SpawnManager" parent="." instance=ExtResource("2_6wo30")]
+visible = false
+spawn_bubble_size = 250.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+clip_children = 2
+material = SubResource("ShaderMaterial_811bs")
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_owkkq")
+autoplay = "default"
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
+visible = false
+polygon = PackedVector2Array(64, 96, 100, 84, 128, 32, 124, -64, 92, -116, 36, -120, 0, -96, -48, -8, -116, 48, -120, 100, -92, 124, -64, 128, -24, 120, 28, 104, 48, 96)
+
+[node name="RefillArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RefillArea"]
+polygon = PackedVector2Array(72, 124, 160, 60, 168, -8, 164, -72, 116, -140, 52, -164, -12, -128, -68, -68, -116, -8, -160, 76, -112, 152, -24, 152)

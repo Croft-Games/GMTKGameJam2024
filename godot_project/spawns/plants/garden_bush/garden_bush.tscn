@@ -1,0 +1,172 @@
+[gd_scene load_steps=30 format=3 uid="uid://cc7brw25kjye1"]
+
+[ext_resource type="Script" path="res://spawns/plants/garden_tree/garden_plant.gd" id="1_unf5s"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_hd86j"]
+[ext_resource type="Texture2D" uid="uid://sntjiaxsbyw2" path="res://spawns/plants/garden_bush/dry_sprites/BushDry_1.PNG" id="3_j6vgf"]
+[ext_resource type="Shader" path="res://spawns/plants/garden_tree/garden_tree.gdshader" id="3_mu7ef"]
+[ext_resource type="Texture2D" uid="uid://buynfkd8orhoh" path="res://spawns/plants/garden_bush/dry_sprites/BushDry_2.PNG" id="4_j6hkd"]
+[ext_resource type="Texture2D" uid="uid://bmn4twug0grdq" path="res://spawns/plants/garden_bush/happy_sprites/BushIdle_1.PNG" id="5_i6obf"]
+[ext_resource type="Texture2D" uid="uid://bv8yqx35moehb" path="res://spawns/plants/garden_bush/happy_sprites/BushIdle_2.PNG" id="6_5ju5t"]
+[ext_resource type="Texture2D" uid="uid://d1jvlk4c8vnqx" path="res://spawns/plants/garden_bush/overgrown_sprites/BushOvergrown_1.PNG" id="7_8tsuw"]
+[ext_resource type="Texture2D" uid="uid://otnl0jhp0an" path="res://spawns/plants/garden_bush/overgrown_sprites/BushOvergrown_2.PNG" id="8_l12b2"]
+[ext_resource type="PackedScene" uid="uid://cdwwomujrar14" path="res://spawns/plants/timer/task_timer.tscn" id="9_h8r2l"]
+[ext_resource type="Texture2D" uid="uid://cfli620xtpxux" path="res://spawns/plants/explosions/explosion00.png" id="10_4bt7c"]
+[ext_resource type="Texture2D" uid="uid://c8dyf4qm0yhpe" path="res://spawns/plants/explosions/explosion01.png" id="11_qtrn8"]
+[ext_resource type="Texture2D" uid="uid://dyv0l0ik8x5n5" path="res://spawns/plants/explosions/explosion02.png" id="12_e2jct"]
+[ext_resource type="Texture2D" uid="uid://dndybf8eluo1c" path="res://spawns/plants/explosions/explosion03.png" id="13_6stbf"]
+[ext_resource type="Texture2D" uid="uid://byjpbxgras8s0" path="res://spawns/plants/explosions/explosion04.png" id="14_wy4li"]
+[ext_resource type="Texture2D" uid="uid://cvty42f1fe22t" path="res://spawns/plants/explosions/explosion05.png" id="15_xrnck"]
+[ext_resource type="Texture2D" uid="uid://bts78opnkqwvd" path="res://spawns/plants/explosions/explosion06.png" id="16_i0hu3"]
+[ext_resource type="Texture2D" uid="uid://ccddy5qwwqmyj" path="res://spawns/plants/explosions/explosion07.png" id="17_dombw"]
+[ext_resource type="Texture2D" uid="uid://g751jwd3j235" path="res://spawns/plants/explosions/explosion08.png" id="18_ojrid"]
+[ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="19_3mojb"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="20_qbw1d"]
+[ext_resource type="AudioStream" uid="uid://bsy6hrtxy4gbg" path="res://spawns/plants/leafy/106130__j1987__leafpilehit.wav" id="21_q84hd"]
+[ext_resource type="Texture2D" uid="uid://c7sfdcs3sc7o5" path="res://spawns/plants/leafy/DryParticle.png" id="22_fhgwa"]
+[ext_resource type="AudioStream" uid="uid://cgusdwwtadu5w" path="res://spawns/plants/471411__juaner__12_steam.wav" id="23_28qv7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01nt3"]
+shader = ExtResource("3_mu7ef")
+shader_parameter/deform = Vector2(2, 2)
+shader_parameter/offset = Vector2(230, 230)
+shader_parameter/modulate = Color(0, 0, 0, 0.490196)
+shader_parameter/x_buffer = 2.0
+shader_parameter/y_buffer = 2.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5q56a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_j6vgf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j6hkd")
+}],
+"loop": true,
+"name": &"dry",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_i6obf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5ju5t")
+}],
+"loop": true,
+"name": &"happy",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8tsuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_l12b2")
+}],
+"loop": true,
+"name": &"overgrown",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1swo"]
+radius = 117.85
+height = 309.15
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0gc0"]
+radius = 64.0
+height = 144.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8enbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_4bt7c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qtrn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_e2jct")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6stbf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wy4li")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_xrnck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_i0hu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dombw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ojrid")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[node name="Bush" type="Node2D"]
+script = ExtResource("1_unf5s")
+task_assignments = Array[int]([1, 2, 3])
+
+[node name="SpawnManager" parent="." instance=ExtResource("2_hd86j")]
+spawn_bubble_size = 220.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_01nt3")
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_5q56a")
+animation = &"dry"
+
+[node name="InteractionBox" type="Area2D" parent="."]
+collision_layer = 12
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
+shape = SubResource("CapsuleShape2D_g1swo")
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
+position = Vector2(-8, 42)
+shape = SubResource("CapsuleShape2D_p0gc0")
+
+[node name="WaterTimer" parent="." instance=ExtResource("9_h8r2l")]
+visible = false
+position = Vector2(0, -160)
+color = Color(0.398642, 0.587427, 1, 1)
+
+[node name="PruneTimer" parent="." instance=ExtResource("9_h8r2l")]
+visible = false
+position = Vector2(0, -160)
+color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
+
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_8enbr")
+frame = 2
+frame_progress = 0.0806179
+
+[node name="Timer" type="Timer" parent="Explosion"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Explosion"]
+stream = ExtResource("19_3mojb")
+volume_db = 3.0
+bus = &"SFX"
+
+[node name="LeafSpawner" parent="." instance=ExtResource("20_qbw1d")]
+stream = ExtResource("21_q84hd")
+
+[node name="DryEffectSpawner" parent="." instance=ExtResource("20_qbw1d")]
+texture = ExtResource("22_fhgwa")
+stream = ExtResource("23_28qv7")

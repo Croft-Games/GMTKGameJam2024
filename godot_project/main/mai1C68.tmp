@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://c7qxiy8cill5b"]
+
+[ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
+[ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
+[ext_resource type="Script" path="res://main/PlayArea.gd" id="2_ej2m2"]
+[ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
+[ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/tree/tree.tscn" id="5_gepyh"]
+
+[sub_resource type="Gradient" id="Gradient_6gm4f"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yrv0p"]
+gradient = SubResource("Gradient_6gm4f")
+width = 1920
+height = 1920
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Main" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_yrv0p")
+
+[node name="GameManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("1_bvkti")
+
+[node name="Camera2D" type="Camera2D" parent="GameManager"]
+editor_draw_limits = true
+
+[node name="Player" parent="GameManager" instance=ExtResource("1_uhbg0")]
+
+[node name="PlayArea" type="Node2D" parent="GameManager"]
+script = ExtResource("2_ej2m2")
+
+[node name="Top" parent="GameManager/PlayArea" instance=ExtResource("3_hxqmk")]
+position = Vector2(0, -450)
+rotation = 3.14159
+
+[node name="Bottom" parent="GameManager/PlayArea" instance=ExtResource("3_hxqmk")]
+position = Vector2(0, 450)
+
+[node name="Left" parent="GameManager/PlayArea" instance=ExtResource("3_hxqmk")]
+position = Vector2(-800, 0)
+rotation = 1.5708
+
+[node name="Right" parent="GameManager/PlayArea" instance=ExtResource("3_hxqmk")]
+position = Vector2(800, 0)
+rotation = -1.5708
+
+[node name="Tree" parent="GameManager" instance=ExtResource("5_gepyh")]
+position = Vector2(560, -16)

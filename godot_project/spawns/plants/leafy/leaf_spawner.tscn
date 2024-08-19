@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://blhowhla1mpbw"]
+
+[ext_resource type="Texture2D" uid="uid://d12lhmn3pu15f" path="res://spawns/plants/leafy/LeafParticle.png" id="1_i3di1"]
+[ext_resource type="Script" path="res://spawns/plants/leafy/leaf_spawner.gd" id="2_uqg1o"]
+
+[node name="LeafSpawner" type="CPUParticles2D"]
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 1.0
+texture = ExtResource("1_i3di1")
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2(0, -1)
+spread = 90.0
+initial_velocity_min = 100.0
+initial_velocity_max = 400.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+orbit_velocity_min = -0.3
+orbit_velocity_max = 0.3
+scale_amount_min = 0.8
+hue_variation_min = -0.3
+hue_variation_max = 0.3
+script = ExtResource("2_uqg1o")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=17 format=3 uid="uid://bm3q6hnap71fv"]
+
+[ext_resource type="Script" path="res://spawns/spawn_manager.gd" id="1_wm2wn"]
+[ext_resource type="AudioStream" uid="uid://gk4yeg315ph2" path="res://spawns/pop_sfx/67086__sunnysidesound__pop_1.mp3" id="2_47swt"]
+[ext_resource type="AudioStream" uid="uid://3o4lq83hbply" path="res://spawns/pop_sfx/67087__sunnysidesound__pop_10.mp3" id="3_k266t"]
+[ext_resource type="AudioStream" uid="uid://bdwq2goaa60ah" path="res://spawns/pop_sfx/67088__sunnysidesound__pop_2.mp3" id="4_r4ooa"]
+[ext_resource type="AudioStream" uid="uid://o4nd46usbwd8" path="res://spawns/pop_sfx/67089__sunnysidesound__pop_3.mp3" id="5_ddovr"]
+[ext_resource type="AudioStream" uid="uid://5fbii44e5r4s" path="res://spawns/pop_sfx/67090__sunnysidesound__pop_4.mp3" id="6_hwq86"]
+[ext_resource type="AudioStream" uid="uid://csabtrg8dj1ux" path="res://spawns/pop_sfx/67091__sunnysidesound__pop_5.mp3" id="7_kmwoj"]
+[ext_resource type="AudioStream" uid="uid://c0llrqw7qtxar" path="res://spawns/pop_sfx/67092__sunnysidesound__pop_6.mp3" id="8_gk3pl"]
+[ext_resource type="AudioStream" uid="uid://cbx6twpio4882" path="res://spawns/pop_sfx/67093__sunnysidesound__pop_7.mp3" id="9_qact0"]
+[ext_resource type="AudioStream" uid="uid://dj2s3qmokm1l4" path="res://spawns/pop_sfx/67094__sunnysidesound__pop_8.mp3" id="10_qbebm"]
+[ext_resource type="AudioStream" uid="uid://cc2sj7ac72q6o" path="res://spawns/pop_sfx/67095__sunnysidesound__pop_9.mp3" id="11_xfgub"]
+[ext_resource type="AudioStream" uid="uid://bsxd81xhy160b" path="res://spawns/131913__vartioh__pianist-build.wav" id="12_nwk8w"]
+
+[sub_resource type="Gradient" id="Gradient_81ip0"]
+offsets = PackedFloat32Array(0, 0.688312)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qn7hv"]
+gradient = SubResource("Gradient_81ip0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rwarh"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0tvlr"]
+radius = 100.0
+
+[node name="SpawnManager" type="Node2D"]
+script = ExtResource("1_wm2wn")
+pop_sounds = Array[AudioStream]([ExtResource("2_47swt"), ExtResource("3_k266t"), ExtResource("4_r4ooa"), ExtResource("5_ddovr"), ExtResource("6_hwq86"), ExtResource("7_kmwoj"), ExtResource("8_gk3pl"), ExtResource("9_qact0"), ExtResource("10_qbebm"), ExtResource("11_xfgub")])
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="BuildupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_nwk8w")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 1, 0, 1)
+texture = SubResource("GradientTexture2D_qn7hv")
+
+[node name="SpawnBlockBubble" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnBlockBubble"]
+shape = SubResource("CircleShape2D_rwarh")
+debug_color = Color(0.816203, 0.338697, 0.585381, 0.42)
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="SpawnBlockBubble"]
+shape = SubResource("CircleShape2D_0tvlr")
+target_position = Vector2(0, 0)
+collision_mask = 32768
+collide_with_areas = true
+collide_with_bodies = false

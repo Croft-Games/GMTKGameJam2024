@@ -1,0 +1,16 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvmt8u2g1t1cg"]
+
+[ext_resource type="Script" path="res://main/tiles/decoration.gd" id="1_0x4i8"]
+[ext_resource type="Texture2D" uid="uid://dsm7et2btbbu3" path="res://main/tiles/Tile_1.PNG" id="2_61771"]
+[ext_resource type="Texture2D" uid="uid://bvlqi3hc85k0s" path="res://main/tiles/Tile_2.PNG" id="3_iy5gx"]
+[ext_resource type="Texture2D" uid="uid://duo4017o7i5is" path="res://main/tiles/Tile_3.PNG" id="4_c41nn"]
+[ext_resource type="Texture2D" uid="uid://cshyrfwujp5q2" path="res://main/tiles/Tile_4.PNG" id="5_kgm1k"]
+[ext_resource type="Texture2D" uid="uid://j06snuyfjyar" path="res://main/tiles/Tile_5.PNG" id="6_j1vd2"]
+[ext_resource type="Texture2D" uid="uid://coxy1vjuu1s05" path="res://main/tiles/Tile_6.PNG" id="7_yoxh8"]
+
+[node name="Decoration" type="Sprite2D"]
+z_index = -5
+scale = Vector2(0.065, 0.065)
+texture = ExtResource("2_61771")
+script = ExtResource("1_0x4i8")
+texture_options = Array[Texture2D]([ExtResource("2_61771"), ExtResource("3_iy5gx"), ExtResource("4_c41nn"), ExtResource("5_kgm1k"), ExtResource("6_j1vd2"), ExtResource("7_yoxh8")])
