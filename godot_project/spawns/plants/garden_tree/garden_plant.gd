@@ -21,6 +21,13 @@ var current_task: Task = Task.UNSET
 var previous_task: Task = Task.UNSET
 var unlocked_tasks: Array[Task] = [Task.IDLE, Task.PRUNE]
 
+@export var task_timers: Dictionary = {
+	Task.IDLE: [15, 3],
+	Task.PRUNE: [15, 3],
+	Task.WATER: [26, 3],
+	Task.COLLECT: [22, 5],
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
@@ -115,6 +122,7 @@ func set_state_happy():
 	if current_state != TreeState.HAPPY:
 		current_state = TreeState.HAPPY
 		sprite.play(&"happy")
+		idle_timer.wait_time = get_wait_time(Task.IDLE)
 		idle_timer.start()
 
 
@@ -125,11 +133,15 @@ func set_queued_task():
 	else:
 		set_random_task()
 
+func get_wait_time(task: Task) -> float:
+	var timer_params: Array = task_timers[task]
+	return randfn(timer_params[0], timer_params[1])
 
 func set_state_dry():
 	if current_state != TreeState.DRY:
 		current_state = TreeState.DRY
 		sprite.play(&"dry")
+		water_timer.timer.wait_time = get_wait_time(Task.WATER)
 		water_timer.timer.start()
 		water_timer.show()
 		dry_spawner.emit()
@@ -138,6 +150,7 @@ func set_state_overgrown():
 	if current_state != TreeState.OVERGROWN:
 		current_state = TreeState.OVERGROWN
 		sprite.play(&"overgrown")
+		prune_timer.timer.wait_time = get_wait_time(Task.PRUNE)
 		prune_timer.timer.start()
 		prune_timer.show()
 		leaf_spawner.emit()
@@ -146,6 +159,7 @@ func set_state_fruit():
 	if current_state != TreeState.FRUIT:
 		current_state = TreeState.FRUIT
 		sprite.play(&"fruit")
+		fruit_timer.timer.wait_time = get_wait_time(Task.COLLECT)
 		fruit_timer.timer.start()
 		fruit_timer.show()
 		apple_spawner.emit()
