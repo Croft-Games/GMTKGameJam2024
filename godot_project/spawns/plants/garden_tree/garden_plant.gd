@@ -20,6 +20,7 @@ var current_task: Task = Task.UNSET
 @export var queued_task: Task = Task.UNSET
 var previous_task: Task = Task.UNSET
 var unlocked_tasks: Array[Task] = [Task.IDLE, Task.PRUNE]
+var non_tasks: Array[Task] = [Task.UNSET, Task.IDLE]
 
 @export var task_timers: Dictionary = {
 	Task.IDLE: [15, 3],
@@ -31,6 +32,7 @@ var unlocked_tasks: Array[Task] = [Task.IDLE, Task.PRUNE]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
+	do_spawn_animation = false  # use custom logic instead
 	if Task.PRUNE in task_assignments:
 		leaf_spawner = $LeafSpawner
 		prune_timer = $PruneTimer
@@ -84,6 +86,8 @@ func get_colliders() -> Array:
 func _on_spawn():
 	super()
 	set_queued_task()
+	if current_task in non_tasks and queued_task in non_tasks:
+		leaf_spawner.emit()
 
 func stop_timers():
 	# todo reduce task code duplication

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnivtnyi5b0e5"]
+[gd_scene load_steps=15 format=3 uid="uid://bnivtnyi5b0e5"]
 
 [ext_resource type="Script" path="res://player/garden_tools/watering_can/watering_can.gd" id="1_nyv6o"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_h3vma"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dppmwgeor16xm" path="res://player/garden_tools/watering_can/pour_sprites/WateringcanPour_2.PNG" id="5_hovqc"]
 [ext_resource type="Texture2D" uid="uid://cfmag5uwn4kws" path="res://player/garden_tools/watering_can/pour_sprites/WateringcanPour_3.PNG" id="6_k85sg"]
 [ext_resource type="AudioStream" uid="uid://2nk7jornm2pp" path="res://player/garden_tools/watering_can/532890__bricklover__watering-with-a-watering-can.mp3" id="7_37b6l"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="9_cstyo"]
+[ext_resource type="Texture2D" uid="uid://bcqexxvisdl0y" path="res://spawns/plants/leafy/WaterParticle.png" id="10_2sb1r"]
+[ext_resource type="AudioStream" uid="uid://cc0dyrupxnmby" path="res://spawns/plants/leafy/364700__alegemaate__water-splash.wav" id="11_mwxyd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rm0a5"]
 animations = [{
@@ -81,3 +84,8 @@ shape = SubResource("CircleShape2D_ijo1r")
 [node name="ActionTimer" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
+
+[node name="LeafSpawner" parent="." instance=ExtResource("9_cstyo")]
+amount = 10
+texture = ExtResource("10_2sb1r")
+stream = ExtResource("11_mwxyd")

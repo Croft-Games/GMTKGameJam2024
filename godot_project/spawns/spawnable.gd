@@ -2,6 +2,7 @@ class_name Spawnable
 extends Node2D
 
 @onready var spawn_manager: SpawnManager = $SpawnManager
+var do_spawn_animation: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,6 +26,10 @@ func _on_start_spawn():
 
 func _on_spawn():
 	custom_show()
+	if do_spawn_animation:
+		var leaf_spawner: LeafSpawner = $LeafSpawner
+		if leaf_spawner != null:
+			leaf_spawner.emit()
 
 func get_visuals() -> Array[Node2D]:
 	return []

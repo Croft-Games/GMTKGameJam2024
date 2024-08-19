@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbgnu7nmpy442"]
+[gd_scene load_steps=12 format=3 uid="uid://cbgnu7nmpy442"]
 
 [ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_6wo30"]
@@ -6,6 +6,9 @@
 [ext_resource type="Shader" path="res://main/pond/pond.gdshader" id="3_phr3x"]
 [ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
 [ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="6_w844i"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="7_v2jyt"]
+[ext_resource type="Texture2D" uid="uid://bcqexxvisdl0y" path="res://spawns/plants/leafy/WaterParticle.png" id="8_sex6s"]
+[ext_resource type="AudioStream" uid="uid://cc0dyrupxnmby" path="res://spawns/plants/leafy/364700__alegemaate__water-splash.wav" id="9_cfnyv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_811bs"]
 shader = ExtResource("3_phr3x")
@@ -63,3 +66,7 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RefillArea"]
 polygon = PackedVector2Array(72, 124, 160, 60, 168, -8, 164, -72, 116, -140, 52, -164, -12, -128, -68, -68, -116, -8, -160, 76, -112, 152, -24, 152)
+
+[node name="LeafSpawner" parent="." instance=ExtResource("7_v2jyt")]
+texture = ExtResource("8_sex6s")
+stream = ExtResource("9_cfnyv")

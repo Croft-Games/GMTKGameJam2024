@@ -171,8 +171,6 @@ func _select_random_spawn() -> int:
 	for i in possible_spawns.size():
 		var obj_count = object_counts.get(i, 0)
 		modified_spawn_weights.append(spawn_weights[i] * exp(-obj_count * spawn_dropoff))
-	print(object_counts)
-	print(modified_spawn_weights)
 	var sum_of_spawn_weights: float = sum(modified_spawn_weights)
 	var n: float = randf_range(0, sum_of_spawn_weights)
 	var t: float = 0

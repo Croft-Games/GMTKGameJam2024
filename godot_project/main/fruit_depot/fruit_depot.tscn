@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbwmume1vvu7l"]
+[gd_scene load_steps=14 format=3 uid="uid://dbwmume1vvu7l"]
 
 [ext_resource type="Script" path="res://main/fruit_depot/fruit_depot.gd" id="1_e0wib"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_fi7qu"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://chtd2ujntvlhk" path="res://main/fruit_depot/Crate_1.PNG" id="3_qnxj4"]
 [ext_resource type="Texture2D" uid="uid://ce840mlxmf830" path="res://main/fruit_depot/Crate_2.PNG" id="4_qlifv"]
 [ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="6_6sf5k"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="7_6opjv"]
+[ext_resource type="Texture2D" uid="uid://dw61mpmwxk8qn" path="res://spawns/plants/leafy/AppleParticle.png" id="8_shxyi"]
+[ext_resource type="AudioStream" uid="uid://dj2s3qmokm1l4" path="res://spawns/pop_sfx/67094__sunnysidesound__pop_8.mp3" id="9_uj2qu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4xa2l"]
 shader = ExtResource("3_gerac")
@@ -62,3 +65,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DepositArea"]
 shape = SubResource("CircleShape2D_6s3kl")
+
+[node name="LeafSpawner" parent="." instance=ExtResource("7_6opjv")]
+texture = ExtResource("8_shxyi")
+stream = ExtResource("9_uj2qu")
