@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfli620xtpxux"
-path="res://.godot/imported/explosion00.png-9c10e7bffac03b0c82a68833994d17b3.ctex"
+uid="uid://bbgvuftd5336l"
+path="res://.godot/imported/Boom_3.PNG-3530a33bd0ee1dbdd843e58899069788.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/explosions/explosion00.png"
-dest_files=["res://.godot/imported/explosion00.png-9c10e7bffac03b0c82a68833994d17b3.ctex"]
+source_file="res://spawns/plants/explosions/Boom_3.PNG"
+dest_files=["res://.godot/imported/Boom_3.PNG-3530a33bd0ee1dbdd843e58899069788.ctex"]
 
 [params]
 

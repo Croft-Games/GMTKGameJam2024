@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfyb11w4d3lbo"]
+
+[ext_resource type="Texture2D" uid="uid://cfituwi6w83mx" path="res://spawns/plants/explosions/Boom_1.PNG" id="1_tddun"]
+[ext_resource type="Texture2D" uid="uid://c2w2lldwyunv7" path="res://spawns/plants/explosions/Boom_2.PNG" id="2_7xark"]
+[ext_resource type="Texture2D" uid="uid://bbgvuftd5336l" path="res://spawns/plants/explosions/Boom_3.PNG" id="3_84gse"]
+[ext_resource type="Texture2D" uid="uid://bx3rd1hagqpdr" path="res://spawns/plants/explosions/Boom_4.PNG" id="4_v0x4w"]
+[ext_resource type="Texture2D" uid="uid://5424ak70um1e" path="res://spawns/plants/explosions/Boom_5.PNG" id="5_jubj5"]
+[ext_resource type="AudioStream" uid="uid://c72voimnbvd3d" path="res://spawns/plants/garden_tree/625114__newlocknew__expldsgn_powerful-explosion-21_em_28lrs.wav" id="6_fxtxj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8enbr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_tddun")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_7xark")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_84gse")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v0x4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jubj5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v0x4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jubj5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 9.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_8enbr")
+frame = 6
+frame_progress = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_fxtxj")
+volume_db = 1.0
+bus = &"SFX"

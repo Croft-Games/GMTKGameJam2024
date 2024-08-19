@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g751jwd3j235"
-path="res://.godot/imported/explosion08.png-a331f3732558c219cab6f4adb2f5b7ef.ctex"
+uid="uid://bnbv7xi4ctquo"
+path="res://.godot/imported/BurntTree_2.PNG-d5c15eda5592cb4092ff804de69e91d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/explosions/explosion08.png"
-dest_files=["res://.godot/imported/explosion08.png-a331f3732558c219cab6f4adb2f5b7ef.ctex"]
+source_file="res://spawns/plants/garden_tree/dead_sprites/BurntTree_2.PNG"
+dest_files=["res://.godot/imported/BurntTree_2.PNG-d5c15eda5592cb4092ff804de69e91d2.ctex"]
 
 [params]
 

@@ -11,7 +11,7 @@ var leaf_spawner: LeafSpawner
 var dry_spawner: LeafSpawner
 var apple_spawner: LeafSpawner
 
-enum TreeState{SPAWNING, HAPPY, DRY, OVERGROWN, FRUIT}
+enum TreeState{SPAWNING, HAPPY, DRY, OVERGROWN, FRUIT, DEAD}
 var current_state: TreeState = TreeState.SPAWNING
 
 enum Task{UNSET, IDLE, WATER, PRUNE, COLLECT}
@@ -61,15 +61,15 @@ func unlock_task(task: Task):
 func fail_task():
 	failed_task.emit(self)
 	stop_timers()
-	custom_hide()
-
-	var explosion_sound = $Explosion/AudioStreamPlayer2D
+	var explosion_sound: AudioStreamPlayer2D = $Explosion/AudioStreamPlayer2D
 	explosion_sound.play()
-	var explosion = $Explosion
+	var explosion: AnimatedSprite2D = $Explosion
 	var explosion_timer = $Explosion/Timer
-	explosion.frame = randi() % 9
 	explosion.show()
-	explosion_timer.timeout.connect(queue_free)
+	explosion.play()
+	set_state_dead()
+	explosion_timer.timeout.connect(explosion_sound.stop)
+	explosion.animation_finished.connect(explosion.hide)
 	explosion_timer.start()
 
 func complete_task():
@@ -167,6 +167,12 @@ func set_state_fruit():
 		fruit_timer.timer.start()
 		fruit_timer.show()
 		apple_spawner.emit()
+
+func set_state_dead():
+	if current_state != TreeState.DEAD:
+		current_state = TreeState.DEAD
+		sprite.play(&"dead")
+		stop_timers()
 
 func water():
 	if water_timer != null:

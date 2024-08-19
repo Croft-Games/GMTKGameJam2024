@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck34ca8i5adr"
-path="res://.godot/imported/DaisyIdle_2.PNG-6191de8a2e1d49df74d18b993538e83b.ctex"
+uid="uid://dwpa6odwaecu"
+path="res://.godot/imported/BurntBush_1.PNG-f08cc0a39a96ef0cb8c26df7cbb5433a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/daisy/happy_sprites/DaisyIdle_2.PNG"
-dest_files=["res://.godot/imported/DaisyIdle_2.PNG-6191de8a2e1d49df74d18b993538e83b.ctex"]
+source_file="res://spawns/plants/garden_bush/dead_sprites/BurntBush_1.PNG"
+dest_files=["res://.godot/imported/BurntBush_1.PNG-f08cc0a39a96ef0cb8c26df7cbb5433a.ctex"]
 
 [params]
 

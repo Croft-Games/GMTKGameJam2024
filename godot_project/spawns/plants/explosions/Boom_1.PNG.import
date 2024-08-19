@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2lpv1wdnu1kc"
-path="res://.godot/imported/DaisyIdle_1.PNG-b529b147cc5f5d2c82e33d4adde54308.ctex"
+uid="uid://cfituwi6w83mx"
+path="res://.godot/imported/Boom_1.PNG-a41acad93a96ae116018b2dddb46c2f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/daisy/happy_sprites/DaisyIdle_1.PNG"
-dest_files=["res://.godot/imported/DaisyIdle_1.PNG-b529b147cc5f5d2c82e33d4adde54308.ctex"]
+source_file="res://spawns/plants/explosions/Boom_1.PNG"
+dest_files=["res://.godot/imported/Boom_1.PNG-a41acad93a96ae116018b2dddb46c2f6.ctex"]
 
 [params]
 

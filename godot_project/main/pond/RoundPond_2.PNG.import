@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dndybf8eluo1c"
-path="res://.godot/imported/explosion03.png-ccfed3e0da52218158359aad7f17009e.ctex"
+uid="uid://crxrtj43gc413"
+path="res://.godot/imported/RoundPond_2.PNG-54ac37b2e61629471380db2fe8cdbf8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spawns/plants/explosions/explosion03.png"
-dest_files=["res://.godot/imported/explosion03.png-ccfed3e0da52218158359aad7f17009e.ctex"]
+source_file="res://main/pond/RoundPond_2.PNG"
+dest_files=["res://.godot/imported/RoundPond_2.PNG-54ac37b2e61629471380db2fe8cdbf8b.ctex"]
 
 [params]
 
