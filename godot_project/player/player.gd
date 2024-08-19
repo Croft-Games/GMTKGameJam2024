@@ -1,17 +1,19 @@
+class_name Player
 extends CharacterBody2D
 
 @onready var player_sprite: AnimatedSprite2D = $PlayerSprite
 @onready var light: PointLight2D = $PlayerSprite/PointLight2D
 @onready var trail: CPUParticles2D = $PlayerSprite/CPUParticles2D
+@onready var dust_cloud: AnimatedSprite2D = $PlayerSprite/DustCloud
 @onready var move_sound: AudioStreamPlayer2D = $MovementSound
 @onready var equip_sound: AudioStreamPlayer2D = $EquipSound
 @onready var drop_sound: AudioStreamPlayer2D = $DropSound
+@onready var upgrade_sound: AudioStreamPlayer2D = $UpgradeSound
 @onready var interaction_box: Area2D = $InteractionBox
 @onready var interaction_shape: CollisionShape2D = $InteractionBox/CollisionShape2D
 
 @export var base_speed: float = 400
 
-var speed_multiplier: float = 1
 enum PlayerState{IDLE, MOVING}
 var current_state: PlayerState = PlayerState.IDLE
 
@@ -23,6 +25,9 @@ const move_light_position: Vector2 = Vector2(-100, -215)
 var equipped_tool: GardenTool = null
 var tool_slowdown: float = 0.5
 
+var batteries_collected: int = 0
+var speed_multiplier: float = 1
+
 var facing_right: bool = false
 
 var active_tool_offset: Vector2 = Vector2(-50, -1)
@@ -33,6 +38,7 @@ const base_sprite_scale: float = 0.065
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_sprite.scale = base_sprite_scale * Vector2.ONE
+	dust_cloud.animation_finished.connect(switch_dust_to_loop)
 	set_state_idle(true)
 
 func flip_direction():
@@ -47,11 +53,17 @@ func set_facing(right: bool):
 	player_sprite.scale = vector_from_facing(base_sprite_scale * Vector2.ONE)
 	interaction_shape.position = vector_from_facing(interaction_box_offset)
 
+func compute_speed() -> float:
+	var tool_multiplier: float = exp(-tool_slowdown * int(equipped_tool != null))
+	var battery_multiplier: float = float(2 + batteries_collected) / 2
+	speed_multiplier = tool_multiplier * battery_multiplier
+	move_sound.pitch_scale = speed_multiplier
+	return speed_multiplier * base_speed
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var move_input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	speed_multiplier = exp(-tool_slowdown * int(equipped_tool != null))
-	velocity = move_input * base_speed * speed_multiplier
+	velocity = move_input * compute_speed()
 
 	if move_input.x != 0:
 		set_facing(move_input.x > 0)
@@ -62,6 +74,21 @@ func _process(delta: float) -> void:
 		set_state_moving()
 
 	_move_tool()
+	for col in interaction_box.get_overlapping_areas():
+		var p = col.get_parent()
+		if p is Battery:
+			get_battery(p)
+
+signal battery_collected
+
+func get_battery(battery: Battery):
+	if battery.is_active:
+		battery.consume()
+		batteries_collected += 1
+		trail.amount += 5
+		upgrade_sound.play()
+		battery_collected.emit()
+
 
 func set_state_moving(force: bool = false):
 	if force or current_state != PlayerState.MOVING:
@@ -70,7 +97,12 @@ func set_state_moving(force: bool = false):
 		light.color = move_light_colour
 		light.position = move_light_position
 		trail.emitting = true
+		dust_cloud.show()
+		dust_cloud.play("start")
 		move_sound.play()
+
+func switch_dust_to_loop():
+	dust_cloud.play("loop")
 
 func set_state_idle(force: bool = false):
 	if force or current_state != PlayerState.IDLE:
@@ -80,6 +112,7 @@ func set_state_idle(force: bool = false):
 		light.position = idle_light_position
 		trail.emitting = false
 		move_sound.stop()
+		dust_cloud.hide()
 
 
 func _physics_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=16 format=3 uid="uid://c7qxiy8cill5b"]
 
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
 [ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
+[ext_resource type="PackedScene" uid="uid://cprxffneukfg" path="res://main/battery/battery.tscn" id="9_2bjdc"]
 [ext_resource type="PackedScene" uid="uid://cc7brw25kjye1" path="res://spawns/plants/garden_bush/garden_bush.tscn" id="9_420uc"]
 [ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="9_wccgg"]
 [ext_resource type="PackedScene" uid="uid://bdapd833dgoht" path="res://hud.tscn" id="9_wtwda"]
@@ -22,8 +23,8 @@ radius = 100.0
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
-possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k")])
-spawn_weights = Array[float]([10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k"), ExtResource("9_2bjdc")])
+spawn_weights = Array[float]([10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.4])
 
 [node name="HUDCanvas" type="CanvasLayer" parent="GameManager"]
 layer = 2

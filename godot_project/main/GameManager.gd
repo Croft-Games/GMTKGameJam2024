@@ -13,6 +13,7 @@ const initial_zoom: float = 1
 @onready var boundary_finder: RayCast2D = $BoundaryFinder
 @onready var first_plant: GardenPlant = $First
 @onready var health_bar: ProgressBar = $HUDCanvas/HUD/MarginContainer/HealthBar
+@onready var player: Player = $Player
 const max_health: float = 100
 var passive_health_regen: float = 0.05
 var active_health_regen: float = 2
@@ -78,6 +79,11 @@ func _ready() -> void:
 	first_plant.spawn_manager.start_spawn()
 	first_plant.failed_task.connect(task_failed)
 	first_plant.completed_task.connect(task_completed)
+	player.battery_collected.connect(_on_battery_collect)
+
+func _on_battery_collect():
+	var bindex: int = 7
+	object_counts[bindex] = object_counts.get(bindex, 1) - 1
 
 
 func modified_passive_health_regen() -> float:

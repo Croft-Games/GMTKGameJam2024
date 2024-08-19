@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=34 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -7,14 +7,20 @@
 [ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
+[ext_resource type="Texture2D" uid="uid://b8yjxj06bxsdb" path="res://player/dust/DirtCloud_1.PNG" id="8_bye0o"]
 [ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
 [ext_resource type="AudioStream" uid="uid://cjfxwi88uf5d4" path="res://player/538150__fupicat__sad-synth.wav" id="9_5x1au"]
+[ext_resource type="Texture2D" uid="uid://c0j5gr0r36gsg" path="res://player/dust/DirtCloud_2.PNG" id="9_ga0ve"]
+[ext_resource type="Texture2D" uid="uid://b8kvykk4b1xhm" path="res://player/dust/DirtCloud_3.PNG" id="10_387ak"]
 [ext_resource type="AudioStream" uid="uid://bu1haofvelo5" path="res://player/garden_tools/518850__mrickey13__item-equip.mp3" id="10_qaut7"]
+[ext_resource type="Texture2D" uid="uid://sfqpnw122d7u" path="res://player/dust/DirtCloud_4.PNG" id="11_nvmbm"]
 [ext_resource type="AudioStream" uid="uid://clydrxewmb1vi" path="res://player/garden_tools/648952__infi1234__equip.wav" id="11_unmod"]
 [ext_resource type="Texture2D" uid="uid://b78qkdr0ukwwc" path="res://player/icons/exclamation_mark/Exclamation_1.PNG" id="12_0gxrr"]
+[ext_resource type="Texture2D" uid="uid://dn13otxiyae7l" path="res://spawns/plants/leafy/SparkParticle.png" id="12_jt51h"]
 [ext_resource type="Texture2D" uid="uid://br10aa4r2txw1" path="res://player/icons/exclamation_mark/Exclatmation_2.PNG" id="13_gmqms"]
 [ext_resource type="Texture2D" uid="uid://du8naftxp2qqh" path="res://player/icons/no_water/NoWater_1.PNG" id="14_qk456"]
 [ext_resource type="Texture2D" uid="uid://b0puivcahlag7" path="res://player/icons/no_water/NoWater_2.PNG" id="15_8rlpd"]
+[ext_resource type="AudioStream" uid="uid://cxss0wt0g266x" path="res://main/battery/478337__joao_janz__bouncing-power-up-1_2.wav" id="17_gxok7"]
 [ext_resource type="Texture2D" uid="uid://7u0ktcdbc02y" path="res://player/icons/crate/Box_1.PNG" id="17_mrh7o"]
 [ext_resource type="Texture2D" uid="uid://dhhy0mkbmpw4g" path="res://player/icons/crate/Box_2.PNG" id="18_8oq8i"]
 
@@ -50,6 +56,37 @@ animations = [{
 "loop": true,
 "name": &"move",
 "speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3qoun"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_387ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nvmbm")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_bye0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ga0ve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_387ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nvmbm")
+}],
+"loop": false,
+"name": &"start",
+"speed": 9.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_j5slm"]
@@ -126,6 +163,16 @@ scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_hvbdm")
 animation = &"idle"
 
+[node name="DustCloud" type="AnimatedSprite2D" parent="PlayerSprite"]
+modulate = Color(1, 1, 1, 0.788235)
+z_index = -1
+position = Vector2(984.616, 441.756)
+scale = Vector2(1.46, 1.46)
+sprite_frames = SubResource("SpriteFrames_3qoun")
+animation = &"start"
+frame = 3
+frame_progress = 1.0
+
 [node name="PointLight2D" type="PointLight2D" parent="PlayerSprite"]
 position = Vector2(-80.24, -253.215)
 color = Color(0.811765, 0.282353, 0.2, 1)
@@ -134,13 +181,23 @@ range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_va6p4")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="PlayerSprite"]
+visible = false
 position = Vector2(531.683, 707.692)
 emitting = false
-amount = 48
+amount = 6
+lifetime = 0.1
 randomness = 0.3
+lifetime_randomness = 0.1
+texture = ExtResource("12_jt51h")
+direction = Vector2(1, -0.5)
 gravity = Vector2(0, 0)
-initial_velocity_min = 616.16
-initial_velocity_max = 1000.0
+initial_velocity_min = 383.83
+initial_velocity_max = 727.27
+angle_min = -25.0
+angle_max = -10.0
+scale_amount_min = 0.3
+scale_amount_max = 0.5
+color = Color(1, 1, 1, 0.752941)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 24)
@@ -153,7 +210,7 @@ bus = &"SFX"
 
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_h2jn7")
-volume_db = -20.0
+volume_db = -7.0
 bus = &"SFX"
 
 [node name="EquipSound" type="AudioStreamPlayer2D" parent="."]
@@ -164,9 +221,13 @@ bus = &"SFX"
 stream = ExtResource("11_unmod")
 bus = &"SFX"
 
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_gxok7")
+bus = &"SFX"
+
 [node name="InteractionBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 130
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
 position = Vector2(-32, 0)

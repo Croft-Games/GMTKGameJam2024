@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=3 uid="uid://cprxffneukfg"]
+
+[ext_resource type="Script" path="res://main/battery/battery.gd" id="1_itfwr"]
+[ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_fcxbr"]
+[ext_resource type="Shader" path="res://main/battery/battery.gdshader" id="3_cued6"]
+[ext_resource type="Texture2D" uid="uid://c3eibeb8ynwdy" path="res://main/battery/Battery_1.PNG" id="4_rs5sy"]
+[ext_resource type="Texture2D" uid="uid://bjd55rfjocu1c" path="res://main/battery/Battery_2.PNG" id="5_wjyf3"]
+[ext_resource type="Shader" path="res://main/battery/glowvanish.gdshader" id="6_ti00k"]
+[ext_resource type="Texture2D" uid="uid://dn13otxiyae7l" path="res://spawns/plants/leafy/SparkParticle.png" id="7_v7js8"]
+[ext_resource type="AudioStream" uid="uid://85vocs1t2xk3" path="res://main/battery/536741__egomassive__zap.ogg" id="8_65vjx"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="9_h0ech"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c81lg"]
+shader = ExtResource("3_cued6")
+shader_parameter/Smooth = true
+shader_parameter/width = 31.875
+shader_parameter/outline_color = Color(0.980392, 0.929412, 0, 1)
+shader_parameter/pixel_size = 2
+shader_parameter/width_speed = 6.107
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s0ivs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_rs5sy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_wjyf3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oabbf"]
+shader = ExtResource("6_ti00k")
+shader_parameter/speed = 1.0
+shader_parameter/primary_color = Vector4(1, 1, 0, 1)
+shader_parameter/secondary_color = Vector4(0.8, 0.8, 0, 1)
+shader_parameter/turbulence = 0.2
+shader_parameter/distortion = 0.1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7pxtk"]
+radius = 48.0
+
+[node name="Battery" type="Node2D"]
+z_index = -1
+script = ExtResource("1_itfwr")
+
+[node name="SpawnManager" parent="." instance=ExtResource("2_fcxbr")]
+spawn_bubble_size = 80.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_c81lg")
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_s0ivs")
+autoplay = "default"
+frame_progress = 0.130049
+
+[node name="ColorRect" type="ColorRect" parent="AnimatedSprite2D"]
+material = SubResource("ShaderMaterial_oabbf")
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 453.0
+offset_bottom = 512.0
+
+[node name="UpgradeArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeArea"]
+shape = SubResource("CircleShape2D_7pxtk")
+
+[node name="LeafSpawner" parent="." instance=ExtResource("9_h0ech")]
+texture = ExtResource("7_v7js8")
+stream = ExtResource("8_65vjx")
