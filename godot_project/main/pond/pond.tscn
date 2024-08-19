@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbgnu7nmpy442"]
+[gd_scene load_steps=14 format=3 uid="uid://cbgnu7nmpy442"]
 
 [ext_resource type="Script" path="res://main/pond/pond.gd" id="1_3p408"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_6wo30"]
 [ext_resource type="Texture2D" uid="uid://wgnc5mk8ev0n" path="res://main/pond/MainPond_1.PNG" id="2_nvxob"]
 [ext_resource type="Shader" path="res://main/pond/pond.gdshader" id="3_phr3x"]
 [ext_resource type="Texture2D" uid="uid://dad77x53h3181" path="res://main/pond/MainPond_2.PNG" id="3_yctd3"]
+[ext_resource type="Texture2D" uid="uid://jyx067qv0di3" path="res://main/pond/RoundPond_1.PNG" id="6_55xsi"]
 [ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="6_w844i"]
+[ext_resource type="Texture2D" uid="uid://crxrtj43gc413" path="res://main/pond/RoundPond_2.PNG" id="7_edwuy"]
 [ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="7_v2jyt"]
 [ext_resource type="Texture2D" uid="uid://bcqexxvisdl0y" path="res://spawns/plants/leafy/WaterParticle.png" id="8_sex6s"]
 [ext_resource type="AudioStream" uid="uid://cc0dyrupxnmby" path="res://spawns/plants/leafy/364700__alegemaate__water-splash.wav" id="9_cfnyv"]
@@ -35,6 +37,17 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_55xsi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_edwuy")
+}],
+"loop": true,
+"name": &"round",
+"speed": 3.0
 }]
 
 [node name="Pond" type="Node2D"]
@@ -49,23 +62,22 @@ clip_children = 2
 material = SubResource("ShaderMaterial_811bs")
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_owkkq")
+animation = &"round"
 autoplay = "default"
-frame = 1
-frame_progress = 0.949561
 
 [node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("6_w844i")]
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
-polygon = PackedVector2Array(64, 96, 100, 84, 128, 32, 124, -64, 92, -116, 36, -120, 0, -96, -48, -8, -116, 48, -120, 100, -92, 124, -64, 128, -24, 120, 28, 104, 48, 96)
+polygon = PackedVector2Array(64, 96, 100, 84, 128, 32, 124, -64, 92, -116, 36, -120, 0, -96, -80, -32, -116, 48, -120, 100, -92, 124, -64, 128, -24, 120, 28, 104, 48, 96)
 
 [node name="RefillArea" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RefillArea"]
-polygon = PackedVector2Array(72, 124, 160, 60, 168, -8, 164, -72, 116, -140, 52, -164, -12, -128, -68, -68, -116, -8, -160, 76, -112, 152, -24, 152)
+polygon = PackedVector2Array(72, 124, 160, 60, 168, -8, 164, -72, 116, -140, 52, -164, -16, -136, -96, -88, -128, -16, -160, 76, -112, 152, -24, 152)
 
 [node name="LeafSpawner" parent="." instance=ExtResource("7_v2jyt")]
 texture = ExtResource("8_sex6s")

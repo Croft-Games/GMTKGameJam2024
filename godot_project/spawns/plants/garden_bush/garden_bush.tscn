@@ -78,8 +78,8 @@ radius = 117.85
 height = 309.15
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p0gc0"]
-radius = 64.0
-height = 144.0
+radius = 54.0
+height = 140.0
 
 [node name="Bush" type="Node2D"]
 script = ExtResource("1_unf5s")
@@ -105,7 +105,7 @@ shape = SubResource("CapsuleShape2D_g1swo")
 [node name="CollisionBox" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionBox"]
-position = Vector2(-8, 42)
+position = Vector2(2, 30)
 shape = SubResource("CapsuleShape2D_p0gc0")
 
 [node name="WaterTimer" parent="." instance=ExtResource("9_h8r2l")]
@@ -122,7 +122,6 @@ color = Color(1.01075e-06, 0.531399, 1.05888e-06, 1)
 wait_time = 5.0
 
 [node name="Explosion" parent="." instance=ExtResource("13_pqigo")]
-visible = false
 
 [node name="LeafSpawner" parent="." instance=ExtResource("20_qbw1d")]
 stream = ExtResource("21_q84hd")
