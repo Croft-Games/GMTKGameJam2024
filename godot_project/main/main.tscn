@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=15 format=3 uid="uid://c7qxiy8cill5b"]
 
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
 [ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
+[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/main.tres" id="9_3e18q"]
 [ext_resource type="PackedScene" uid="uid://cc7brw25kjye1" path="res://spawns/plants/garden_bush/garden_bush.tscn" id="9_420uc"]
 [ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="9_wccgg"]
 [ext_resource type="PackedScene" uid="uid://dmmyqmunmetl3" path="res://player/garden_tools/basket/basket.tscn" id="12_u20n1"]
@@ -34,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_3e18q")
 
 [node name="MarginContainer" type="MarginContainer" parent="GameManager/HUDCanvas/HUD"]
 layout_mode = 1
@@ -47,8 +49,10 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 70
 
 [node name="HealthBar" type="ProgressBar" parent="GameManager/HUDCanvas/HUD/MarginContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 value = 100.0
+show_percentage = false
 
 [node name="GameOverPanel" type="PanelContainer" parent="GameManager/HUDCanvas/HUD"]
 visible = false
@@ -68,8 +72,11 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
+[node name="GameOverText" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 41
 theme_override_font_sizes/font_size = 101
 text = "Game Over"
 horizontal_alignment = 1
@@ -146,7 +153,7 @@ layout_mode = 2
 text = "Back to Main Menu"
 
 [node name="Background" type="ColorRect" parent="GameManager"]
-z_index = -1
+z_index = -20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

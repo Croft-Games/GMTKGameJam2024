@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cogjgiysvpaha"
-path="res://.godot/imported/AstoriaMedium.ttf-8e881d2479c78e9cd03115041d1a2a63.fontdata"
+uid="uid://cysui7kl62w5w"
+path="res://.godot/imported/Yaelah.ttf-273afd262e316f6cdb22ad28da6bbc12.fontdata"
 
 [deps]
 
-source_file="res://fonts/AstoriaMedium.ttf"
-dest_files=["res://.godot/imported/AstoriaMedium.ttf-8e881d2479c78e9cd03115041d1a2a63.fontdata"]
+source_file="res://fonts/Yaelah.ttf"
+dest_files=["res://.godot/imported/Yaelah.ttf-273afd262e316f6cdb22ad28da6bbc12.fontdata"]
 
 [params]
 
