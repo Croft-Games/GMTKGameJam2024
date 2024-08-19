@@ -25,18 +25,14 @@ var expansion_rate: float = 0.005
 const init_tree_dist: float = 250
 var game_active: bool = true
 
-var _sum_of_spawn_weights: float = 1
-
 var tasks_completed: int = 0
 var max_plants: int = 0
 var current_plants: int = 1
 
 var unlocked_tasks: Array = [GardenPlant.Task.PRUNE]
 
-var num_watering_cans: int = 0
-var num_ponds: int = 0
-var num_baskets: int = 0
-var num_crates: int = 0
+var object_counts: Dictionary = {}
+@export var spawn_dropoff: float = 1
 
 @export var unlock_reqs: Dictionary = {
 	GardenPlant.Task.WATER: [2, 4],
@@ -66,7 +62,6 @@ func sum(values) -> float:
 func _ready() -> void:
 	health_bar.max_value = max_health
 	assert(possible_spawns.size() == spawn_weights.size())
-	_sum_of_spawn_weights = sum(spawn_weights)
 	spawn_timer.timeout.connect(spawn_element)
 	first_plant.position = Vector2.ZERO
 	while not first_plant.spawn_manager.is_valid_spawn_location():
@@ -160,12 +155,18 @@ func is_unlocked(i):
 
 
 func _select_random_spawn():
-	var n: float = randf_range(0, _sum_of_spawn_weights)
+	var modified_spawn_weights: Array[float] = []
+	for i in possible_spawns.size():
+		var packed_scene = possible_spawns[i]
+		var obj_count = object_counts.get(packed_scene, 0)
+		modified_spawn_weights.append(spawn_weights[i] * exp(-obj_count * spawn_dropoff))
+	var sum_of_spawn_weights: float = sum(modified_spawn_weights)
+	var n: float = randf_range(0, sum_of_spawn_weights)
 	var t: float = 0
 	var e: int = -1
 	while not is_unlocked(e):
 		for i in possible_spawns.size():
-			t += spawn_weights[i]
+			t += modified_spawn_weights[i]
 			if n < t:
 				e = i
 				break
@@ -196,12 +197,5 @@ func spawn_element(packed_scene = null) -> Spawnable:
 			max_plants = max(current_plants, max_plants)
 			for task in unlocked_tasks:
 				new_spawn.unlock_task(task)
-		if new_spawn is Pond:
-			num_ponds += 1
-		if new_spawn is WateringCan:
-			num_watering_cans += 1
-		if new_spawn is FruitDepot:
-			num_crates += 1
-		if new_spawn is Basket:
-			num_baskets += 1
+		object_counts[packed_scene] = object_counts.get(packed_scene, 0) + 1
 	return new_spawn
