@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=29 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://br10aa4r2txw1" path="res://player/icons/exclamation_mark/Exclatmation_2.PNG" id="13_gmqms"]
 [ext_resource type="Texture2D" uid="uid://du8naftxp2qqh" path="res://player/icons/no_water/NoWater_1.PNG" id="14_qk456"]
 [ext_resource type="Texture2D" uid="uid://b0puivcahlag7" path="res://player/icons/no_water/NoWater_2.PNG" id="15_8rlpd"]
+[ext_resource type="Texture2D" uid="uid://7u0ktcdbc02y" path="res://player/icons/crate/Box_1.PNG" id="17_mrh7o"]
+[ext_resource type="Texture2D" uid="uid://dhhy0mkbmpw4g" path="res://player/icons/crate/Box_2.PNG" id="18_8oq8i"]
 
 [sub_resource type="Curve" id="Curve_8facg"]
 _data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0.483516), -0.164835, 0.0, 0, 0]
@@ -96,6 +98,20 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("15_8rlpd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rhd2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_mrh7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_8oq8i")
 }],
 "loop": true,
 "name": &"default",
@@ -196,6 +212,17 @@ frame_progress = 0.298128
 [node name="Timer" type="Timer" parent="NoWater"]
 one_shot = true
 
+[node name="FullBasket" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(48, -96)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_rhd2y")
+autoplay = "default"
+
+[node name="Timer" type="Timer" parent="FullBasket"]
+one_shot = true
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32768
 collision_mask = 32768
@@ -206,3 +233,4 @@ debug_color = Color(0, 0.0325286, 0.0454713, 0.42)
 
 [connection signal="timeout" from="ExclamationMark/Timer" to="ExclamationMark" method="hide"]
 [connection signal="timeout" from="NoWater/Timer" to="NoWater" method="hide"]
+[connection signal="timeout" from="FullBasket/Timer" to="FullBasket" method="hide"]

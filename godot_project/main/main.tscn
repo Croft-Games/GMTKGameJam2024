@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
 [ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
-[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/main.tres" id="9_3e18q"]
 [ext_resource type="PackedScene" uid="uid://cc7brw25kjye1" path="res://spawns/plants/garden_bush/garden_bush.tscn" id="9_420uc"]
 [ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="9_wccgg"]
+[ext_resource type="PackedScene" uid="uid://bdapd833dgoht" path="res://hud.tscn" id="9_wtwda"]
 [ext_resource type="PackedScene" uid="uid://dmmyqmunmetl3" path="res://player/garden_tools/basket/basket.tscn" id="12_u20n1"]
 [ext_resource type="PackedScene" uid="uid://cbgnu7nmpy442" path="res://main/pond/pond.tscn" id="12_vy460"]
 [ext_resource type="PackedScene" uid="uid://dbwmume1vvu7l" path="res://main/fruit_depot/fruit_depot.tscn" id="13_cbs7k"]
@@ -28,129 +28,7 @@ spawn_weights = Array[float]([10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 [node name="HUDCanvas" type="CanvasLayer" parent="GameManager"]
 layer = 2
 
-[node name="HUD" type="Control" parent="GameManager/HUDCanvas"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("9_3e18q")
-
-[node name="MarginContainer" type="MarginContainer" parent="GameManager/HUDCanvas/HUD"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 70
-
-[node name="HealthBar" type="ProgressBar" parent="GameManager/HUDCanvas/HUD/MarginContainer"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-value = 70.0
-show_percentage = false
-
-[node name="GameOverPanel" type="PanelContainer" parent="GameManager/HUDCanvas/HUD"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = -38.5
-offset_right = 43.5
-offset_bottom = 38.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel"]
-layout_mode = 2
-
-[node name="GameOverText" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 41
-theme_override_font_sizes/font_size = 101
-text = "Game Over"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TasksCompleted" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Tasks Completed"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="VSeparator" type="VSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="MaxPlants" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Maximum Plants"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="VSeparator2" type="VSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="TotalTime" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Total Time"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TryAgainButton" type="Button" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Try Again"
-
-[node name="MainMenuButton" type="Button" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Back to Main Menu"
+[node name="HUD" parent="GameManager/HUDCanvas" instance=ExtResource("9_wtwda")]
 
 [node name="Background" type="ColorRect" parent="GameManager"]
 z_index = -20
@@ -227,6 +105,3 @@ position = Vector2(-248, -120)
 
 [node name="Decoration6" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(-160, 512)
-
-[connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton" to="GameManager" method="restart"]
-[connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton" to="GameManager" method="back_to_menu"]

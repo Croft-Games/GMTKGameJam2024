@@ -160,6 +160,9 @@ func _on_tool_failed(action: String):
 	if action == "water":
 		$NoWater.show()
 		$NoWater/Timer.start()
+	elif action == "fruit":
+		$FullBasket.show()
+		$FullBasket/Timer.start()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("grab_tool"):
