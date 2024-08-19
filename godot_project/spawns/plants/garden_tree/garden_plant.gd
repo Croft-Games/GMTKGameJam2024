@@ -19,6 +19,7 @@ enum Task{UNSET, IDLE, WATER, PRUNE, COLLECT}
 var current_task: Task = Task.UNSET
 @export var queued_task: Task = Task.UNSET
 var previous_task: Task = Task.UNSET
+var unlocked_tasks: Array[Task] = [Task.IDLE, Task.PRUNE]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,6 +44,10 @@ func _ready() -> void:
 
 signal completed_task()
 signal failed_task()
+
+func unlock_task(task: Task):
+	if task not in unlocked_tasks:
+		unlocked_tasks.append(task)
 
 func fail_task():
 	failed_task.emit()
@@ -102,7 +107,7 @@ func set_task(task: Task):
 
 func set_random_task():
 	var new_task: Task = current_task
-	while (new_task == current_task):
+	while (new_task == current_task) or (new_task not in unlocked_tasks):
 		new_task = task_assignments.pick_random()
 	set_task(new_task)
 

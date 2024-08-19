@@ -207,12 +207,6 @@ rotation = 1.5708
 position = Vector2(800, 0)
 rotation = -1.5708
 
-[node name="WateringCan" parent="GameManager" instance=ExtResource("6_m2s7n")]
-position = Vector2(176, -200)
-
-[node name="Pond" parent="GameManager" instance=ExtResource("12_vy460")]
-position = Vector2(-216, 88)
-
 [node name="Shears" parent="GameManager" instance=ExtResource("13_ceri6")]
 position = Vector2(-72, -208)
 
@@ -233,12 +227,6 @@ position = Vector2(-248, -120)
 
 [node name="Decoration6" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(-160, 512)
-
-[node name="Basket" parent="GameManager" instance=ExtResource("12_u20n1")]
-position = Vector2(448, -168)
-
-[node name="FruitDepot" parent="GameManager" instance=ExtResource("13_cbs7k")]
-position = Vector2(16, 360)
 
 [connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton" to="GameManager" method="restart"]
 [connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton" to="GameManager" method="back_to_menu"]

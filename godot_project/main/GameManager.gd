@@ -31,6 +31,31 @@ var tasks_completed: int = 0
 var max_plants: int = 0
 var current_plants: int = 1
 
+var unlocked_tasks: Array = [GardenPlant.Task.PRUNE]
+
+var num_watering_cans: int = 0
+var num_ponds: int = 0
+var num_baskets: int = 0
+var num_crates: int = 0
+
+@export var unlock_reqs: Dictionary = {
+	GardenPlant.Task.WATER: [2, 4],
+	GardenPlant.Task.COLLECT: [1, 5, 6],
+}
+var unlock_progress: Dictionary = {
+	GardenPlant.Task.WATER: 0,
+	GardenPlant.Task.COLLECT: 0,
+}
+var unlock_started: Dictionary = {
+	GardenPlant.Task.WATER: false,
+	GardenPlant.Task.COLLECT: false,
+}
+var unlock_delays: Dictionary = {
+	GardenPlant.Task.WATER: 27,
+	GardenPlant.Task.COLLECT: 62,
+}
+
+
 func sum(values) -> float:
 	var total: float = 0
 	for item in values:
@@ -60,7 +85,35 @@ func _process(delta: float) -> void:
 			game_over()
 		health = clampf(health + passive_health_regen * delta, 0, max_health)
 		set_zoom_from_elapsed_time()
+
+		try_unlock(GardenPlant.Task.WATER)
+		try_unlock(GardenPlant.Task.COLLECT)
 	health_bar.value = move_toward(health_bar.value, health, health_bar_move_speed * delta)
+
+func try_unlock(task):
+	if (not unlock_started[task]) and (elapsed_time > unlock_delays[task]):
+		start_unlock(task)
+
+func start_unlock(task):
+	unlock_started[task] = true
+	var reqs = unlock_reqs[task]
+	for i in reqs:
+		print(possible_spawns[i])
+		var new_spawn: Spawnable = spawn_element(possible_spawns[i])
+		new_spawn.spawn_manager.spawned.connect(unlock_task_for_plants.bind(task))
+
+func unlock_task_for_plants(task):
+	unlock_progress[task] = unlock_progress[task] + 1
+	if (task not in unlocked_tasks) and unlock_progress[task] >= unlock_reqs[task].size():
+		unlocked_tasks.append(task)
+		for ch in get_children():
+			if ch is GardenPlant:
+				ch.unlock_task(task)
+		for ch in get_children():
+			if ch is GardenPlant:
+				if task in ch.task_assignments:
+					ch.queued_task = task
+					break
 
 func restart():
 	get_tree().reload_current_scene()
@@ -79,6 +132,7 @@ func task_failed():
 func game_over():
 	spawn_timer.stop()
 	game_active = false
+	health_bar.hide()
 	for ch in get_children():
 		if ch is GardenPlant:
 			ch.stop_timers()
@@ -96,15 +150,27 @@ func set_zoom_from_elapsed_time():
 	play_area.set_size(play_size)
 	background.scale = Vector2(1 / camera.zoom.x, 1 / camera.zoom.y)
 
+func is_unlocked(i):
+	if i < 0:
+		return false
+	if (not GardenPlant.Task.WATER in unlocked_tasks) and (i in unlock_reqs[GardenPlant.Task.WATER]):
+		return false
+	if (not GardenPlant.Task.COLLECT in unlocked_tasks) and (i in unlock_reqs[GardenPlant.Task.COLLECT]):
+		return false
+	return true
+
 
 func _select_random_spawn():
 	var n: float = randf_range(0, _sum_of_spawn_weights)
 	var t: float = 0
-	for i in possible_spawns.size():
-		t += spawn_weights[i]
-		if n < t:
-			return possible_spawns[i]
-	return possible_spawns[0]
+	var e: int = -1
+	while not is_unlocked(e):
+		for i in possible_spawns.size():
+			t += spawn_weights[i]
+			if n < t:
+				e = i
+				break
+	return possible_spawns[e]
 
 func is_spawnable(item):
 	return is_instance_valid(item) and item is Spawnable
@@ -114,12 +180,15 @@ func generate_spawn_position():
 	boundary_finder.force_raycast_update()
 	return boundary_finder.get_collision_point() * minf(randfn(0.8, 0.1), 1.0)
 
-func spawn_element():
-	var new_spawn = _select_random_spawn().instantiate()
+func spawn_element(packed_scene = null) -> Spawnable:
+	if packed_scene == null:
+		packed_scene = _select_random_spawn()
+	var new_spawn = packed_scene.instantiate()
 	if new_spawn is Spawnable:
 		add_child(new_spawn)
 		new_spawn.position = Vector2.ZERO
 		while not new_spawn.spawn_manager.is_valid_spawn_location():
+			print("looking for spawn location... ")
 			new_spawn.position = generate_spawn_position()
 		new_spawn.spawn_manager.start_spawn()
 		if new_spawn is GardenPlant:
@@ -127,3 +196,14 @@ func spawn_element():
 			new_spawn.completed_task.connect(task_completed)
 			current_plants += 1
 			max_plants = max(current_plants, max_plants)
+			for task in unlocked_tasks:
+				new_spawn.unlock_task(task)
+		if new_spawn is Pond:
+			num_ponds += 1
+		if new_spawn is WateringCan:
+			num_watering_cans += 1
+		if new_spawn is FruitDepot:
+			num_crates += 1
+		if new_spawn is Basket:
+			num_baskets += 1
+	return new_spawn

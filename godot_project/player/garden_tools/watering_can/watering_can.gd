@@ -1,3 +1,4 @@
+class_name WateringCan
 extends GardenTool
 
 const max_water_level: int = 3
