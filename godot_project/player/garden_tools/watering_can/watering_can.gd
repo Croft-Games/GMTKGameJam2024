@@ -6,8 +6,8 @@ const max_water_level: int = 3
 var water_level: int = max_water_level
 var is_pouring: bool = false
 
-@export var empty_modulation: Color = Color.DIM_GRAY
-var full_modulation: Color = Color.WHITE
+@export var darkening: float = 0.1
+@export var darkening_curve: float = 2
 
 func _ready() -> void:
 	super()
@@ -24,6 +24,10 @@ func _process(delta: float) -> void:
 			if t is GardenPlant:
 				t.water()
 
+func set_modulation():
+	var darken_amount = darkening * (exp(darkening_curve * float(max_water_level - water_level) / max_water_level) - 1)
+	sprite.modulate = Color.WHITE.darkened(darken_amount)
+
 func use() -> bool:
 	if water_level < max_water_level:
 		for area in action_area.get_overlapping_areas():
@@ -36,7 +40,7 @@ func use() -> bool:
 			sprite.play(&"pour")
 			play_water_sound()
 			water_level -= 1
-			sprite.modulate = empty_modulation.lerp(full_modulation, float(water_level) / max_water_level)
+			set_modulation()
 			is_pouring = true
 			return true
 	else:
@@ -53,7 +57,7 @@ func refill():
 	water_level = max_water_level
 	play_sound(8)
 	refill_animation()
-	sprite.modulate = full_modulation
+	set_modulation()
 
 func refill_animation():
 	var refill_tween = create_tween()

@@ -1,16 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvmt8u2g1t1cg"]
+[gd_scene load_steps=12 format=3 uid="uid://cvmt8u2g1t1cg"]
 
 [ext_resource type="Script" path="res://main/tiles/decoration.gd" id="1_0x4i8"]
-[ext_resource type="Texture2D" uid="uid://dsm7et2btbbu3" path="res://main/tiles/Tile_1.PNG" id="2_61771"]
-[ext_resource type="Texture2D" uid="uid://bvlqi3hc85k0s" path="res://main/tiles/Tile_2.PNG" id="3_iy5gx"]
-[ext_resource type="Texture2D" uid="uid://duo4017o7i5is" path="res://main/tiles/Tile_3.PNG" id="4_c41nn"]
-[ext_resource type="Texture2D" uid="uid://cshyrfwujp5q2" path="res://main/tiles/Tile_4.PNG" id="5_kgm1k"]
-[ext_resource type="Texture2D" uid="uid://j06snuyfjyar" path="res://main/tiles/Tile_5.PNG" id="6_j1vd2"]
-[ext_resource type="Texture2D" uid="uid://coxy1vjuu1s05" path="res://main/tiles/Tile_6.PNG" id="7_yoxh8"]
+[ext_resource type="Texture2D" uid="uid://bv7o4isukhtfj" path="res://main/tiles/Grass_1.png" id="2_wa2nu"]
+[ext_resource type="Texture2D" uid="uid://c4wjs3bf8m8q5" path="res://main/tiles/Grass_2.png" id="4_yhjxd"]
+[ext_resource type="Texture2D" uid="uid://csmujlwthnmxj" path="res://main/tiles/Grass_3.png" id="5_flxck"]
+[ext_resource type="Texture2D" uid="uid://dxaljo7e1txh8" path="res://main/tiles/Grass_4.png" id="6_4dpsu"]
+[ext_resource type="Texture2D" uid="uid://ca65w0jeipdu8" path="res://main/tiles/Grass_5.png" id="7_c0blr"]
+[ext_resource type="Texture2D" uid="uid://50mluou3wuuy" path="res://main/tiles/Rock_1.png" id="8_linn2"]
+[ext_resource type="Texture2D" uid="uid://p85jlu5oq7aw" path="res://main/tiles/Rock_2.png" id="9_lb3f3"]
+[ext_resource type="Texture2D" uid="uid://txktok6t77je" path="res://main/tiles/Rock_3.png" id="10_eunx6"]
+[ext_resource type="Texture2D" uid="uid://bkgx8u5gi7fti" path="res://main/tiles/Rock_4.png" id="11_tnbc6"]
+[ext_resource type="Texture2D" uid="uid://rdmvw1eqbjln" path="res://main/tiles/Rock_5.png" id="12_nldne"]
 
 [node name="Decoration" type="Sprite2D"]
 z_index = -5
-scale = Vector2(0.065, 0.065)
-texture = ExtResource("2_61771")
+texture = ExtResource("2_wa2nu")
 script = ExtResource("1_0x4i8")
-texture_options = Array[Texture2D]([ExtResource("2_61771"), ExtResource("3_iy5gx"), ExtResource("4_c41nn"), ExtResource("5_kgm1k"), ExtResource("6_j1vd2"), ExtResource("7_yoxh8")])
+texture_options = Array[Texture2D]([ExtResource("2_wa2nu"), ExtResource("4_yhjxd"), ExtResource("5_flxck"), ExtResource("6_4dpsu"), ExtResource("7_c0blr"), ExtResource("8_linn2"), ExtResource("9_lb3f3"), ExtResource("10_eunx6"), ExtResource("11_tnbc6"), ExtResource("12_nldne")])

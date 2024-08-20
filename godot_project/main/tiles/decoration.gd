@@ -5,5 +5,5 @@ extends Sprite2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	texture = texture_options.pick_random()
-	flip_h = randi() % 2
-	scale = randfn(0.065, 0.005) * Vector2.ONE
+	flip_h = bool(randi() % 2)
+	scale = scale * randfn(1, 0.2)

@@ -23,6 +23,7 @@ radius = 100.0
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
+decoration_scene = ExtResource("9_wccgg")
 possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k"), ExtResource("9_2bjdc")])
 spawn_weights = Array[float]([10.0, 10.0, 0.4, 1.0, 1.0, 0.5, 0.3, 0.2])
 
@@ -88,8 +89,6 @@ rotation = -1.5708
 
 [node name="Shears" parent="GameManager" instance=ExtResource("13_ceri6")]
 position = Vector2(-72, -208)
-default_animation = null
-drop_cooldown = null
 
 [node name="Decoration" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(256, 248)
@@ -108,3 +107,8 @@ position = Vector2(-248, -120)
 
 [node name="Decoration6" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(-160, 512)
+
+[node name="DecorationTimer" type="Timer" parent="GameManager"]
+autostart = true
+
+[connection signal="timeout" from="GameManager/DecorationTimer" to="GameManager" method="add_decoration"]

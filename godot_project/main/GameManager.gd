@@ -1,7 +1,7 @@
 extends Node2D
 
 var elapsed_time: float = 0
-
+@export var decoration_scene: PackedScene
 @export var possible_spawns: Array[PackedScene] = []
 @export var spawn_weights: Array[float] = []
 
@@ -252,3 +252,12 @@ func _on_tool_failed(action: String):
 	for ch in get_children():
 		if (action == "water" and ch is Pond) or (action == "fruit" and ch is FruitDepot):
 			ch.highlight()
+
+func add_decoration():
+	boundary_finder.target_position = random_vec() * play_area.right_boundary.position.x * 2
+	boundary_finder.force_raycast_update()
+	var pos: Vector2 = boundary_finder.get_collision_point() * maxf(randfn(2, 0.4), 1.5)
+	var dec = decoration_scene.instantiate()
+	dec.position = pos
+	add_child(dec)
+

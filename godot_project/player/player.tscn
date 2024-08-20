@@ -335,10 +335,10 @@ position = Vector2(8, -120)
 texture = ExtResource("32_mn7l4")
 
 [node name="Label" type="Label" parent="ControlsPrompt/Grab"]
-offset_left = -24.0
+offset_left = -80.0
 offset_top = -208.0
-offset_right = 16.0
-offset_bottom = -190.0
+offset_right = 130.0
+offset_bottom = -153.0
 text = "grab/drop"
 label_settings = ExtResource("29_laidd")
 
