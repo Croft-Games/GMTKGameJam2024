@@ -1,3 +1,4 @@
+class_name Basket
 extends GardenTool
 
 @export var sounds: Dictionary = {}
@@ -8,23 +9,25 @@ func _ready() -> void:
 	super()
 	set_fruit_level(0)
 
-func use():
+func use() -> bool:
 	if fruit_level > 0:
 		for area in action_area.get_overlapping_areas():
 			var p = area.get_parent()
 			if p is FruitDepot:
 				empty_fruit()
-				return
+				return true
 	if fruit_level >= max_fruit_level:
 		tool_failed.emit("fruit")
 		play_full_sound()
-		return
+		return false
 	for area in action_area.get_overlapping_areas():
 		var t = area.get_parent()
 		if t is GardenPlant:
 			var collected_fruit: bool = t.collect()
 			if collected_fruit:
 				collect_fruit()
+				return true
+	return false
 
 func play_collect_sound():
 	sound.stream = sounds["collect"]
@@ -42,6 +45,15 @@ func play_full_sound():
 func empty_fruit():
 	set_fruit_level(0)
 	play_empty_sound()
+	empty_animation()
+
+
+func empty_animation():
+	var empty_tween = create_tween()
+	empty_tween.set_trans(Tween.TRANS_SINE)
+	empty_tween.set_ease(Tween.EASE_IN_OUT)
+	empty_tween.tween_property(sprite, "rotation_degrees", 45 * facing_mult(), 0.4)
+	empty_tween.tween_property(sprite, "rotation_degrees", 0, 0.2)
 
 func set_fruit_level(level: int):
 	fruit_level = level

@@ -6,7 +6,11 @@ extends Spawnable
 @onready var action_timer: Timer = $ActionTimer
 @onready var action_area: Area2D = $ActionArea
 @export var default_animation: StringName = &"idle"
+@export var drop_cooldown: float = 0.3
 
+@onready var grabbable_area_shape: CollisionShape2D = $GrabbableArea/CollisionShape2D
+
+var drop_cooldown_timer: Timer
 var facing_right: bool = false
 
 signal tool_failed(action: String)
@@ -17,8 +21,8 @@ func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_end)
 	action_timer.timeout.connect(sound.stop)
 
-func use():
-	pass
+func use() -> bool:
+	return false
 
 func facing_mult() -> float:
 	return (1 if facing_right else -1)
@@ -47,3 +51,11 @@ func play_sound(from: float):
 	sound.pitch_scale = randfn(1, 0.02)
 	sound.play(from)
 	action_timer.start()
+
+func grab():
+	pass
+
+func drop():
+	grabbable_area_shape.disabled = true
+	await get_tree().create_timer(drop_cooldown).timeout
+	grabbable_area_shape.disabled = false

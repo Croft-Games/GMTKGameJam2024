@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c7qxiy8cill5b"]
+[gd_scene load_steps=16 format=3 uid="uid://c7qxiy8cill5b"]
 
 [ext_resource type="Script" path="res://main/GameManager.gd" id="1_bvkti"]
 [ext_resource type="PackedScene" uid="uid://bqnpxbe8h6t4j" path="res://player/player.tscn" id="1_uhbg0"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bqhtu63uou7f" path="res://main/world_boundary.tscn" id="3_hxqmk"]
 [ext_resource type="PackedScene" uid="uid://b18jlwxea0nsk" path="res://spawns/plants/garden_tree/garden_tree.tscn" id="5_gepyh"]
 [ext_resource type="PackedScene" uid="uid://bnivtnyi5b0e5" path="res://player/garden_tools/watering_can/watering_can.tscn" id="6_m2s7n"]
+[ext_resource type="PackedScene" uid="uid://cprxffneukfg" path="res://main/battery/battery.tscn" id="9_2bjdc"]
 [ext_resource type="PackedScene" uid="uid://cc7brw25kjye1" path="res://spawns/plants/garden_bush/garden_bush.tscn" id="9_420uc"]
 [ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="9_wccgg"]
+[ext_resource type="PackedScene" uid="uid://bdapd833dgoht" path="res://hud.tscn" id="9_wtwda"]
 [ext_resource type="PackedScene" uid="uid://dmmyqmunmetl3" path="res://player/garden_tools/basket/basket.tscn" id="12_u20n1"]
 [ext_resource type="PackedScene" uid="uid://cbgnu7nmpy442" path="res://main/pond/pond.tscn" id="12_vy460"]
 [ext_resource type="PackedScene" uid="uid://dbwmume1vvu7l" path="res://main/fruit_depot/fruit_depot.tscn" id="13_cbs7k"]
@@ -21,132 +23,17 @@ radius = 100.0
 [node name="GameManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
-possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k")])
-spawn_weights = Array[float]([10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0])
+decoration_scene = ExtResource("9_wccgg")
+possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k"), ExtResource("9_2bjdc")])
+spawn_weights = Array[float]([10.0, 10.0, 0.4, 1.0, 1.0, 0.5, 0.3, 0.2])
 
 [node name="HUDCanvas" type="CanvasLayer" parent="GameManager"]
 layer = 2
 
-[node name="HUD" type="Control" parent="GameManager/HUDCanvas"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="GameManager/HUDCanvas/HUD"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 70
-
-[node name="HealthBar" type="ProgressBar" parent="GameManager/HUDCanvas/HUD/MarginContainer"]
-layout_mode = 2
-value = 100.0
-
-[node name="GameOverPanel" type="PanelContainer" parent="GameManager/HUDCanvas/HUD"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -43.5
-offset_top = -38.5
-offset_right = 43.5
-offset_bottom = 38.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 101
-text = "Game Over"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TasksCompleted" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Tasks Completed"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="VSeparator" type="VSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="MaxPlants" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Maximum Plants"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="VSeparator2" type="VSeparator" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="TotalTime" type="VBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="StatLabel" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Total Time"
-horizontal_alignment = 1
-
-[node name="StatValue" type="Label" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "0"
-horizontal_alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TryAgainButton" type="Button" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Try Again"
-
-[node name="MainMenuButton" type="Button" parent="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Back to Main Menu"
+[node name="HUD" parent="GameManager/HUDCanvas" instance=ExtResource("9_wtwda")]
 
 [node name="Background" type="ColorRect" parent="GameManager"]
-z_index = -1
+z_index = -20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -200,12 +87,6 @@ rotation = 1.5708
 position = Vector2(800, 0)
 rotation = -1.5708
 
-[node name="WateringCan" parent="GameManager" instance=ExtResource("6_m2s7n")]
-position = Vector2(176, -200)
-
-[node name="Pond" parent="GameManager" instance=ExtResource("12_vy460")]
-position = Vector2(-216, 88)
-
 [node name="Shears" parent="GameManager" instance=ExtResource("13_ceri6")]
 position = Vector2(-72, -208)
 
@@ -227,11 +108,7 @@ position = Vector2(-248, -120)
 [node name="Decoration6" parent="GameManager" instance=ExtResource("9_wccgg")]
 position = Vector2(-160, 512)
 
-[node name="Basket" parent="GameManager" instance=ExtResource("12_u20n1")]
-position = Vector2(448, -168)
+[node name="DecorationTimer" type="Timer" parent="GameManager"]
+autostart = true
 
-[node name="FruitDepot" parent="GameManager" instance=ExtResource("13_cbs7k")]
-position = Vector2(16, 360)
-
-[connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton" to="GameManager" method="restart"]
-[connection signal="pressed" from="GameManager/HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton" to="GameManager" method="back_to_menu"]
+[connection signal="timeout" from="GameManager/DecorationTimer" to="GameManager" method="add_decoration"]

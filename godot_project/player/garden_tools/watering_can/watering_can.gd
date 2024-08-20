@@ -1,9 +1,13 @@
+class_name WateringCan
 extends GardenTool
 
 const max_water_level: int = 3
 
 var water_level: int = max_water_level
 var is_pouring: bool = false
+
+@export var darkening: float = 0.1
+@export var darkening_curve: float = 2
 
 func _ready() -> void:
 	super()
@@ -20,21 +24,28 @@ func _process(delta: float) -> void:
 			if t is GardenPlant:
 				t.water()
 
-func use():
+func set_modulation():
+	var darken_amount = darkening * (exp(darkening_curve * float(max_water_level - water_level) / max_water_level) - 1)
+	sprite.modulate = Color.WHITE.darkened(darken_amount)
+
+func use() -> bool:
 	if water_level < max_water_level:
 		for area in action_area.get_overlapping_areas():
 			var p = area.get_parent()
 			if p is Pond:
 				refill()
-				return
+				return true
 	if water_level > 0:
 		if not is_pouring:
 			sprite.play(&"pour")
 			play_water_sound()
 			water_level -= 1
+			set_modulation()
 			is_pouring = true
+			return true
 	else:
 		empty_animation()
+	return false
 
 func play_water_sound():
 	play_sound(1)
@@ -45,6 +56,15 @@ func play_empty_sound():
 func refill():
 	water_level = max_water_level
 	play_sound(8)
+	refill_animation()
+	set_modulation()
+
+func refill_animation():
+	var refill_tween = create_tween()
+	refill_tween.set_trans(Tween.TRANS_SINE)
+	refill_tween.set_ease(Tween.EASE_IN_OUT)
+	refill_tween.tween_property(sprite, "rotation_degrees", 20 * facing_mult(), 0.4)
+	refill_tween.tween_property(sprite, "rotation_degrees", 0, 0.2)
 
 func empty_animation():
 	tool_failed.emit("water")

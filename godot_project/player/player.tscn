@@ -1,25 +1,39 @@
-[gd_scene load_steps=26 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=45 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
-[ext_resource type="Texture2D" uid="uid://d3qa817ki2x1m" path="res://player/garden_tools/Rope_Texture.PNG" id="2_r7wrx"]
 [ext_resource type="Texture2D" uid="uid://bkpcjt462pdji" path="res://player/Player_Sprite/idle/PlayerIdle_2.PNG" id="3_e28t7"]
 [ext_resource type="Texture2D" uid="uid://cy05hfm8j8uxy" path="res://player/Player_Sprite/move/PlayerMove1.PNG" id="3_tflh0"]
 [ext_resource type="Texture2D" uid="uid://dsjgr8lq886wy" path="res://player/Player_Sprite/idle/PlayerIdle_3.PNG" id="4_bc855"]
 [ext_resource type="Texture2D" uid="uid://da3fv6vj50lch" path="res://player/Player_Sprite/move/PlayerMove2.PNG" id="4_frlsx"]
 [ext_resource type="Texture2D" uid="uid://5co33gy2jc88" path="res://player/Player_Sprite/move/PlayerMove3.PNG" id="5_v3ijn"]
+[ext_resource type="Texture2D" uid="uid://bv17x6qu3tww8" path="res://spawns/plants/leafy/DirtParticle.png" id="8_3y2k1"]
+[ext_resource type="Texture2D" uid="uid://b8yjxj06bxsdb" path="res://player/dust/DirtCloud_1.PNG" id="8_bye0o"]
 [ext_resource type="AudioStream" uid="uid://drpa3ajhhx82s" path="res://player/242739__marlonhj__engine1.wav" id="8_h2jn7"]
 [ext_resource type="AudioStream" uid="uid://cjfxwi88uf5d4" path="res://player/538150__fupicat__sad-synth.wav" id="9_5x1au"]
+[ext_resource type="Texture2D" uid="uid://c0j5gr0r36gsg" path="res://player/dust/DirtCloud_2.PNG" id="9_ga0ve"]
+[ext_resource type="Texture2D" uid="uid://b8kvykk4b1xhm" path="res://player/dust/DirtCloud_3.PNG" id="10_387ak"]
 [ext_resource type="AudioStream" uid="uid://bu1haofvelo5" path="res://player/garden_tools/518850__mrickey13__item-equip.mp3" id="10_qaut7"]
+[ext_resource type="Texture2D" uid="uid://sfqpnw122d7u" path="res://player/dust/DirtCloud_4.PNG" id="11_nvmbm"]
 [ext_resource type="AudioStream" uid="uid://clydrxewmb1vi" path="res://player/garden_tools/648952__infi1234__equip.wav" id="11_unmod"]
 [ext_resource type="Texture2D" uid="uid://b78qkdr0ukwwc" path="res://player/icons/exclamation_mark/Exclamation_1.PNG" id="12_0gxrr"]
 [ext_resource type="Texture2D" uid="uid://br10aa4r2txw1" path="res://player/icons/exclamation_mark/Exclatmation_2.PNG" id="13_gmqms"]
 [ext_resource type="Texture2D" uid="uid://du8naftxp2qqh" path="res://player/icons/no_water/NoWater_1.PNG" id="14_qk456"]
 [ext_resource type="Texture2D" uid="uid://b0puivcahlag7" path="res://player/icons/no_water/NoWater_2.PNG" id="15_8rlpd"]
-
-[sub_resource type="Curve" id="Curve_8facg"]
-_data = [Vector2(0, 1), 0.0, -1.25275, 0, 0, Vector2(1, 0.483516), -0.164835, 0.0, 0, 0]
-point_count = 2
+[ext_resource type="AudioStream" uid="uid://cxss0wt0g266x" path="res://main/battery/478337__joao_janz__bouncing-power-up-1_2.wav" id="17_gxok7"]
+[ext_resource type="Texture2D" uid="uid://7u0ktcdbc02y" path="res://player/icons/crate/Box_1.PNG" id="17_mrh7o"]
+[ext_resource type="Texture2D" uid="uid://dhhy0mkbmpw4g" path="res://player/icons/crate/Box_2.PNG" id="18_8oq8i"]
+[ext_resource type="Script" path="res://player/controls_prompt.gd" id="24_rhott"]
+[ext_resource type="Texture2D" uid="uid://dpvhefhektxi0" path="res://player/button_prompts/keyboard_w.png" id="25_uinh7"]
+[ext_resource type="Texture2D" uid="uid://crd434ton4kn4" path="res://player/button_prompts/keyboard_a.png" id="26_puqy0"]
+[ext_resource type="Texture2D" uid="uid://42okf6f4b85o" path="res://player/button_prompts/keyboard_s.png" id="27_qri6r"]
+[ext_resource type="Texture2D" uid="uid://b8gx27p8lh8kq" path="res://player/button_prompts/keyboard_d.png" id="28_ngcv0"]
+[ext_resource type="LabelSettings" uid="uid://b65yi6ewaqiks" path="res://player/button_prompts/controlspromt.tres" id="29_laidd"]
+[ext_resource type="Texture2D" uid="uid://cxb4d7nanfpms" path="res://player/button_prompts/keyboard_shift.png" id="30_xopvx"]
+[ext_resource type="Texture2D" uid="uid://cb6ijqhvqk44w" path="res://player/button_prompts/mouse_right.png" id="31_wukok"]
+[ext_resource type="Texture2D" uid="uid://dw2kxmg1l6rbu" path="res://player/button_prompts/flair_disabled_line.png" id="32_mn7l4"]
+[ext_resource type="Texture2D" uid="uid://bj04y8v3pnkos" path="res://player/button_prompts/keyboard_space_outline.png" id="33_uiuvn"]
+[ext_resource type="Texture2D" uid="uid://b1n11kq3nluoh" path="res://player/button_prompts/mouse_left.png" id="34_7y0nr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
 animations = [{
@@ -53,6 +67,37 @@ animations = [{
 "loop": true,
 "name": &"move",
 "speed": 12.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3qoun"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_387ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nvmbm")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_bye0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ga0ve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_387ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nvmbm")
+}],
+"loop": false,
+"name": &"start",
+"speed": 9.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_j5slm"]
@@ -102,6 +147,20 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_rhd2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_mrh7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_8oq8i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_eusyq"]
 radius = 71.65
 
@@ -109,21 +168,21 @@ radius = 71.65
 motion_mode = 1
 script = ExtResource("1_uo0jg")
 
-[node name="Line2D" type="Line2D" parent="."]
-z_index = -1
-width_curve = SubResource("Curve_8facg")
-default_color = Color(0.8, 0.54902, 0, 1)
-texture = ExtResource("2_r7wrx")
-texture_mode = 1
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 light_mask = 3
 scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_hvbdm")
 animation = &"idle"
+
+[node name="DustCloud" type="AnimatedSprite2D" parent="PlayerSprite"]
+modulate = Color(1, 1, 1, 0.788235)
+z_index = -1
+position = Vector2(984.616, 441.756)
+scale = Vector2(1.46, 1.46)
+sprite_frames = SubResource("SpriteFrames_3qoun")
+animation = &"start"
+frame = 3
+frame_progress = 1.0
 
 [node name="PointLight2D" type="PointLight2D" parent="PlayerSprite"]
 position = Vector2(-80.24, -253.215)
@@ -135,11 +194,20 @@ texture = SubResource("GradientTexture2D_va6p4")
 [node name="CPUParticles2D" type="CPUParticles2D" parent="PlayerSprite"]
 position = Vector2(531.683, 707.692)
 emitting = false
-amount = 48
-randomness = 0.3
+amount = 20
+lifetime = 0.6
+explosiveness = 0.34
+randomness = 0.44
+lifetime_randomness = 0.45
+texture = ExtResource("8_3y2k1")
+direction = Vector2(1, -0.5)
 gravity = Vector2(0, 0)
-initial_velocity_min = 616.16
-initial_velocity_max = 1000.0
+initial_velocity_max = 323.23
+angular_velocity_max = 253.64
+angle_max = 360.0
+scale_amount_min = 0.8
+scale_amount_max = 1.2
+color = Color(1, 1, 1, 0.752941)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 24)
@@ -152,7 +220,7 @@ bus = &"SFX"
 
 [node name="MovementSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_h2jn7")
-volume_db = -20.0
+volume_db = -7.0
 bus = &"SFX"
 
 [node name="EquipSound" type="AudioStreamPlayer2D" parent="."]
@@ -163,9 +231,13 @@ bus = &"SFX"
 stream = ExtResource("11_unmod")
 bus = &"SFX"
 
+[node name="UpgradeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("17_gxok7")
+bus = &"SFX"
+
 [node name="InteractionBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 130
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
 position = Vector2(-32, 0)
@@ -196,6 +268,17 @@ frame_progress = 0.298128
 [node name="Timer" type="Timer" parent="NoWater"]
 one_shot = true
 
+[node name="FullBasket" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(48, -96)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_rhd2y")
+autoplay = "default"
+
+[node name="Timer" type="Timer" parent="FullBasket"]
+one_shot = true
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32768
 collision_mask = 32768
@@ -204,5 +287,85 @@ collision_mask = 32768
 shape = SubResource("CircleShape2D_eusyq")
 debug_color = Color(0, 0.0325286, 0.0454713, 0.42)
 
+[node name="ControlsPrompt" type="Node2D" parent="."]
+script = ExtResource("24_rhott")
+
+[node name="Movement" type="Node2D" parent="ControlsPrompt"]
+position = Vector2(0, -16)
+
+[node name="W" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(0, -152)
+texture = ExtResource("25_uinh7")
+
+[node name="A" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(-64, -96)
+texture = ExtResource("26_puqy0")
+
+[node name="S" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(0, -96)
+texture = ExtResource("27_qri6r")
+
+[node name="D" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(64, -96)
+texture = ExtResource("28_ngcv0")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Movement"]
+offset_left = -56.0
+offset_top = -224.0
+offset_right = 53.0
+offset_bottom = -169.0
+text = "move"
+label_settings = ExtResource("29_laidd")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grab" type="Node2D" parent="ControlsPrompt"]
+visible = false
+
+[node name="Shift" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(-40, -128)
+texture = ExtResource("30_xopvx")
+
+[node name="RMB" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(72, -128)
+texture = ExtResource("31_wukok")
+
+[node name="Slash" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(8, -120)
+texture = ExtResource("32_mn7l4")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Grab"]
+offset_left = -80.0
+offset_top = -208.0
+offset_right = 130.0
+offset_bottom = -153.0
+text = "grab/drop"
+label_settings = ExtResource("29_laidd")
+
+[node name="Use" type="Node2D" parent="ControlsPrompt"]
+visible = false
+
+[node name="Space" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(-40, -128)
+texture = ExtResource("33_uiuvn")
+
+[node name="LMB" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(72, -128)
+texture = ExtResource("34_7y0nr")
+
+[node name="Slash" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(8, -120)
+texture = ExtResource("32_mn7l4")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Use"]
+offset_left = -24.0
+offset_top = -208.0
+offset_right = 16.0
+offset_bottom = -190.0
+text = "use"
+label_settings = ExtResource("29_laidd")
+
+[connection signal="grabbed_tool" from="." to="ControlsPrompt" method="on_grab"]
+[connection signal="used_tool" from="." to="ControlsPrompt" method="use"]
 [connection signal="timeout" from="ExclamationMark/Timer" to="ExclamationMark" method="hide"]
 [connection signal="timeout" from="NoWater/Timer" to="NoWater" method="hide"]
+[connection signal="timeout" from="FullBasket/Timer" to="FullBasket" method="hide"]

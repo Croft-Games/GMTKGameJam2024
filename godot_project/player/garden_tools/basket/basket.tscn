@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmmyqmunmetl3"]
+[gd_scene load_steps=19 format=3 uid="uid://dmmyqmunmetl3"]
 
 [ext_resource type="Script" path="res://player/garden_tools/basket/basket.gd" id="1_bdnx1"]
 [ext_resource type="PackedScene" uid="uid://bm3q6hnap71fv" path="res://spawns/spawn_manager.tscn" id="2_482ku"]
@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://b4irs4sa3j012" path="res://player/garden_tools/basket/one_third_sprites/BasketOneThird_2.PNG" id="8_rvrdg"]
 [ext_resource type="Texture2D" uid="uid://bux1ek1oih0gr" path="res://player/garden_tools/basket/two_thirds_sprites/BasketTwoThird_1.PNG" id="9_xvj2e"]
 [ext_resource type="Texture2D" uid="uid://dmw4hqm5ly7g1" path="res://player/garden_tools/basket/two_thirds_sprites/BasketTwoThird_2.PNG" id="10_ch8nj"]
+[ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="13_1n68y"]
+[ext_resource type="Texture2D" uid="uid://dw61mpmwxk8qn" path="res://spawns/plants/leafy/AppleParticle.png" id="14_tyxvu"]
+[ext_resource type="AudioStream" uid="uid://gk4yeg315ph2" path="res://spawns/pop_sfx/67086__sunnysidesound__pop_1.mp3" id="15_0c02q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3sqrp"]
 animations = [{
@@ -103,3 +106,8 @@ shape = SubResource("CircleShape2D_ijo1r")
 
 [node name="ActionTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="LeafSpawner" parent="." instance=ExtResource("13_1n68y")]
+amount = 10
+texture = ExtResource("14_tyxvu")
+stream = ExtResource("15_0c02q")

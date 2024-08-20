@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cks8af20ujok7"]
 
 [ext_resource type="Script" path="res://settings/settings_page.gd" id="1_dw1ri"]
-[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/menu_theme.tres" id="1_fbcux"]
+[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/main.tres" id="1_fbcux"]
 [ext_resource type="PackedScene" uid="uid://fmcsbpyk4nw6" path="res://settings/settings_panel.tscn" id="3_0hbu6"]
 
 [node name="SettingsPage" type="Control"]

@@ -1,7 +1,7 @@
 extends Node2D
 
 var elapsed_time: float = 0
-
+@export var decoration_scene: PackedScene
 @export var possible_spawns: Array[PackedScene] = []
 @export var spawn_weights: Array[float] = []
 
@@ -13,23 +13,54 @@ const initial_zoom: float = 1
 @onready var boundary_finder: RayCast2D = $BoundaryFinder
 @onready var first_plant: GardenPlant = $First
 @onready var health_bar: ProgressBar = $HUDCanvas/HUD/MarginContainer/HealthBar
-const max_health: float = 100
+@onready var player: Player = $Player
+const max_health: float = 80
 var passive_health_regen: float = 0.05
-var active_health_regen: float = 2
+var active_health_regen: float = 1
 
 var health: float = max_health
-var fail_damage: float = 10
+var fail_damage: float = 15
 var health_bar_move_speed: float = 10
 
-var expansion_rate: float = 0.005
+@export var expansion_rate: float = 0.01
+@export var expansion_exponent: float = 0.6 # Slightly more than equal area increase over time
+var current_expansion: float = 1
 const init_tree_dist: float = 250
 var game_active: bool = true
-
-var _sum_of_spawn_weights: float = 1
 
 var tasks_completed: int = 0
 var max_plants: int = 0
 var current_plants: int = 1
+
+var unlocked_tasks: Array = [GardenPlant.Task.PRUNE]
+
+var object_counts: Dictionary = {
+	0: 1,
+	3: 1,
+}
+@export var spawn_dropoff: float = 1
+
+@export var unlock_reqs: Dictionary = {
+	GardenPlant.Task.WATER: [2, 4],
+	GardenPlant.Task.COLLECT: [1, 5, 6],
+}
+@export var locked_behind: Dictionary = {
+	GardenPlant.Task.WATER: [2, 4],
+	GardenPlant.Task.COLLECT: [5, 6],
+}
+var unlock_progress: Dictionary = {
+	GardenPlant.Task.WATER: 0,
+	GardenPlant.Task.COLLECT: 0,
+}
+var unlock_started: Dictionary = {
+	GardenPlant.Task.WATER: false,
+	GardenPlant.Task.COLLECT: false,
+}
+var unlock_delays: Dictionary = {
+	GardenPlant.Task.WATER: 27,
+	GardenPlant.Task.COLLECT: 62,
+}
+
 
 func sum(values) -> float:
 	var total: float = 0
@@ -40,8 +71,8 @@ func sum(values) -> float:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	health_bar.max_value = max_health
+	health_bar.value = max_health
 	assert(possible_spawns.size() == spawn_weights.size())
-	_sum_of_spawn_weights = sum(spawn_weights)
 	spawn_timer.timeout.connect(spawn_element)
 	first_plant.position = Vector2.ZERO
 	while not first_plant.spawn_manager.is_valid_spawn_location():
@@ -50,17 +81,73 @@ func _ready() -> void:
 	first_plant.spawn_manager.start_spawn()
 	first_plant.failed_task.connect(task_failed)
 	first_plant.completed_task.connect(task_completed)
+	player.battery_collected.connect(_on_battery_collect)
+	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton.pressed.connect(restart)
+	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton.pressed.connect(back_to_menu)
+	$Player/ControlsPrompt.highlight_tools.connect(highlight_tools)
+	$Player/ControlsPrompt.highlight_plants.connect(highlight_plants)
 
+func _on_battery_collect():
+	var bindex: int = 7
+	object_counts[bindex] = object_counts.get(bindex, 1) - 1
+
+func highlight_tools():
+	for ch in get_children():
+		if ch is GardenTool and ch.has_node("AnimatedSprite2D/Highlighter"):
+			ch.get_node("AnimatedSprite2D/Highlighter").highlight()
+
+func highlight_plants():
+	for ch in get_children():
+		if ch is GardenPlant and ch.has_node("AnimatedSprite2D/Highlighter"):
+			ch.get_node("AnimatedSprite2D/Highlighter").highlight()
+
+func modified_passive_health_regen() -> float:
+	return passive_health_regen * (1 - exp(1 - (float(current_plants) / 2)))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if game_active:
 		elapsed_time += delta
-		if health <= 0:
-			game_over()
-		health = clampf(health + passive_health_regen * delta, 0, max_health)
+		health = clampf(health + modified_passive_health_regen() * delta, 0, max_health)
 		set_zoom_from_elapsed_time()
-	health_bar.value = move_toward(health_bar.value, health, health_bar_move_speed * delta)
+		health_bar.value = move_toward(health_bar.value, health, health_bar_move_speed * delta)
+		if health_bar.value <= 0:
+			game_over()
+		try_unlock(GardenPlant.Task.WATER)
+		try_unlock(GardenPlant.Task.COLLECT)
+
+	if game_over_fadeout:
+		var inputting: bool = player.get_move_input().length_squared() > 0.1
+		var c: Color
+		if inputting:
+			c = Color(1, 1, 1, 0.2)
+		else:
+			c = Color.WHITE
+		$HUDCanvas/HUD/GameOverPanel.modulate = c
+
+func try_unlock(task):
+	if (not unlock_started[task]) and (elapsed_time > unlock_delays[task]):
+		start_unlock(task)
+
+func start_unlock(task):
+	unlock_started[task] = true
+	var reqs = unlock_reqs[task]
+	for i in reqs:
+		var new_spawn: Spawnable = spawn_element(i)
+		new_spawn.spawn_manager.spawned.connect(unlock_task_for_plants.bind(task))
+
+func unlock_task_for_plants(task):
+	unlock_progress[task] = unlock_progress[task] + 1
+	if (task not in unlocked_tasks) and unlock_progress[task] >= unlock_reqs[task].size():
+		unlocked_tasks.append(task)
+		for ch in get_children():
+			if ch is GardenPlant:
+				ch.unlock_task(task)
+		for ch in get_children():
+			if ch is GardenPlant:
+				if task in ch.task_assignments:
+					ch.queued_task = task
+					break
 
 func restart():
 	get_tree().reload_current_scene()
@@ -72,13 +159,20 @@ func task_completed():
 	health += active_health_regen
 	tasks_completed += 1
 
-func task_failed():
+func task_failed(plant: GardenPlant):
 	health -= fail_damage
 	current_plants -= 1
+	var i: int = 0
+	if GardenPlant.Task.COLLECT in plant.task_assignments:
+		i += 1
+	object_counts[i] = object_counts.get(i, 1) - 1
+
+var game_over_fadeout: bool = false
 
 func game_over():
 	spawn_timer.stop()
 	game_active = false
+	health_bar.hide()
 	for ch in get_children():
 		if ch is GardenPlant:
 			ch.stop_timers()
@@ -86,25 +180,49 @@ func game_over():
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants/StatValue.text = str(max_plants)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted/StatValue.text = str(tasks_completed)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime/StatValue.text = str(elapsed_time).pad_decimals(1)
+	await get_tree().create_timer(3).timeout
+	game_over_fadeout = true
+
 
 func random_vec():
 	return Vector2.from_angle(randf_range(-PI, PI))
 
+func get_expansion() -> float:
+	return pow((elapsed_time * expansion_rate) + 1, expansion_exponent)
+
+
 func set_zoom_from_elapsed_time():
-	var play_size: float = exp(elapsed_time * expansion_rate)
-	camera.zoom = (initial_zoom / play_size) * Vector2.ONE
-	play_area.set_size(play_size)
-	background.scale = Vector2(1 / camera.zoom.x, 1 / camera.zoom.y)
+	current_expansion = get_expansion()
+	camera.zoom = (initial_zoom / current_expansion) * Vector2.ONE
+	play_area.set_size(current_expansion)
+	background.scale = Vector2.ONE * current_expansion
+
+func is_unlocked(i):
+	if i < 0:
+		return false
+	if (not GardenPlant.Task.WATER in unlocked_tasks) and (i in locked_behind[GardenPlant.Task.WATER]):
+		return false
+	if (not GardenPlant.Task.COLLECT in unlocked_tasks) and (i in locked_behind[GardenPlant.Task.COLLECT]):
+		return false
+	return true
 
 
-func _select_random_spawn():
-	var n: float = randf_range(0, _sum_of_spawn_weights)
-	var t: float = 0
+func _select_random_spawn() -> int:
+	var modified_spawn_weights: Array[float] = []
 	for i in possible_spawns.size():
-		t += spawn_weights[i]
-		if n < t:
-			return possible_spawns[i]
-	return possible_spawns[0]
+		var obj_count = object_counts.get(i, 0)
+		modified_spawn_weights.append(spawn_weights[i] * exp(-obj_count * spawn_dropoff))
+	var sum_of_spawn_weights: float = sum(modified_spawn_weights)
+	var n: float = randf_range(0, sum_of_spawn_weights)
+	var t: float = 0
+	var e: int = -1
+	while not is_unlocked(e):
+		for i in possible_spawns.size():
+			t += modified_spawn_weights[i]
+			if n < t:
+				e = i
+				break
+	return e
 
 func is_spawnable(item):
 	return is_instance_valid(item) and item is Spawnable
@@ -114,8 +232,15 @@ func generate_spawn_position():
 	boundary_finder.force_raycast_update()
 	return boundary_finder.get_collision_point() * minf(randfn(0.8, 0.1), 1.0)
 
-func spawn_element():
-	var new_spawn = _select_random_spawn().instantiate()
+func set_all_timer_scales():
+	for ch in get_children():
+		if ch is GardenPlant:
+			ch.set_timer_scale(current_expansion)
+
+func spawn_element(packed_scene_index = null) -> Spawnable:
+	if packed_scene_index == null:
+		packed_scene_index = _select_random_spawn()
+	var new_spawn = possible_spawns[packed_scene_index].instantiate()
 	if new_spawn is Spawnable:
 		add_child(new_spawn)
 		new_spawn.position = Vector2.ZERO
@@ -127,3 +252,25 @@ func spawn_element():
 			new_spawn.completed_task.connect(task_completed)
 			current_plants += 1
 			max_plants = max(current_plants, max_plants)
+			for task in unlocked_tasks:
+				new_spawn.unlock_task(task)
+		if new_spawn is GardenTool:
+			new_spawn.tool_failed.connect(_on_tool_failed)
+		object_counts[packed_scene_index] = object_counts.get(packed_scene_index, 0) + 1
+	set_all_timer_scales()
+	return new_spawn
+
+
+func _on_tool_failed(action: String):
+	for ch in get_children():
+		if (action == "water" and ch is Pond) or (action == "fruit" and ch is FruitDepot):
+			ch.highlight()
+
+func add_decoration():
+	boundary_finder.target_position = random_vec() * play_area.right_boundary.position.x * 2
+	boundary_finder.force_raycast_update()
+	var pos: Vector2 = boundary_finder.get_collision_point() * maxf(randfn(2, 0.4), 1.5)
+	var dec = decoration_scene.instantiate()
+	dec.position = pos
+	add_child(dec)
+

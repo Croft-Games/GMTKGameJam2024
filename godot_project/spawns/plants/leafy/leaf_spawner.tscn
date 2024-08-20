@@ -27,3 +27,8 @@ hue_variation_max = 0.3
 script = ExtResource("2_uqg1o")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Timer" type="Timer" parent="AudioStreamPlayer2D"]
+one_shot = true
+
+[connection signal="timeout" from="AudioStreamPlayer2D/Timer" to="AudioStreamPlayer2D" method="stop"]

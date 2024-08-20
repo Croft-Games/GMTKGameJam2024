@@ -11,3 +11,4 @@ func _ready() -> void:
 func emit():
 	emitting = true
 	sound.play()
+	$AudioStreamPlayer2D/Timer.start()

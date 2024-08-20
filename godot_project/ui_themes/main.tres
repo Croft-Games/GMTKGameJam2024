@@ -1,0 +1,94 @@
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://bcg08v88fsprf"]
+
+[ext_resource type="FontFile" uid="uid://cysui7kl62w5w" path="res://fonts/Yaelah.ttf" id="1_8bqw3"]
+[ext_resource type="StyleBox" uid="uid://bcjjjuhrac3c7" path="res://ui_themes/buttons/menu_button_disabled.tres" id="1_72ox1"]
+[ext_resource type="StyleBox" uid="uid://b4mg5ed3wcqwb" path="res://ui_themes/buttons/menu_button_hover.tres" id="3_l20m2"]
+[ext_resource type="StyleBox" uid="uid://cuupqbx5jbt8b" path="res://ui_themes/buttons/menu_button.tres" id="4_of7lf"]
+[ext_resource type="StyleBox" uid="uid://c74ddbtxp2wvu" path="res://ui_themes/buttons/healthbar_bg.tres" id="5_03okk"]
+[ext_resource type="StyleBox" uid="uid://cc1r8e01dy2xh" path="res://ui_themes/buttons/menu_button_pressed.tres" id="5_5aeko"]
+[ext_resource type="StyleBox" uid="uid://bn2pc1qnro7k5" path="res://ui_themes/buttons/tabcontainer.tres" id="5_usr1b"]
+[ext_resource type="StyleBox" uid="uid://bno6wt7nh0hcv" path="res://ui_themes/buttons/healthbar_fg.tres" id="6_ouotj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tf7mh"]
+bg_color = Color(1, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tql80"]
+bg_color = Color(1, 0.387955, 0.319725, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q08ai"]
+bg_color = Color(0.277748, 2.22605e-07, 0.151588, 1)
+border_width_left = 5
+border_width_top = 7
+border_width_right = 5
+border_width_bottom = 7
+border_color = Color(0.20871, 0.20871, 0.20871, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ui5xo"]
+content_margin_left = 30.0
+content_margin_top = 30.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+bg_color = Color(0.720841, 0.766374, 0.91459, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_size = 15
+shadow_offset = Vector2(26.345, -4.69)
+
+[resource]
+default_font = ExtResource("1_8bqw3")
+default_font_size = 31
+BoxContainer/constants/separation = 34
+Button/colors/font_color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+Button/colors/font_focus_color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+Button/colors/font_hover_color = Color(0.392157, 0.392157, 0.392157, 1)
+Button/styles/disabled = ExtResource("1_72ox1")
+Button/styles/focus = ExtResource("4_of7lf")
+Button/styles/hover = ExtResource("3_l20m2")
+Button/styles/normal = ExtResource("4_of7lf")
+Button/styles/pressed = ExtResource("5_5aeko")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_tf7mh")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tql80")
+HSlider/styles/slider = SubResource("StyleBoxFlat_q08ai")
+Label/colors/font_color = Color(0.0687983, 0.0687983, 0.0687983, 1)
+MarginContainer/constants/margin_bottom = 12
+MarginContainer/constants/margin_left = 12
+MarginContainer/constants/margin_right = 12
+MarginContainer/constants/margin_top = 12
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_ui5xo")
+ProgressBar/styles/background = ExtResource("5_03okk")
+ProgressBar/styles/fill = ExtResource("6_ouotj")
+TabContainer/colors/font_hovered_color = Color(0.27022, 0.270222, 0.270223, 1)
+TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)
+TabContainer/styles/panel = ExtResource("5_usr1b")
+TabContainer/styles/tab_disabled = ExtResource("5_usr1b")
+TabContainer/styles/tab_selected = ExtResource("5_usr1b")
+TabContainer/styles/tab_unselected = ExtResource("5_usr1b")

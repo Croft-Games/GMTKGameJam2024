@@ -1,11 +1,37 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkdw11d4rpi23"]
+[gd_scene load_steps=11 format=3 uid="uid://dkdw11d4rpi23"]
 
-[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/menu_theme.tres" id="1_7lpgg"]
+[ext_resource type="Theme" uid="uid://bcg08v88fsprf" path="res://ui_themes/main.tres" id="1_7lpgg"]
 [ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_bqyte"]
-[ext_resource type="Texture2D" uid="uid://d0b6yg4h5iq5m" path="res://main_menu/starry-night-sky-wallpaper-1.jpg" id="3_tse5c"]
+[ext_resource type="FontFile" uid="uid://cr8qqyqd5cvlf" path="res://fonts/Socafe.ttf" id="4_5hhqa"]
 [ext_resource type="AudioStream" uid="uid://vmu8ytwbr3ol" path="res://main_menu/Almusic34 - Nature spirits.mp3.mp3" id="4_42s10"]
 [ext_resource type="PackedScene" uid="uid://cks8af20ujok7" path="res://settings/settings_page.tscn" id="5_cjnax"]
-[ext_resource type="Theme" uid="uid://dsb8c8f6k62cq" path="res://title_theme.tres" id="5_hb8ih"]
+[ext_resource type="Texture2D" uid="uid://dgnwfwrxhphhi" path="res://spawns/plants/garden_tree/fruit_sprites/FruitTree_1.PNG" id="6_5hmls"]
+[ext_resource type="Texture2D" uid="uid://7el1rdnotl8g" path="res://spawns/plants/garden_tree/fruit_sprites/FruitTree_2.PNG" id="7_6vh5f"]
+[ext_resource type="PackedScene" uid="uid://cvmt8u2g1t1cg" path="res://main/tiles/decoration.tscn" id="8_uvqc0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_icgq7"]
+line_spacing = -21.265
+font = ExtResource("4_5hhqa")
+font_size = 90
+outline_size = 60
+outline_color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+shadow_size = 76
+shadow_color = Color(0.152941, 0.152941, 0.152941, 0.309804)
+shadow_offset = Vector2(5.1, 2.605)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j7ywx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_5hmls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_6vh5f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -17,21 +43,19 @@ grow_vertical = 2
 theme = ExtResource("1_7lpgg")
 script = ExtResource("1_bqyte")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
+z_index = -20
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -704.0
-offset_top = -396.0
-offset_right = 704.0
-offset_bottom = 396.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_tse5c")
+color = Color(0.133333, 0.694118, 0.298039, 1)
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_42s10")
+volume_db = -2.0
 autoplay = true
 bus = &"Music"
 
@@ -53,8 +77,9 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="MenuContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("5_hb8ih")
-text = "Game Name Here"
+text = "Endless
+Orchard"
+label_settings = SubResource("LabelSettings_icgq7")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -76,6 +101,40 @@ text = "Settings"
 [node name="Exit" type="Button" parent="MenuContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Decorations"]
+z_index = -4
+position = Vector2(1356, 531)
+scale = Vector2(0.215, 0.215)
+sprite_frames = SubResource("SpriteFrames_j7ywx")
+autoplay = "default"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Decorations"]
+z_index = -4
+position = Vector2(548, 533)
+scale = Vector2(0.215, 0.215)
+sprite_frames = SubResource("SpriteFrames_j7ywx")
+autoplay = "default"
+
+[node name="Decoration" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(1204, 870)
+
+[node name="Decoration2" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(1704, 810)
+
+[node name="Decoration3" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(302, 208)
+
+[node name="Decoration4" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(1262, 248)
+
+[node name="Decoration5" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(774, 854)
+
+[node name="Decoration6" parent="Decorations" instance=ExtResource("8_uvqc0")]
+position = Vector2(304, 618)
 
 [node name="SettingsPage" parent="." instance=ExtResource("5_cjnax")]
 visible = false
