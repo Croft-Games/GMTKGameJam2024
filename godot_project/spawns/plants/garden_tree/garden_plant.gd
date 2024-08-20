@@ -29,6 +29,8 @@ var non_tasks: Array[Task] = [Task.UNSET, Task.IDLE]
 	Task.COLLECT: [22, 5],
 }
 
+var base_timer_scale: Vector2 = Vector2.ONE
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
@@ -38,6 +40,7 @@ func _ready() -> void:
 		prune_timer = $PruneTimer
 		prune_timer.timer.wait_time = 10
 		prune_timer.timer.timeout.connect(fail_task)
+		base_timer_scale = prune_timer.scale
 	if Task.WATER in task_assignments:
 		dry_spawner = $DryEffectSpawner
 		water_timer = $WaterTimer
@@ -53,6 +56,11 @@ func _ready() -> void:
 
 signal completed_task()
 signal failed_task(plant: GardenPlant)
+
+func set_timer_scale(scale: float):
+	for t in [prune_timer, water_timer, fruit_timer]:
+		if t != null:
+			t.scale = base_timer_scale * scale
 
 func unlock_task(task: Task):
 	if task not in unlocked_tasks:

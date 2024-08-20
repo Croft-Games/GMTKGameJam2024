@@ -24,6 +24,7 @@ var health_bar_move_speed: float = 10
 
 @export var expansion_rate: float = 0.01
 @export var expansion_exponent: float = 0.6 # Slightly more than equal area increase over time
+var current_expansion: float = 1
 const init_tree_dist: float = 250
 var game_active: bool = true
 
@@ -167,10 +168,10 @@ func get_expansion() -> float:
 
 
 func set_zoom_from_elapsed_time():
-	var play_size: float = get_expansion()
-	camera.zoom = (initial_zoom / play_size) * Vector2.ONE
-	play_area.set_size(play_size)
-	background.scale = Vector2(1 / camera.zoom.x, 1 / camera.zoom.y)
+	current_expansion = get_expansion()
+	camera.zoom = (initial_zoom / current_expansion) * Vector2.ONE
+	play_area.set_size(current_expansion)
+	background.scale = Vector2.ONE * current_expansion
 
 func is_unlocked(i):
 	if i < 0:
@@ -207,6 +208,11 @@ func generate_spawn_position():
 	boundary_finder.force_raycast_update()
 	return boundary_finder.get_collision_point() * minf(randfn(0.8, 0.1), 1.0)
 
+func set_all_timer_scales():
+	for ch in get_children():
+		if ch is GardenPlant:
+			ch.set_timer_scale(current_expansion)
+
 func spawn_element(packed_scene_index = null) -> Spawnable:
 	if packed_scene_index == null:
 		packed_scene_index = _select_random_spawn()
@@ -227,6 +233,7 @@ func spawn_element(packed_scene_index = null) -> Spawnable:
 		if new_spawn is GardenTool:
 			new_spawn.tool_failed.connect(_on_tool_failed)
 		object_counts[packed_scene_index] = object_counts.get(packed_scene_index, 0) + 1
+	set_all_timer_scales()
 	return new_spawn
 
 

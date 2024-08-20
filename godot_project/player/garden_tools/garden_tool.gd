@@ -52,6 +52,9 @@ func play_sound(from: float):
 	sound.play(from)
 	action_timer.start()
 
+func grab():
+	pass
+
 func drop():
 	grabbable_area_shape.disabled = true
 	await get_tree().create_timer(drop_cooldown).timeout
