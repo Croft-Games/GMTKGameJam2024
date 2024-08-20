@@ -108,14 +108,22 @@ func modified_passive_health_regen() -> float:
 func _process(delta: float) -> void:
 	if game_active:
 		elapsed_time += delta
-		if health <= 0:
-			game_over()
 		health = clampf(health + modified_passive_health_regen() * delta, 0, max_health)
 		set_zoom_from_elapsed_time()
-
+		health_bar.value = move_toward(health_bar.value, health, health_bar_move_speed * delta)
+		if health_bar.value <= 0:
+			game_over()
 		try_unlock(GardenPlant.Task.WATER)
 		try_unlock(GardenPlant.Task.COLLECT)
-	health_bar.value = move_toward(health_bar.value, health, health_bar_move_speed * delta)
+
+	if game_over_fadeout:
+		var inputting: bool = player.get_move_input().length_squared() > 0.1
+		var c: Color
+		if inputting:
+			c = Color(1, 1, 1, 0.2)
+		else:
+			c = Color.WHITE
+		$HUDCanvas/HUD/GameOverPanel.modulate = c
 
 func try_unlock(task):
 	if (not unlock_started[task]) and (elapsed_time > unlock_delays[task]):
@@ -159,6 +167,8 @@ func task_failed(plant: GardenPlant):
 		i += 1
 	object_counts[i] = object_counts.get(i, 1) - 1
 
+var game_over_fadeout: bool = false
+
 func game_over():
 	spawn_timer.stop()
 	game_active = false
@@ -170,6 +180,9 @@ func game_over():
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/MaxPlants/StatValue.text = str(max_plants)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TasksCompleted/StatValue.text = str(tasks_completed)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer/TotalTime/StatValue.text = str(elapsed_time).pad_decimals(1)
+	await get_tree().create_timer(3).timeout
+	game_over_fadeout = true
+
 
 func random_vec():
 	return Vector2.from_angle(randf_range(-PI, PI))
