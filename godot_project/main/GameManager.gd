@@ -84,11 +84,22 @@ func _ready() -> void:
 	player.battery_collected.connect(_on_battery_collect)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton.pressed.connect(restart)
 	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton.pressed.connect(back_to_menu)
+	$Player/ControlsPrompt.highlight_tools.connect(highlight_tools)
+	$Player/ControlsPrompt.highlight_plants.connect(highlight_plants)
 
 func _on_battery_collect():
 	var bindex: int = 7
 	object_counts[bindex] = object_counts.get(bindex, 1) - 1
 
+func highlight_tools():
+	for ch in get_children():
+		if ch is GardenTool and ch.has_node("AnimatedSprite2D/Highlighter"):
+			ch.get_node("AnimatedSprite2D/Highlighter").highlight()
+
+func highlight_plants():
+	for ch in get_children():
+		if ch is GardenPlant and ch.has_node("AnimatedSprite2D/Highlighter"):
+			ch.get_node("AnimatedSprite2D/Highlighter").highlight()
 
 func modified_passive_health_regen() -> float:
 	return passive_health_regen * (1 - exp(1 - (float(current_plants) / 2)))

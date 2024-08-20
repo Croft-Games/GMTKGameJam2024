@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bsm73i4jjane3"]
+[gd_scene load_steps=13 format=3 uid="uid://bsm73i4jjane3"]
 
 [ext_resource type="Script" path="res://player/garden_tools/shears/shears.gd" id="1_4pqy0"]
 [ext_resource type="Texture2D" uid="uid://cbjj6volwve2w" path="res://player/garden_tools/shears/idle_sprites/ShearsIdle_1.PNG" id="2_7xtsa"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dhc5h1wcslrsu" path="res://player/garden_tools/shears/snip_sprites/ShearsSnip_1.PNG" id="4_itpm1"]
 [ext_resource type="Texture2D" uid="uid://rr46fd3a7hy0" path="res://player/garden_tools/shears/snip_sprites/ShearsSnip_2.PNG" id="5_m56ul"]
 [ext_resource type="AudioStream" uid="uid://bj7q7y2bx8vfg" path="res://player/garden_tools/shears/267975__roulaine__garden-shears.wav" id="6_h4gh5"]
+[ext_resource type="PackedScene" uid="uid://xokngs078a6j" path="res://highlighter.tscn" id="7_edssr"]
 [ext_resource type="PackedScene" uid="uid://blhowhla1mpbw" path="res://spawns/plants/leafy/leaf_spawner.tscn" id="8_jsdk6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bi0x4"]
@@ -60,14 +61,19 @@ radius = 60.0
 
 [node name="Shears" type="Node2D"]
 script = ExtResource("1_4pqy0")
+default_animation = null
+drop_cooldown = null
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_k4ngo")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+clip_children = 2
 scale = Vector2(0.0820313, 0.0820313)
 sprite_frames = SubResource("SpriteFrames_bi0x4")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("7_edssr")]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_h4gh5")

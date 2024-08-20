@@ -21,8 +21,8 @@ func _ready() -> void:
 	sprite.animation_finished.connect(_on_animation_end)
 	action_timer.timeout.connect(sound.stop)
 
-func use():
-	pass
+func use() -> bool:
+	return false
 
 func facing_mult() -> float:
 	return (1 if facing_right else -1)

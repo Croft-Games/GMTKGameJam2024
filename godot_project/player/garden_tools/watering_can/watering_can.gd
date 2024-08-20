@@ -24,13 +24,13 @@ func _process(delta: float) -> void:
 			if t is GardenPlant:
 				t.water()
 
-func use():
+func use() -> bool:
 	if water_level < max_water_level:
 		for area in action_area.get_overlapping_areas():
 			var p = area.get_parent()
 			if p is Pond:
 				refill()
-				return
+				return true
 	if water_level > 0:
 		if not is_pouring:
 			sprite.play(&"pour")
@@ -38,8 +38,10 @@ func use():
 			water_level -= 1
 			sprite.modulate = empty_modulation.lerp(full_modulation, float(water_level) / max_water_level)
 			is_pouring = true
+			return true
 	else:
 		empty_animation()
+	return false
 
 func play_water_sound():
 	play_sound(1)

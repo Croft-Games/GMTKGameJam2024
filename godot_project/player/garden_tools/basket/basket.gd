@@ -9,23 +9,25 @@ func _ready() -> void:
 	super()
 	set_fruit_level(0)
 
-func use():
+func use() -> bool:
 	if fruit_level > 0:
 		for area in action_area.get_overlapping_areas():
 			var p = area.get_parent()
 			if p is FruitDepot:
 				empty_fruit()
-				return
+				return true
 	if fruit_level >= max_fruit_level:
 		tool_failed.emit("fruit")
 		play_full_sound()
-		return
+		return false
 	for area in action_area.get_overlapping_areas():
 		var t = area.get_parent()
 		if t is GardenPlant:
 			var collected_fruit: bool = t.collect()
 			if collected_fruit:
 				collect_fruit()
+				return true
+	return false
 
 func play_collect_sound():
 	sound.stream = sounds["collect"]

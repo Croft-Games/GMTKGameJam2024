@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bqnpxbe8h6t4j"]
+[gd_scene load_steps=45 format=3 uid="uid://bqnpxbe8h6t4j"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_uo0jg"]
 [ext_resource type="Texture2D" uid="uid://nbqvr17bm8qx" path="res://player/Player_Sprite/idle/PlayerIdle_1.PNG" id="2_iwtc6"]
@@ -23,6 +23,17 @@
 [ext_resource type="AudioStream" uid="uid://cxss0wt0g266x" path="res://main/battery/478337__joao_janz__bouncing-power-up-1_2.wav" id="17_gxok7"]
 [ext_resource type="Texture2D" uid="uid://7u0ktcdbc02y" path="res://player/icons/crate/Box_1.PNG" id="17_mrh7o"]
 [ext_resource type="Texture2D" uid="uid://dhhy0mkbmpw4g" path="res://player/icons/crate/Box_2.PNG" id="18_8oq8i"]
+[ext_resource type="Script" path="res://player/controls_prompt.gd" id="24_rhott"]
+[ext_resource type="Texture2D" uid="uid://dpvhefhektxi0" path="res://player/button_prompts/keyboard_w.png" id="25_uinh7"]
+[ext_resource type="Texture2D" uid="uid://crd434ton4kn4" path="res://player/button_prompts/keyboard_a.png" id="26_puqy0"]
+[ext_resource type="Texture2D" uid="uid://42okf6f4b85o" path="res://player/button_prompts/keyboard_s.png" id="27_qri6r"]
+[ext_resource type="Texture2D" uid="uid://b8gx27p8lh8kq" path="res://player/button_prompts/keyboard_d.png" id="28_ngcv0"]
+[ext_resource type="LabelSettings" uid="uid://b65yi6ewaqiks" path="res://player/button_prompts/controlspromt.tres" id="29_laidd"]
+[ext_resource type="Texture2D" uid="uid://cxb4d7nanfpms" path="res://player/button_prompts/keyboard_shift.png" id="30_xopvx"]
+[ext_resource type="Texture2D" uid="uid://cb6ijqhvqk44w" path="res://player/button_prompts/mouse_right.png" id="31_wukok"]
+[ext_resource type="Texture2D" uid="uid://dw2kxmg1l6rbu" path="res://player/button_prompts/flair_disabled_line.png" id="32_mn7l4"]
+[ext_resource type="Texture2D" uid="uid://bj04y8v3pnkos" path="res://player/button_prompts/keyboard_space_outline.png" id="33_uiuvn"]
+[ext_resource type="Texture2D" uid="uid://b1n11kq3nluoh" path="res://player/button_prompts/mouse_left.png" id="34_7y0nr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hvbdm"]
 animations = [{
@@ -277,6 +288,85 @@ collision_mask = 32768
 shape = SubResource("CircleShape2D_eusyq")
 debug_color = Color(0, 0.0325286, 0.0454713, 0.42)
 
+[node name="ControlsPrompt" type="Node2D" parent="."]
+script = ExtResource("24_rhott")
+
+[node name="Movement" type="Node2D" parent="ControlsPrompt"]
+position = Vector2(0, -16)
+
+[node name="W" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(0, -152)
+texture = ExtResource("25_uinh7")
+
+[node name="A" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(-64, -96)
+texture = ExtResource("26_puqy0")
+
+[node name="S" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(0, -96)
+texture = ExtResource("27_qri6r")
+
+[node name="D" type="Sprite2D" parent="ControlsPrompt/Movement"]
+position = Vector2(64, -96)
+texture = ExtResource("28_ngcv0")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Movement"]
+offset_left = -56.0
+offset_top = -224.0
+offset_right = 53.0
+offset_bottom = -169.0
+text = "move"
+label_settings = ExtResource("29_laidd")
+metadata/_edit_use_anchors_ = true
+
+[node name="Grab" type="Node2D" parent="ControlsPrompt"]
+visible = false
+
+[node name="Shift" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(-40, -128)
+texture = ExtResource("30_xopvx")
+
+[node name="RMB" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(72, -128)
+texture = ExtResource("31_wukok")
+
+[node name="Slash" type="Sprite2D" parent="ControlsPrompt/Grab"]
+position = Vector2(8, -120)
+texture = ExtResource("32_mn7l4")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Grab"]
+offset_left = -24.0
+offset_top = -208.0
+offset_right = 16.0
+offset_bottom = -190.0
+text = "grab/drop"
+label_settings = ExtResource("29_laidd")
+
+[node name="Use" type="Node2D" parent="ControlsPrompt"]
+visible = false
+
+[node name="Space" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(-40, -128)
+texture = ExtResource("33_uiuvn")
+
+[node name="LMB" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(72, -128)
+texture = ExtResource("34_7y0nr")
+
+[node name="Slash" type="Sprite2D" parent="ControlsPrompt/Use"]
+position = Vector2(8, -120)
+texture = ExtResource("32_mn7l4")
+
+[node name="Label" type="Label" parent="ControlsPrompt/Use"]
+offset_left = -24.0
+offset_top = -208.0
+offset_right = 16.0
+offset_bottom = -190.0
+text = "use"
+label_settings = ExtResource("29_laidd")
+
+[connection signal="grabbed_tool" from="." to="ControlsPrompt" method="on_grab"]
+[connection signal="used_tool" from="." to="ControlsPrompt" method="use"]
 [connection signal="timeout" from="ExclamationMark/Timer" to="ExclamationMark" method="hide"]
 [connection signal="timeout" from="NoWater/Timer" to="NoWater" method="hide"]
 [connection signal="timeout" from="FullBasket/Timer" to="FullBasket" method="hide"]

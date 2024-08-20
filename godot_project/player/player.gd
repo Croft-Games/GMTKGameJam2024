@@ -123,10 +123,14 @@ func _move_tool():
 		equipped_tool.position = position + vector_from_facing(active_tool_offset)
 		equipped_tool.set_facing(facing_right)
 
+signal used_tool(actually_used: bool)
+signal grabbed_tool(actually_grabbed: bool)
+
 func equip(tool: GardenTool):
 	connect_tool(tool)
 	equipped_tool = tool
 	equip_sound.play()
+	grabbed_tool.emit(true)
 
 func connect_tool(tool: GardenTool):
 	tool.tool_failed.connect(_on_tool_failed)
@@ -140,10 +144,11 @@ func grab_tool():
 		if t is GardenTool and t != equipped_tool:
 			equip(t)
 			return
+	grabbed_tool.emit(false)
 
 func use_tool():
 	if equipped_tool != null:
-		equipped_tool.use()
+		used_tool.emit(equipped_tool.use())
 
 func drop_tool():
 	if equipped_tool != null:
