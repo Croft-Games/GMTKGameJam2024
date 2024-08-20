@@ -14,13 +14,13 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_811bs"]
 shader = ExtResource("3_phr3x")
-shader_parameter/OCTAVE = 6
+shader_parameter/OCTAVE = 3
 shader_parameter/mulscale = 5.0
-shader_parameter/height = 0.6
-shader_parameter/tide = 0.1
-shader_parameter/foamthickness = 0.1
-shader_parameter/timescale = 1.0
-shader_parameter/waterdeep = 0.3
+shader_parameter/height = 0.265
+shader_parameter/tide = 0.26
+shader_parameter/foamthickness = 0.05
+shader_parameter/timescale = 0.07
+shader_parameter/waterdeep = 0.1
 shader_parameter/WATER_COL = Color(0.180392, 0.552941, 0.768627, 1)
 shader_parameter/WATER2_COL = Color(0.12549, 0.380392, 0.529412, 1)
 shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
@@ -55,6 +55,7 @@ z_index = -1
 script = ExtResource("1_3p408")
 
 [node name="SpawnManager" parent="." instance=ExtResource("2_6wo30")]
+visible = false
 spawn_bubble_size = 250.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -64,15 +65,19 @@ scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_owkkq")
 animation = &"round"
 autoplay = "default"
+frame_progress = 0.367145
 
 [node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("6_w844i")]
+visible = false
 
 [node name="CollisionBox" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionBox"]
 polygon = PackedVector2Array(64, 96, 100, 84, 128, 32, 124, -64, 92, -116, 36, -120, 0, -96, -80, -32, -116, 48, -120, 100, -92, 124, -64, 128, -24, 120, 28, 104, 48, 96)
 
 [node name="RefillArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 0
 
