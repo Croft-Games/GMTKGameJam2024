@@ -27,6 +27,10 @@ var tool_slowdown: float = 0.5
 
 var batteries_collected: int = 0
 var speed_multiplier: float = 1
+@export var base_acceleration: float = 1200
+@export var base_friction: float = 3000
+@export var base_deceleration: float = 4000
+var target_velocity: Vector2 = Vector2.ZERO
 
 var facing_right: bool = false
 
@@ -57,14 +61,19 @@ func compute_speed() -> float:
 	var tool_multiplier: float = exp(-tool_slowdown * int(equipped_tool != null))
 	var battery_multiplier: float = float(2 + batteries_collected) / 2
 	speed_multiplier = tool_multiplier * battery_multiplier
-	move_sound.pitch_scale = speed_multiplier
 	return speed_multiplier * base_speed
+
+func get_move_input() -> Vector2:
+	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var move_input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	velocity = move_input * compute_speed()
-
+	if Input.is_key_pressed(KEY_0):
+		batteries_collected -= 1
+	elif Input.is_key_pressed(KEY_1):
+		batteries_collected += 1
+	print(batteries_collected)
+	var move_input: Vector2 = get_move_input()
 	if move_input.x != 0:
 		set_facing(move_input.x > 0)
 
@@ -78,6 +87,24 @@ func _process(delta: float) -> void:
 		var p = col.get_parent()
 		if p is Battery:
 			get_battery(p)
+
+func _physics_process(delta: float) -> void:
+	var move_input: Vector2 = get_move_input()
+	target_velocity = move_input * compute_speed()
+	var dotted: float = velocity.normalized().dot(target_velocity.normalized())
+	var accel: float = base_acceleration
+	if velocity.is_zero_approx():
+		accel = base_acceleration
+	elif target_velocity.is_zero_approx() or is_zero_approx(dotted):
+		accel = base_friction * get_current_speed_as_mult()
+	elif dotted < 0:
+		accel = base_deceleration
+	accel = accel * (4 + batteries_collected) / 4
+	velocity = velocity.move_toward(target_velocity, accel * delta)
+	move_and_slide()
+
+func get_current_speed_as_mult() -> float:
+	return maxf(1, velocity.length() / base_speed)
 
 signal battery_collected
 
@@ -93,7 +120,9 @@ func get_battery(battery: Battery):
 func set_state_moving(force: bool = false):
 	if force or current_state != PlayerState.MOVING:
 		current_state = PlayerState.MOVING
-		player_sprite.play(&"move", speed_multiplier)
+		var speed_mult: float = get_current_speed_as_mult()
+		player_sprite.play(&"move", speed_mult)
+		move_sound.pitch_scale = speed_mult
 		light.color = move_light_colour
 		light.position = move_light_position
 		trail.emitting = true
@@ -113,10 +142,6 @@ func set_state_idle(force: bool = false):
 		trail.emitting = false
 		move_sound.stop()
 		dust_cloud.hide()
-
-
-func _physics_process(delta: float) -> void:
-	move_and_slide()
 
 func _move_tool():
 	if equipped_tool != null:

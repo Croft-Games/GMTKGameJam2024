@@ -65,7 +65,7 @@ scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_owkkq")
 animation = &"round"
 autoplay = "default"
-frame_progress = 0.367145
+frame_progress = 0.432508
 
 [node name="Highlighter" parent="AnimatedSprite2D" instance=ExtResource("6_w844i")]
 visible = false
