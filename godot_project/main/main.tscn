@@ -24,7 +24,7 @@ radius = 100.0
 y_sort_enabled = true
 script = ExtResource("1_bvkti")
 possible_spawns = Array[PackedScene]([ExtResource("9_420uc"), ExtResource("5_gepyh"), ExtResource("12_vy460"), ExtResource("13_ceri6"), ExtResource("6_m2s7n"), ExtResource("12_u20n1"), ExtResource("13_cbs7k"), ExtResource("9_2bjdc")])
-spawn_weights = Array[float]([10.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.4])
+spawn_weights = Array[float]([10.0, 10.0, 0.4, 1.0, 1.0, 0.5, 0.3, 0.2])
 
 [node name="HUDCanvas" type="CanvasLayer" parent="GameManager"]
 layer = 2

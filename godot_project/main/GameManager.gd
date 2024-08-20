@@ -14,15 +14,16 @@ const initial_zoom: float = 1
 @onready var first_plant: GardenPlant = $First
 @onready var health_bar: ProgressBar = $HUDCanvas/HUD/MarginContainer/HealthBar
 @onready var player: Player = $Player
-const max_health: float = 100
+const max_health: float = 80
 var passive_health_regen: float = 0.05
-var active_health_regen: float = 2
+var active_health_regen: float = 1
 
 var health: float = max_health
-var fail_damage: float = 10
+var fail_damage: float = 15
 var health_bar_move_speed: float = 10
 
-var expansion_rate: float = 0.005
+@export var expansion_rate: float = 0.01
+@export var expansion_exponent: float = 0.6 # Slightly more than equal area increase over time
 const init_tree_dist: float = 250
 var game_active: bool = true
 
@@ -80,6 +81,8 @@ func _ready() -> void:
 	first_plant.failed_task.connect(task_failed)
 	first_plant.completed_task.connect(task_completed)
 	player.battery_collected.connect(_on_battery_collect)
+	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/TryAgainButton.pressed.connect(restart)
+	$HUDCanvas/HUD/GameOverPanel/VBoxContainer/HBoxContainer2/MainMenuButton.pressed.connect(back_to_menu)
 
 func _on_battery_collect():
 	var bindex: int = 7
@@ -159,8 +162,12 @@ func game_over():
 func random_vec():
 	return Vector2.from_angle(randf_range(-PI, PI))
 
+func get_expansion() -> float:
+	return pow((elapsed_time * expansion_rate) + 1, expansion_exponent)
+
+
 func set_zoom_from_elapsed_time():
-	var play_size: float = exp(elapsed_time * expansion_rate)
+	var play_size: float = get_expansion()
 	camera.zoom = (initial_zoom / play_size) * Vector2.ONE
 	play_area.set_size(play_size)
 	background.scale = Vector2(1 / camera.zoom.x, 1 / camera.zoom.y)
