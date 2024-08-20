@@ -68,11 +68,6 @@ func get_move_input() -> Vector2:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_key_pressed(KEY_0):
-		batteries_collected -= 1
-	elif Input.is_key_pressed(KEY_1):
-		batteries_collected += 1
-	print(batteries_collected)
 	var move_input: Vector2 = get_move_input()
 	if move_input.x != 0:
 		set_facing(move_input.x > 0)
@@ -101,6 +96,7 @@ func _physics_process(delta: float) -> void:
 		accel = base_deceleration
 	accel = accel * (4 + batteries_collected) / 4
 	velocity = velocity.move_toward(target_velocity, accel * delta)
+	trail.emitting = (velocity.length() > 800 and dotted < 0.5)
 	move_and_slide()
 
 func get_current_speed_as_mult() -> float:
@@ -125,7 +121,6 @@ func set_state_moving(force: bool = false):
 		move_sound.pitch_scale = speed_mult
 		light.color = move_light_colour
 		light.position = move_light_position
-		trail.emitting = true
 		dust_cloud.show()
 		dust_cloud.play("start")
 		move_sound.play()
